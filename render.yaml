@@ -1,0 +1,70 @@
+# ==============================================================================
+# TREASURE CASINO - RENDER BLUEPRINT SPECIFICATION
+# ==============================================================================
+# This configuration deploys:
+# 1. Backend: Node.js Express API Web Service (Free Tier)
+# 2. Frontend: React + Vite Single Page Application Static Site (Free Tier)
+# ==============================================================================
+
+services:
+  # ----------------------------------------------------------------------------
+  # Backend API Web Service
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: treasure-casino-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false # Set in Render Dashboard with your persistent MySQL URL
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: 24h
+      - key: JWT_REFRESH_EXPIRATION
+        value: 7d
+      - key: CORS_ORIGIN
+        sync: false # Set in Render Dashboard to your frontend onrender.com URL
+      - key: SIMULATED_PAYMENTS_ONLY
+        value: "true"
+      - key: PAYMENT_SIMULATION_DELAY_MS
+        value: "1000"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX
+        value: "500"
+      - key: ADMIN_DEFAULT_EMAIL
+        value: admin@treasure.com
+      - key: ADMIN_DEFAULT_PASSWORD
+        sync: false # Set a strong admin password in Render Dashboard
+
+  # ----------------------------------------------------------------------------
+  # Frontend React / Vite Static Site
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: treasure-casino-frontend
+    runtime: static
+    plan: free
+    region: oregon
+    rootDir: admin
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false # Set in Render Dashboard to your backend onrender.com URL
+

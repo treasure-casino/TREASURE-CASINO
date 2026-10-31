@@ -1,0 +1,13 @@
+{
+  "name": "treasure-casino-e2e",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Browser end-to-end tests for TREASURE CASINO original games (uses locally installed Chrome).",
+  "scripts": {
+    "test:games": "node games.e2e.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.10.0"
+  }
+}
+

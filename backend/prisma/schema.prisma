@@ -1,0 +1,698 @@
+// ============================================================================
+// Prisma Schema for TREASURE CASINO
+// Provider: MySQL / MariaDB (XAMPP local & production MySQL compatible)
+// Database: treasure_db
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ───────────────────────────────────────────────────────────────────
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+  PENDING_VERIFICATION
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  REWARD
+  GAME_WIN
+  GAME_BET
+  REFUND
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum PaymentOrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum DepositStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum GameCategory {
+  POPULAR
+  SLOTS
+  FISHING
+  TABLE_CARD
+  BINGO
+  CASINO
+  CRASH
+  PLINKO
+  MINES
+  SPORTS
+  ROULETTE_DICE
+  KENO
+  OTHER
+}
+
+enum GameSessionStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum RewardType {
+  DAILY
+  PROMO
+  VIP
+  REFERRAL
+  COUPON
+}
+
+enum ReferralStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum VerificationType {
+  ID_CARD
+  PASSPORT
+  DRIVERS_LICENSE
+  SELFIE
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum NotificationType {
+  SYSTEM
+  PROMOTION
+  TRANSACTION
+  SECURITY
+  SUPPORT
+}
+
+// ─── USER MODELS ─────────────────────────────────────────────────────────────
+
+model User {
+  id               String      @id @default(uuid()) @db.VarChar(36)
+  email            String      @unique(map: "idx_users_email") @db.VarChar(191)
+  phone            String?     @db.VarChar(32)
+  passwordHash     String      @map("password_hash") @db.VarChar(255)
+  status           UserStatus  @default(ACTIVE)
+  emailVerified    Boolean     @default(false) @map("email_verified")
+  phoneVerified    Boolean     @default(false) @map("phone_verified")
+  twoFactorEnabled Boolean     @default(false) @map("two_factor_enabled")
+  twoFactorSecret  String?     @map("two_factor_secret") @db.VarChar(255)
+  referralCode     String      @unique(map: "idx_users_referral_code") @map("referral_code") @db.VarChar(50)
+  referredBy       String?     @map("referred_by") @db.VarChar(50)
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  profile          UserProfile?
+  sessions         UserSession[]
+  verifications    IdentityVerification[]
+  wallet           Wallet?
+  paymentOrders    PaymentOrder[]
+  deposits         Deposit[]
+  withdrawals      Withdrawal[]
+  gameSessions     GameSession[]
+  rewardClaims     RewardClaim[]
+  referralsMade    Referral[]             @relation("Referrer")
+  referralReceived Referral?              @relation("Referee")
+  notifications    Notification[]
+  supportTickets   SupportTicket[]
+  favorites        GameFavorite[]
+
+  @@index([status], map: "idx_users_status")
+  @@index([referredBy], map: "idx_users_referred_by")
+  @@map("users")
+}
+
+model UserProfile {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  userId      String    @unique(map: "idx_user_profiles_user_id") @map("user_id") @db.VarChar(36)
+  displayName String?   @map("display_name") @db.VarChar(100)
+  avatarUrl   String?   @map("avatar_url") @db.VarChar(255)
+  dateOfBirth DateTime? @map("date_of_birth") @db.Date
+  country     String?   @default("India") @db.VarChar(60)
+  address     String?   @db.VarChar(255)
+  city        String?   @db.VarChar(100)
+  zipCode     String?   @map("zip_code") @db.VarChar(20)
+  bio         String?   @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+}
+
+model UserSession {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  userId    String   @map("user_id") @db.VarChar(36)
+  token     String   @db.VarChar(500)
+  ipAddress String?  @map("ip_address") @db.VarChar(45)
+  userAgent String?  @map("user_agent") @db.Text
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_user_sessions_user_id")
+  @@index([expiresAt], map: "idx_user_sessions_expires_at")
+  @@map("user_sessions")
+}
+
+model IdentityVerification {
+  id          String             @id @default(uuid()) @db.VarChar(36)
+  userId      String             @map("user_id") @db.VarChar(36)
+  type        VerificationType
+  documentUrl String             @map("document_url") @db.VarChar(255)
+  status      VerificationStatus @default(PENDING)
+  reviewedBy  String?            @map("reviewed_by") @db.VarChar(36)
+  reviewedAt  DateTime?          @map("reviewed_at")
+  notes       String?            @db.VarChar(255)
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_id_verifications_user_id")
+  @@index([status], map: "idx_id_verifications_status")
+  @@map("identity_verifications")
+}
+
+// ─── WALLET & FINANCIAL MODELS ───────────────────────────────────────────────
+
+model Wallet {
+  id              String   @id @default(uuid()) @db.VarChar(36)
+  userId          String   @unique(map: "idx_wallets_user_id") @map("user_id") @db.VarChar(36)
+  balance         Decimal  @default(0.00) @db.Decimal(18, 2)
+  reservedBalance Decimal  @default(0.00) @map("reserved_balance") @db.Decimal(18, 2)
+  currency        String   @default("INR") @db.VarChar(10)
+  version         Int      @default(0)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions WalletTransaction[]
+
+  @@map("wallets")
+}
+
+model WalletTransaction {
+  id             String            @id @default(uuid()) @db.VarChar(36)
+  walletId       String            @map("wallet_id") @db.VarChar(36)
+  type           TransactionType
+  amount         Decimal           @db.Decimal(18, 2)
+  balanceBefore  Decimal           @map("balance_before") @db.Decimal(18, 2)
+  balanceAfter   Decimal           @map("balance_after") @db.Decimal(18, 2)
+  referenceId    String?           @map("reference_id") @db.VarChar(100)
+  referenceType  String?           @map("reference_type") @db.VarChar(50)
+  idempotencyKey String?           @unique(map: "idx_wallet_tx_idempotency") @map("idempotency_key") @db.VarChar(191)
+  status         TransactionStatus @default(COMPLETED)
+  description    String?           @db.VarChar(255)
+  createdAt      DateTime          @default(now()) @map("created_at")
+
+  wallet Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@index([walletId], map: "idx_wallet_tx_wallet_id")
+  @@index([type], map: "idx_wallet_tx_type")
+  @@index([status], map: "idx_wallet_tx_status")
+  @@index([createdAt], map: "idx_wallet_tx_created_at")
+  @@map("wallet_transactions")
+}
+
+model PaymentOrder {
+  id              String             @id @default(uuid()) @db.VarChar(36)
+  userId          String             @map("user_id") @db.VarChar(36)
+  amount          Decimal            @db.Decimal(18, 2)
+  currency        String             @default("INR") @db.VarChar(10)
+  provider        String             @default("SIMULATED") @db.VarChar(50)
+  providerOrderId String?            @map("provider_order_id") @db.VarChar(100)
+  status          PaymentOrderStatus @default(PENDING)
+  metadata        String?            @db.LongText
+  createdAt       DateTime           @default(now()) @map("created_at")
+  completedAt     DateTime?          @map("completed_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deposits Deposit[]
+
+  @@index([userId], map: "idx_payment_orders_user_id")
+  @@index([status], map: "idx_payment_orders_status")
+  @@map("payment_orders")
+}
+
+model Deposit {
+  id             String        @id @default(uuid()) @db.VarChar(36)
+  userId         String        @map("user_id") @db.VarChar(36)
+  paymentOrderId String        @map("payment_order_id") @db.VarChar(36)
+  amount         Decimal       @db.Decimal(18, 2)
+  status         DepositStatus @default(PENDING)
+  transactionId  String?       @map("transaction_id") @db.VarChar(36)
+  createdAt      DateTime      @default(now()) @map("created_at")
+  completedAt    DateTime?     @map("completed_at")
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentOrder PaymentOrder @relation(fields: [paymentOrderId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_deposits_user_id")
+  @@index([status], map: "idx_deposits_status")
+  @@map("deposits")
+}
+
+model Withdrawal {
+  id            String           @id @default(uuid()) @db.VarChar(36)
+  userId        String           @map("user_id") @db.VarChar(36)
+  amount        Decimal          @db.Decimal(18, 2)
+  status        WithdrawalStatus @default(PENDING)
+  bankDetails   String?          @map("bank_details") @db.LongText
+  reviewedBy    String?          @map("reviewed_by") @db.VarChar(36)
+  reviewedAt    DateTime?        @map("reviewed_at")
+  reason        String?          @db.VarChar(255)
+  transactionId String?          @map("transaction_id") @db.VarChar(36)
+  createdAt     DateTime         @default(now()) @map("created_at")
+  completedAt   DateTime?        @map("completed_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_withdrawals_user_id")
+  @@index([status], map: "idx_withdrawals_status")
+  @@map("withdrawals")
+}
+
+// ─── GAME MODELS ─────────────────────────────────────────────────────────────
+
+model GameProvider {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  name       String   @unique(map: "idx_game_providers_name") @db.VarChar(100)
+  code       String   @default("IN_HOUSE") @db.VarChar(50)
+  apiBaseUrl String?  @map("api_base_url") @db.VarChar(255)
+  apiKey     String?  @map("api_key") @db.VarChar(255)
+  agentId    String?  @map("agent_id") @db.VarChar(100)
+  secretKey  String?  @map("secret_key") @db.VarChar(255)
+  isActive   Boolean  @default(true) @map("is_active")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  games    Game[]
+  mappings ProviderGameMapping[]
+
+  @@map("game_providers")
+}
+
+model Game {
+  id                String       @id @default(uuid()) @db.VarChar(36)
+  name              String       @db.VarChar(100)
+  description       String?      @db.Text
+  thumbnailUrl      String?      @map("thumbnail_url") @db.VarChar(255)
+  category          GameCategory @default(SLOTS)
+  providerId        String       @map("provider_id") @db.VarChar(36)
+  providerGameId    String?      @map("provider_game_id") @db.VarChar(100)
+  providerCode      String       @default("IN_HOUSE") @map("provider_code") @db.VarChar(50)
+  integrationStatus String       @default("DEMO_ONLY") @map("integration_status") @db.VarChar(50)
+  isActive          Boolean      @default(true) @map("is_active")
+  isFeatured        Boolean      @default(false) @map("is_featured")
+  isPopular         Boolean      @default(false) @map("is_popular")
+  isDemo            Boolean      @default(true) @map("is_demo")
+  sortOrder         Int          @default(0) @map("sort_order")
+  volatility        String?      @default("MEDIUM") @db.VarChar(20)
+  deviceSupport     String?      @default("ALL") @map("device_support") @db.VarChar(50)
+  rtp               Decimal?     @default(96.50) @db.Decimal(5, 2)
+  minBet            Decimal?     @default(1.00) @map("min_bet") @db.Decimal(18, 2)
+  maxBet            Decimal?     @default(5000.00) @map("max_bet") @db.Decimal(18, 2)
+  createdAt         DateTime     @default(now()) @map("created_at")
+  updatedAt         DateTime     @updatedAt @map("updated_at")
+
+  provider        GameProvider          @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  sessions        GameSession[]
+  favorites       GameFavorite[]
+  launchSessions  GameLaunchSession[]
+  events          GameEvent[]
+  mapping         ProviderGameMapping?
+  demoRounds      DemoGameRound[]
+
+  @@index([category], map: "idx_games_category")
+  @@index([providerId], map: "idx_games_provider_id")
+  @@index([isActive], map: "idx_games_is_active")
+  @@index([isPopular], map: "idx_games_is_popular")
+  @@map("games")
+}
+
+model GameLaunchSession {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  sessionToken String    @unique @map("session_token") @db.VarChar(64)
+  userId       String?   @map("user_id") @db.VarChar(36)
+  gameId       String    @map("game_id") @db.VarChar(36)
+  providerCode String    @default("IN_HOUSE") @map("provider_code") @db.VarChar(50)
+  mode         String    @default("DEMO") @db.VarChar(20)
+  ipAddress    String?   @map("ip_address") @db.VarChar(45)
+  expiresAt    DateTime  @map("expires_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([sessionToken], map: "idx_game_launch_session_token")
+  @@index([userId], map: "idx_game_launch_user_id")
+  @@map("game_launch_sessions")
+}
+
+model GameEvent {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  sessionToken String?  @map("session_token") @db.VarChar(64)
+  userId       String?  @map("user_id") @db.VarChar(36)
+  gameId       String   @map("game_id") @db.VarChar(36)
+  providerCode String   @default("IN_HOUSE") @map("provider_code") @db.VarChar(50)
+  eventType    String   @map("event_type") @db.VarChar(50)
+  amount       Decimal  @default(0.00) @db.Decimal(18, 2)
+  multiplier   Decimal? @db.Decimal(10, 4)
+  externalTxId String?  @unique(map: "idx_game_events_ext_tx_id") @map("external_tx_id") @db.VarChar(100)
+  metadata     String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_game_events_user_id")
+  @@index([gameId], map: "idx_game_events_game_id")
+  @@map("game_events")
+}
+
+model ProviderGameMapping {
+  id             String   @id @default(uuid()) @db.VarChar(36)
+  providerId     String   @map("provider_id") @db.VarChar(36)
+  gameId         String   @unique @map("game_id") @db.VarChar(36)
+  providerGameId String   @map("provider_game_id") @db.VarChar(100)
+  launchUrl      String?  @map("launch_url") @db.VarChar(255)
+  status         String   @default("PENDING_CONFIG") @db.VarChar(50)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  provider GameProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  game     Game         @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@map("provider_game_mappings")
+}
+
+model GameSession {
+  id        String            @id @default(uuid()) @db.VarChar(36)
+  userId    String            @map("user_id") @db.VarChar(36)
+  gameId    String            @map("game_id") @db.VarChar(36)
+  startedAt DateTime          @default(now()) @map("started_at")
+  endedAt   DateTime?         @map("ended_at")
+  betAmount Decimal           @default(0.00) @map("bet_amount") @db.Decimal(18, 2)
+  winAmount Decimal           @default(0.00) @map("win_amount") @db.Decimal(18, 2)
+  status    GameSessionStatus @default(ACTIVE)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_game_sessions_user_id")
+  @@index([gameId], map: "idx_game_sessions_game_id")
+  @@index([startedAt], map: "idx_game_sessions_started_at")
+  @@map("game_sessions")
+}
+
+model GameFavorite {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  userId    String   @map("user_id") @db.VarChar(36)
+  gameId    String   @map("game_id") @db.VarChar(36)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, gameId], map: "idx_game_favorites_user_game")
+  @@map("game_favorites")
+}
+
+// ─── ORIGINAL GAMES: DEMO-ONLY WALLET & ROUNDS ──────────────────────────────
+// Demo credits are completely separate from the real `wallets` table.
+// No row here is ever linked to deposits, withdrawals or wallet_transactions.
+
+model DemoWallet {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  tokenHash String   @unique(map: "idx_demo_wallets_token_hash") @map("token_hash") @db.Char(64)
+  balance   Decimal  @default(10000.00) @db.Decimal(18, 2)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  rounds DemoGameRound[]
+
+  @@map("demo_wallets")
+}
+
+model DemoGameRound {
+  id            String    @id @default(uuid()) @db.VarChar(36)
+  demoWalletId  String    @map("demo_wallet_id") @db.VarChar(36)
+  gameId        String    @map("game_id") @db.VarChar(36)
+  engine        String    @db.VarChar(20)
+  status        String    @db.VarChar(20)
+  betAmount     Decimal   @map("bet_amount") @db.Decimal(18, 2)
+  payout        Decimal   @default(0.00) @db.Decimal(18, 2)
+  multiplier    Decimal   @default(0.0000) @db.Decimal(12, 4)
+  balanceBefore Decimal   @map("balance_before") @db.Decimal(18, 2)
+  balanceAfter  Decimal?  @map("balance_after") @db.Decimal(18, 2)
+  publicState   String?   @map("public_state") @db.Text
+  secretState   String?   @map("secret_state") @db.Text
+  commitment    String?   @db.Char(64)
+  startedAt     DateTime  @default(now()) @map("started_at")
+  settledAt     DateTime? @map("settled_at")
+
+  demoWallet DemoWallet @relation(fields: [demoWalletId], references: [id], onDelete: Cascade)
+  game       Game       @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([demoWalletId, gameId, startedAt], map: "idx_demo_rounds_wallet_game_started")
+  @@index([status], map: "idx_demo_rounds_status")
+  @@map("demo_game_rounds")
+}
+
+// ─── REWARD MODELS ───────────────────────────────────────────────────────────
+
+model Reward {
+  id          String     @id @default(uuid()) @db.VarChar(36)
+  name        String     @db.VarChar(100)
+  description String?    @db.Text
+  type        RewardType
+  amount      Decimal    @db.Decimal(18, 2)
+  couponCode  String?    @unique(map: "idx_rewards_coupon_code") @map("coupon_code") @db.VarChar(50)
+  minVipLevel Int        @default(0) @map("min_vip_level")
+  isActive    Boolean    @default(true) @map("is_active")
+  startsAt    DateTime?  @map("starts_at")
+  expiresAt   DateTime?  @map("expires_at")
+  maxClaims   Int?       @map("max_claims")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  claims RewardClaim[]
+
+  @@index([type], map: "idx_rewards_type")
+  @@index([isActive], map: "idx_rewards_is_active")
+  @@map("rewards")
+}
+
+model RewardClaim {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  userId    String   @map("user_id") @db.VarChar(36)
+  rewardId  String   @map("reward_id") @db.VarChar(36)
+  amount    Decimal  @db.Decimal(18, 2)
+  claimedAt DateTime @default(now()) @map("claimed_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reward Reward @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_reward_claims_user_id")
+  @@index([rewardId], map: "idx_reward_claims_reward_id")
+  @@map("reward_claims")
+}
+
+// ─── VIP LEVELS ──────────────────────────────────────────────────────────────
+
+model VipLevel {
+  id              String   @id @default(uuid()) @db.VarChar(36)
+  level           Int      @unique(map: "idx_vip_levels_level")
+  name            String   @db.VarChar(50)
+  requiredPoints  Int      @default(0) @map("required_points")
+  cashbackPercent Decimal  @default(0.00) @map("cashback_percent") @db.Decimal(5, 2)
+  bonusMultiplier Decimal  @default(1.00) @map("bonus_multiplier") @db.Decimal(5, 2)
+  benefits        String?  @db.LongText
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("vip_levels")
+}
+
+// ─── REFERRALS ───────────────────────────────────────────────────────────────
+
+model Referral {
+  id            String         @id @default(uuid()) @db.VarChar(36)
+  referrerId    String         @map("referrer_id") @db.VarChar(36)
+  refereeId     String         @unique(map: "idx_referrals_referee_id") @map("referee_id") @db.VarChar(36)
+  status        ReferralStatus @default(PENDING)
+  rewardClaimed Boolean        @default(false) @map("reward_claimed")
+  createdAt     DateTime       @default(now()) @map("created_at")
+
+  referrer User @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
+  referee  User @relation("Referee", fields: [refereeId], references: [id], onDelete: Cascade)
+
+  @@index([referrerId], map: "idx_referrals_referrer_id")
+  @@map("referrals")
+}
+
+// ─── NOTIFICATIONS ───────────────────────────────────────────────────────────
+
+model Notification {
+  id        String           @id @default(uuid()) @db.VarChar(36)
+  userId    String           @map("user_id") @db.VarChar(36)
+  title     String           @db.VarChar(200)
+  message   String           @db.Text
+  type      NotificationType @default(SYSTEM)
+  isRead    Boolean          @default(false) @map("is_read")
+  data      String?          @db.LongText
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_notifications_user_id")
+  @@index([isRead], map: "idx_notifications_is_read")
+  @@map("notifications")
+}
+
+// ─── SUPPORT TICKETS ─────────────────────────────────────────────────────────
+
+model SupportTicket {
+  id          String         @id @default(uuid()) @db.VarChar(36)
+  userId      String         @map("user_id") @db.VarChar(36)
+  subject     String         @db.VarChar(200)
+  description String         @db.Text
+  status      TicketStatus   @default(OPEN)
+  priority    TicketPriority @default(MEDIUM)
+  assignedTo  String?        @map("assigned_to") @db.VarChar(36)
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_support_tickets_user_id")
+  @@index([status], map: "idx_support_tickets_status")
+  @@index([priority], map: "idx_support_tickets_priority")
+  @@map("support_tickets")
+}
+
+// ─── ADMIN USERS & RBAC ──────────────────────────────────────────────────────
+
+model AdminRole {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  name        String   @unique(map: "idx_admin_roles_name") @db.VarChar(50)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  users       AdminUser[]
+  permissions AdminPermission[]
+
+  @@map("admin_roles")
+}
+
+model AdminPermission {
+  id       String @id @default(uuid()) @db.VarChar(36)
+  roleId   String @map("role_id") @db.VarChar(36)
+  resource String @db.VarChar(50)
+  action   String @db.VarChar(50)
+
+  role AdminRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, resource, action], map: "idx_admin_permissions_role_res_act")
+  @@map("admin_permissions")
+}
+
+model AdminUser {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  email        String    @unique(map: "idx_admin_users_email") @db.VarChar(191)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  name         String    @db.VarChar(100)
+  roleId       String    @map("role_id") @db.VarChar(36)
+  isActive     Boolean   @default(true) @map("is_active")
+  mfaEnabled   Boolean   @default(false) @map("mfa_enabled")
+  mfaSecret    String?   @map("mfa_secret") @db.VarChar(255)
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  role      AdminRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  auditLogs AdminAuditLog[]
+
+  @@index([roleId], map: "idx_admin_users_role_id")
+  @@map("admin_users")
+}
+
+model AdminAuditLog {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  adminUserId String   @map("admin_user_id") @db.VarChar(36)
+  action      String   @db.VarChar(100)
+  resource    String   @db.VarChar(100)
+  resourceId  String?  @map("resource_id") @db.VarChar(100)
+  details     String?  @db.LongText
+  ipAddress   String?  @map("ip_address") @db.VarChar(45)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  admin AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@index([adminUserId], map: "idx_admin_audit_logs_admin_id")
+  @@index([action], map: "idx_admin_audit_logs_action")
+  @@index([createdAt], map: "idx_admin_audit_logs_created_at")
+  @@map("admin_audit_logs")
+}
+
+// ─── SYSTEM SETTINGS ─────────────────────────────────────────────────────────
+
+model SystemSetting {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  key         String   @unique(map: "idx_system_settings_key") @db.VarChar(100)
+  value       String   @db.Text
+  description String?  @db.VarChar(255)
+  updatedBy   String?  @map("updated_by") @db.VarChar(36)
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("system_settings")
+}

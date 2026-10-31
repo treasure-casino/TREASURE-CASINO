@@ -1,0 +1,84 @@
+# ==============================================================================
+# TREASURE CASINO - ROOT GITIGNORE
+# ==============================================================================
+
+# Dependencies
+node_modules/
+*/node_modules/
+*/*/node_modules/
+
+# Production & Transpiled Build Outputs
+dist/
+*/dist/
+build/
+*/build/
+out/
+*/out/
+
+# Environment Variables & Secrets (Keep .env.example templates only)
+.env
+.env.*
+!.env.example
+!*/.env.example
+*.pem
+*.key
+*.cert
+*.crt
+secrets/
+*secrets*
+
+# Database Dumps, Exports, and Backups
+*.dump
+*.bak
+*.backup
+*.sqlite
+*.sqlite3
+*.sql.gz
+*.sql.tar
+*.sql
+!backend/sql/*.sql
+
+# Logs
+*.log
+logs/
+*/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temporary & Cache Files
+tmp/
+temp/
+scratch/
+*.tmp
+*.temp
+.cache/
+.turbo/
+.eslintcache
+coverage/
+*/coverage/
+
+# Prisma Internal Binary Engines
+.prisma/
+*/node_modules/.prisma/
+
+# Android & Mobile Build Artifacts
+.gradle/
+android/.gradle/
+android/app/build/
+android/build/
+*.apk
+*.aab
+
+# Editor, OS & System Junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

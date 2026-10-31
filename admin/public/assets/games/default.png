@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="60%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#05070c" />
+    </linearGradient>
+
+    <!-- Gold Metallic Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="40%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#e5e7eb" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#e5e7eb" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="400" height="260" rx="16" fill="url(#bgGrad)" />
+  <rect width="400" height="260" rx="16" fill="url(#centerGlow)" />
+
+  <!-- Ambient Perspective Grid -->
+  <g stroke="rgba(255, 255, 255, 0.04)" stroke-width="1">
+    <line x1="0" y1="40" x2="400" y2="40" />
+    <line x1="0" y1="90" x2="400" y2="90" />
+    <line x1="0" y1="140" x2="400" y2="140" />
+    <line x1="0" y1="190" x2="400" y2="190" />
+    <line x1="60" y1="0" x2="60" y2="260" />
+    <line x1="130" y1="0" x2="130" y2="260" />
+    <line x1="200" y1="0" x2="200" y2="260" />
+    <line x1="270" y1="0" x2="270" y2="260" />
+    <line x1="340" y1="0" x2="340" y2="260" />
+  </g>
+
+  <!-- Top Category Badge -->
+  <g transform="translate(18, 16)">
+    <rect width="130" height="22" rx="6" fill="#090d16" stroke="rgba(212, 175, 55, 0.4)" stroke-width="1" />
+    <text x="65" y="15" font-family="system-ui, sans-serif" font-weight="800" font-size="9" fill="#f59e0b" letter-spacing="1" text-anchor="middle">
+      TREASURE SUITE
+    </text>
+  </g>
+
+  <!-- Top Right RTP Badge -->
+  <g transform="translate(306, 16)">
+    <rect width="76" height="22" rx="6" fill="#090d16" stroke="rgba(16, 185, 129, 0.4)" stroke-width="1" />
+    <text x="38" y="15" font-family="monospace" font-weight="700" font-size="9.5" fill="#34d399" text-anchor="middle">
+      96.50% RTP
+    </text>
+  </g>
+
+  <!-- Central Themed Vector Artwork -->
+  <g>
+    
+        <!-- Jewel / Gemstone -->
+        <polygon points="200,65 235,90 220,135 180,135 165,90" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+        <polygon points="200,65 235,90 200,98 165,90" fill="#7dd3fc" />
+        <polygon points="200,98 235,90 220,135" fill="#0284c7" />
+        <polygon points="200,98 165,90 180,135" fill="#0369a1" />
+      
+  </g>
+
+  <!-- Bottom Title Banner Section -->
+  <rect x="0" y="195" width="400" height="65" fill="#060911" fill-opacity="0.85" />
+  <line x1="0" y1="195" x2="400" y2="195" stroke="rgba(212, 175, 55, 0.3)" stroke-width="1" />
+
+  <!-- Game Title -->
+  <text x="20" y="222" font-family="Cinzel, Georgia, serif" font-weight="900" font-size="16" fill="#ffffff" letter-spacing="0.5">
+    Treasure Casino Game
+  </text>
+
+  <!-- Subtitle Details -->
+  <text x="20" y="242" font-family="system-ui, sans-serif" font-weight="600" font-size="10" fill="#9ca3af">
+    TREASURE CASINO ORIGINAL • DEMO CERTIFIED
+  </text>
+
+  <!-- Gold Corner Trim -->
+  <polygon points="384,244 384,252 376,252" fill="#f59e0b" />
+</svg>
