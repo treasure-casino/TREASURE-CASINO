@@ -1,0 +1,26 @@
+# ==============================================================================
+# TREASURE CASINO - ADMIN DASHBOARD BLUEPRINT (STANDALONE STATIC SITE)
+# ==============================================================================
+# This Blueprint deploys ONLY the React + Vite Admin Dashboard Static Site.
+# It does NOT touch, redeploy, or modify the production backend.
+# ==============================================================================
+
+services:
+  - type: web
+    name: treasure-casino-admin
+    runtime: static
+    plan: free
+    region: oregon
+    rootDir: admin
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: VITE_API_URL
+        value: https://treasure-casino.onrender.com
+
