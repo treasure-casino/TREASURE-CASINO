@@ -23,7 +23,7 @@ export interface ApiClientError extends AxiosError {
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000,
+  timeout: 45000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -79,9 +79,9 @@ apiClient.interceptors.response.use(
     if (backendMessage && typeof backendMessage === 'string') {
       userFacingMessage = backendMessage;
     } else if (error.code === 'ECONNABORTED' || error.message?.toLowerCase().includes('timeout')) {
-      userFacingMessage = 'Request timed out. Server took too long to respond.';
+      userFacingMessage = 'Request timed out or backend cold-start taking longer than usual. Please retry in a moment.';
     } else if (!error.response) {
-      userFacingMessage = 'Network connection lost. Please check your internet connection.';
+      userFacingMessage = 'Unable to connect to the backend API at https://treasure-casino.onrender.com. Please check network or CORS configuration.';
     } else if (status === 400) {
       userFacingMessage = backendMessage || 'Invalid request parameters.';
     } else if (status === 401) {

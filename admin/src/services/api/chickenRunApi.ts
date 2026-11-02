@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiClient } from '../../api/client';
 
 const API_BASE = '/api/chicken-run';
 
@@ -109,7 +109,7 @@ export interface ChickenRunAdminStats {
 
 export const chickenRunApi = {
   start: async (betAmount: number, difficulty: ChickenDifficulty): Promise<ChickenRunStartResponse> => {
-    const res = await axios.post<{ success: boolean; data: ChickenRunStartResponse }>(`${API_BASE}/start`, {
+    const res = await apiClient.post<{ success: boolean; data: ChickenRunStartResponse }>(`${API_BASE}/start`, {
       betAmount,
       difficulty,
     });
@@ -117,36 +117,36 @@ export const chickenRunApi = {
   },
 
   step: async (roundId: string): Promise<ChickenRunStepResponse> => {
-    const res = await axios.post<{ success: boolean; data: ChickenRunStepResponse }>(`${API_BASE}/step`, {
+    const res = await apiClient.post<{ success: boolean; data: ChickenRunStepResponse }>(`${API_BASE}/step`, {
       roundId,
     });
     return res.data.data;
   },
 
   cashout: async (roundId: string): Promise<ChickenRunCashoutResponse> => {
-    const res = await axios.post<{ success: boolean; data: ChickenRunCashoutResponse }>(`${API_BASE}/cashout`, {
+    const res = await apiClient.post<{ success: boolean; data: ChickenRunCashoutResponse }>(`${API_BASE}/cashout`, {
       roundId,
     });
     return res.data.data;
   },
 
   getConfig: async (): Promise<ChickenRunConfig> => {
-    const res = await axios.get<{ success: boolean; data: ChickenRunConfig }>(`${API_BASE}/config`);
+    const res = await apiClient.get<{ success: boolean; data: ChickenRunConfig }>(`${API_BASE}/config`);
     return res.data.data;
   },
 
   getHistory: async (): Promise<ChickenRunHistoryItem[]> => {
-    const res = await axios.get<{ success: boolean; data: ChickenRunHistoryItem[] }>(`${API_BASE}/history`);
+    const res = await apiClient.get<{ success: boolean; data: ChickenRunHistoryItem[] }>(`${API_BASE}/history`);
     return res.data.data;
   },
 
   getAdminStats: async (): Promise<ChickenRunAdminStats> => {
-    const res = await axios.get<{ success: boolean; data: ChickenRunAdminStats }>(`${API_BASE}/admin/stats`);
+    const res = await apiClient.get<{ success: boolean; data: ChickenRunAdminStats }>(`${API_BASE}/admin/stats`);
     return res.data.data;
   },
 
   updateConfig: async (params: { isEnabled?: boolean; minBet?: number; maxBet?: number }): Promise<ChickenRunConfig> => {
-    const res = await axios.post<{ success: boolean; data: ChickenRunConfig }>(`${API_BASE}/admin/config`, params);
+    const res = await apiClient.post<{ success: boolean; data: ChickenRunConfig }>(`${API_BASE}/admin/config`, params);
     return res.data.data;
   },
 };

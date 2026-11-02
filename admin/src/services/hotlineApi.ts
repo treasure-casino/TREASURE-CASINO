@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiClient } from '../api/client';
 import {
   HotlineConfig,
   HotlineRoundState,
@@ -9,7 +9,7 @@ import {
 } from '../types/hotline';
 import { getDemoToken } from '../utils/demoWallet';
 
-const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
+const API_BASE = '/api';
 
 export const hotlineApi = {
   // 5-Reel Slot Spin with PRD options (Risk Level, Bonus Bet, Free Spins)
@@ -30,7 +30,7 @@ export const hotlineApi = {
         ? { betAmount: optionsOrBet, demoToken: token }
         : { ...optionsOrBet, demoToken: token };
 
-    const res = await axios.post(`${API_BASE}/hotline/spin`, payload);
+    const res = await apiClient.post(`${API_BASE}/hotline/spin`, payload);
     return res.data.data;
   },
 
@@ -43,7 +43,7 @@ export const hotlineApi = {
     forcedMultiplier?: number
   ): Promise<HotlineRoundState> => {
     const token = getDemoToken();
-    const res = await axios.post(`${API_BASE}/hotline/start`, {
+    const res = await apiClient.post(`${API_BASE}/hotline/start`, {
       betAmount,
       selectedNumber,
       autoCashoutMultiplier,
@@ -68,7 +68,7 @@ export const hotlineApi = {
     balance: number;
   }> => {
     const token = getDemoToken();
-    const res = await axios.post(`${API_BASE}/hotline/cashout`, {
+    const res = await apiClient.post(`${API_BASE}/hotline/cashout`, {
       roundId,
       multiplier,
       demoToken: token,
@@ -79,7 +79,7 @@ export const hotlineApi = {
   // Settle Loss (when stopping point reached without cashout)
   settleLoss: async (roundId: string): Promise<any> => {
     const token = getDemoToken();
-    const res = await axios.post(`${API_BASE}/hotline/settle-loss`, {
+    const res = await apiClient.post(`${API_BASE}/hotline/settle-loss`, {
       roundId,
       demoToken: token,
     });
@@ -88,14 +88,14 @@ export const hotlineApi = {
 
   // Get config
   getConfig: async (): Promise<HotlineConfig> => {
-    const res = await axios.get(`${API_BASE}/hotline/config`);
+    const res = await apiClient.get(`${API_BASE}/hotline/config`);
     return res.data.data;
   },
 
   // Get history
   getHistory: async (limit = 15): Promise<HotlineHistoryItem[]> => {
     const token = getDemoToken();
-    const res = await axios.get(`${API_BASE}/hotline/history`, {
+    const res = await apiClient.get(`${API_BASE}/hotline/history`, {
       params: { demoToken: token, limit },
     });
     return res.data.data;
@@ -103,13 +103,13 @@ export const hotlineApi = {
 
   // Admin: Get telemetry
   getAdminStats: async (): Promise<HotlineAdminStats> => {
-    const res = await axios.get(`${API_BASE}/hotline/admin/stats`);
+    const res = await apiClient.get(`${API_BASE}/hotline/admin/stats`);
     return res.data.data;
   },
 
   // Admin: Update config
   updateConfig: async (updates: Partial<HotlineConfig>): Promise<HotlineConfig> => {
-    const res = await axios.post(`${API_BASE}/hotline/admin/config`, updates);
+    const res = await apiClient.post(`${API_BASE}/hotline/admin/config`, updates);
     return res.data.data;
   },
 };
