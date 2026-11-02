@@ -6,6 +6,7 @@ import { config } from './config';
 import { swaggerSpec } from './config/swagger';
 import { generalLimiter } from './middleware/rateLimiter';
 import { errorHandler } from './middleware/errorHandler';
+import { preflightCorsMiddleware, corsMiddleware, corsOptions } from './middleware/cors';
 import { logger } from './utils/logger';
 import { prisma } from './prisma';
 
@@ -47,43 +48,10 @@ app.use(
   })
 );
 
-const cleanOrigin = (url: string) => url.trim().replace(/\/+$/, '');
-
-const configuredOrigins = (config.cors.origin || []).map(cleanOrigin).filter(Boolean);
-
-const allowedOrigins = Array.from(
-  new Set([
-    ...configuredOrigins,
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:5174',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-  ])
-);
-
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, curl, Swagger UI, server-to-server)
-      if (!origin) return callback(null, true);
-      const normalizedOrigin = cleanOrigin(origin);
-      if (
-        allowedOrigins.includes(normalizedOrigin) ||
-        normalizedOrigin.startsWith('http://localhost:') ||
-        normalizedOrigin.startsWith('http://127.0.0.1:')
-      ) {
-        return callback(null, true);
-      }
-      logger.warn(`CORS blocked for origin: ${origin}`);
-      return callback(new Error(`CORS blocked for origin: ${origin}`));
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'x-demo-token'],
-  })
-);
+// CORS Preflight & Security Headers (Must execute before rate limiters, body parsers, and routes)
+app.use(preflightCorsMiddleware);
+app.use(corsMiddleware);
+app.options('*', cors(corsOptions));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));

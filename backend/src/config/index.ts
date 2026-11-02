@@ -22,7 +22,7 @@ export const config = {
   },
 
   cors: {
-    origin: (process.env.CORS_ORIGIN || 'http://localhost:3000,http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174').split(','),
+    origin: (process.env.CORS_ORIGIN || 'https://treasure-casino-admin.onrender.com,https://treasure-casino-frontend.onrender.com,https://treasure-casino.onrender.com,http://localhost:3000,http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174').split(','),
   },
 
   rateLimit: {
