@@ -13,6 +13,8 @@ import {
   Crown,
   Sparkles,
   Layers,
+  Trophy,
+  Zap,
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -38,6 +40,10 @@ export const Sidebar: React.FC = () => {
         { label: 'Game Catalogue', path: '/games', icon: Gamepad2 },
         { label: 'Vortex Monitor', path: '/games/vortex', icon: Sparkles },
         { label: 'Spiral Monitor', path: '/games/spiral', icon: Layers },
+        { label: 'Keno Monitor', path: '/games/keno', icon: Trophy },
+        { label: 'Hilo Monitor', path: '/games/hilo', icon: Trophy },
+        { label: 'Hotline Monitor', path: '/games/hotline', icon: Zap },
+        { label: 'Chicken Run Monitor', path: '/games/chicken-run', icon: Trophy },
         { label: 'Promotions & Rewards', path: '/promotions', icon: Gift },
         { label: 'Support Tickets', path: '/support', icon: HelpCircle },
       ],

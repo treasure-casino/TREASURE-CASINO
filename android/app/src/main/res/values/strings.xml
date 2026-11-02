@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TREASURE</string>
+    <string name="tagline">Premium Casino Gaming Experience</string>
+    <string name="currency_symbol">₹</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_invite">Invite</string>
+    <string name="nav_deposit">Deposit</string>
+    <string name="nav_rewards">Rewards</string>
+    <string name="nav_member">Member</string>
+</resources>
+

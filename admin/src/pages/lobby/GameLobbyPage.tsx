@@ -24,6 +24,8 @@ import {
   Zap,
   Target,
   Dices,
+  Club,
+  CircleDot,
 } from 'lucide-react';
 
 const CATEGORIES: { id: string; label: string; icon: string }[] = [
@@ -254,7 +256,35 @@ export const GameLobbyPage: React.FC = () => {
 
                   {/* 3D Visual Icon based on Category */}
                   <div className="relative z-10 w-24 h-24 rounded-2xl bg-gradient-to-tr from-amber-600/40 via-yellow-500/20 to-transparent p-0.5 border border-gold/30 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    {game.name.toLowerCase().includes('dice') ? (
+                    {game.name.toLowerCase().includes('hotline') || game.id.includes('hotline') ? (
+                      <img
+                        src="/assets/games/hotline/treasure-hotline-logo.jpg"
+                        alt="TREASURE HOTLINE"
+                        className="w-full h-full object-cover rounded-2xl shadow-lg border border-yellow-400/40"
+                      />
+                    ) : game.name.toLowerCase().includes('chicken') || game.id.includes('chicken') ? (
+                      <div className="flex flex-col items-center">
+                        <span className="text-3xl">🐔</span>
+                        <span className="text-[9px] text-emerald-400 font-bold font-mono">24 TILES</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('hilo') || game.id.includes('hilo') ? (
+                      <div className="flex flex-col items-center">
+                        <span className="text-xl font-black text-amber-300 font-cinzel">HI-LO</span>
+                        <span className="text-[10px] text-purple-300 font-bold">▲ / ▼ / =</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('keno') || game.id.includes('keno') ? (
+                      <div className="text-[11px] text-purple-300 font-extrabold flex items-center gap-1">
+                        <Target className="w-3 h-3 text-purple-400" />
+                        <span>1–10 SPOTS • 3,500x JACKPOT</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('plinko') || game.id.includes('plinko') ? (
+                      <div className="text-[11px] text-amber-300 font-extrabold flex items-center gap-1">
+                        <CircleDot className="w-3 h-3 text-amber-400" />
+                        <span>8-16 ROWS • 1,000x JACKPOT</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('blackjack') || game.id.includes('blackjack') ? (
+                      <Club className="w-12 h-12 text-emerald-400 animate-pulse" />
+                    ) : game.name.toLowerCase().includes('dice') ? (
                       <Dices className="w-12 h-12 text-amber-400 animate-pulse" />
                     ) : game.name.toLowerCase().includes('limbo') ? (
                       <Zap className="w-12 h-12 text-purple-400 animate-pulse" />
@@ -304,7 +334,37 @@ export const GameLobbyPage: React.FC = () => {
                   </div>
 
                   <div className="pt-2 border-t border-dark-800/80 flex items-center justify-between">
-                    {game.name.toLowerCase().includes('dice') || game.id.includes('dice') ? (
+                    {game.name.toLowerCase().includes('hotline') || game.id.includes('hotline') ? (
+                      <div className="text-[11px] text-fuchsia-400 font-extrabold flex items-center gap-1">
+                        <Flame className="w-3 h-3 text-cyan-400" />
+                        <span>RETRO 80S SLOT • EXPANDING WILDS</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('chicken') || game.id.includes('chicken') ? (
+                      <div className="text-[11px] text-emerald-400 font-extrabold flex items-center gap-1">
+                        <Flame className="w-3 h-3 text-yellow-400" />
+                        <span>CHICKEN ROAD • 100,000x JACKPOT</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('hilo') || game.id.includes('hilo') ? (
+                      <div className="flex flex-col items-center">
+                        <span className="text-xl font-black text-amber-300 font-cinzel">HI-LO</span>
+                        <span className="text-[10px] text-purple-300 font-bold">▲ / ▼ / =</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('keno') || game.id.includes('keno') ? (
+                      <div className="text-[11px] text-purple-300 font-extrabold flex items-center gap-1">
+                        <Target className="w-3 h-3 text-purple-400" />
+                        <span>1–10 SPOTS • 3,500x JACKPOT</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('plinko') || game.id.includes('plinko') ? (
+                      <div className="text-[11px] text-amber-300 font-extrabold flex items-center gap-1">
+                        <CircleDot className="w-3 h-3 text-amber-400" />
+                        <span>8-16 ROWS • 1,000x JACKPOT</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('blackjack') || game.id.includes('blackjack') ? (
+                      <div className="text-[11px] text-emerald-300 font-extrabold flex items-center gap-1">
+                        <Club className="w-3 h-3 text-emerald-400" />
+                        <span>CLASSIC 21 • 3:2 BLACKJACK</span>
+                      </div>
+                    ) : game.name.toLowerCase().includes('dice') || game.id.includes('dice') ? (
                       <div className="text-[11px] text-amber-300 font-extrabold flex items-center gap-1">
                         <Dices className="w-3 h-3 text-amber-400" />
                         <span>ROLL UNDER / OVER • 960x</span>

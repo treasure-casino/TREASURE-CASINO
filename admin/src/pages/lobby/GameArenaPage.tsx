@@ -11,6 +11,12 @@ import { TreasureVortex3D } from '../../components/games/vortex/TreasureVortex3D
 import { TreasureSpiral2D } from '../../components/games/spiral/TreasureSpiral2D';
 import { TreasureLimbo2D } from '../../components/games/limbo/TreasureLimbo2D';
 import { TreasureDice2D } from '../../components/games/dice/TreasureDice2D';
+import { TreasureBlackjack2D } from '../../components/games/blackjack/TreasureBlackjack2D';
+import { TreasurePlinko2D } from '../../components/games/plinko/TreasurePlinko2D';
+import { TreasureKeno2D } from '../../components/games/keno/TreasureKeno2D';
+import { TreasureHilo2D } from '../../components/games/hilo/TreasureHilo2D';
+import { TreasureHotline2D } from '../../components/games/hotline/TreasureHotline2D';
+import { TreasureChickenRun2D } from '../../components/games/chickenRun/TreasureChickenRun2D';
 import {
   ArrowLeft,
   Volume2,
@@ -45,6 +51,25 @@ export const PLAYABLE_GAMES_MAP: Record<string, string> = {
   'game-dice-01': 'Treasure Dice',
   'treasure-dice': 'Treasure Dice',
   'dice': 'Treasure Dice',
+  'game-blackjack-01': 'Treasure Blackjack',
+  'treasure-blackjack': 'Treasure Blackjack',
+  'blackjack': 'Treasure Blackjack',
+  'game-plinko-01': 'Treasure Plinko',
+  'treasure-plinko': 'Treasure Plinko',
+  'plinko': 'Treasure Plinko',
+  'game-keno-01': 'Treasure Keno',
+  'treasure-keno': 'Treasure Keno',
+  'keno': 'Treasure Keno',
+  'game-hilo-01': 'Treasure Hilo',
+  'treasure-hilo': 'Treasure Hilo',
+  'hilo': 'Treasure Hilo',
+  'game-hotline-01': 'Treasure Hotline',
+  'treasure-hotline': 'Treasure Hotline',
+  'hotline': 'Treasure Hotline',
+  'game-chicken-run-01': 'Treasure Chicken Run',
+  'treasure-chicken-run': 'Treasure Chicken Run',
+  'chicken-run': 'Treasure Chicken Run',
+  'chicken': 'Treasure Chicken Run',
 };
 
 export const GameArenaPage: React.FC = () => {
@@ -173,6 +198,38 @@ export const GameArenaPage: React.FC = () => {
         isDemo: true,
         sortOrder: 5,
       });
+    } else if (lower.includes('plinko')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Plinko',
+        category: 'CRASH',
+        description: 'Provably fair 2D casino Plinko board with customizable rows (8, 12, 16), 3 risk tiers, realistic 2D ball pin physics, and payouts up to 1,000x.',
+        thumbnailUrl: '/assets/games/treasure-plinko-2d.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 98.5,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 6,
+      });
+    } else if (lower.includes('keno')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Keno',
+        category: 'ROULETTE_DICE',
+        description: 'Classic 2D casino Keno with 1–80 grid, player-selectable 1–10 spots, 20 unique ball draws, Quick Pick, and jackpot payouts up to 3,500x.',
+        thumbnailUrl: '/assets/games/treasure-keno-2d.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 95.8,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 7,
+      });
     }
   };
 
@@ -207,6 +264,30 @@ export const GameArenaPage: React.FC = () => {
 
     if (name.includes('dice')) {
       return <TreasureDice2D />;
+    }
+
+    if (name.includes('blackjack')) {
+      return <TreasureBlackjack2D />;
+    }
+
+    if (name.includes('plinko')) {
+      return <TreasurePlinko2D />;
+    }
+
+    if (name.includes('keno')) {
+      return <TreasureKeno2D />;
+    }
+
+    if (name.includes('hilo')) {
+      return <TreasureHilo2D />;
+    }
+
+    if (name.includes('hotline')) {
+      return <TreasureHotline2D />;
+    }
+
+    if (name.includes('chicken')) {
+      return <TreasureChickenRun2D />;
     }
 
     if (name.includes('vortex')) {

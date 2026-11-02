@@ -48,3 +48,59 @@
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
 }
 
+/* Blackjack 2D Card Animations & 3D Flip */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes dealCardFromShoe {
+  0% {
+    opacity: 0;
+    transform: translate3d(140px, -150px, 0) rotate(16deg) scale(0.65);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(-6px, 4px, 0) rotate(-2deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+.animate-deal-card {
+  animation: dealCardFromShoe 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes goldPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(234, 179, 8, 0.4), inset 0 0 40px rgba(234, 179, 8, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(234, 179, 8, 0.7), inset 0 0 70px rgba(234, 179, 8, 0.35);
+  }
+}
+
+.win-table-glow {
+  animation: goldPulseGlow 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-deal-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .card-flip-inner {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+

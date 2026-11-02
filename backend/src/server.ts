@@ -23,8 +23,20 @@ import vortexRoutes from './routes/vortex.routes';
 import spiralRoutes from './routes/spiral.routes';
 import limboRoutes from './routes/limbo.routes';
 import diceRoutes from './routes/dice.routes';
+import blackjackRoutes from './routes/blackjack.routes';
+import plinkoRoutes from './routes/plinko.routes';
+import kenoRoutes from './routes/keno.routes';
+import hiloRoutes from './routes/hilo.routes';
+import hotlineRoutes from './routes/hotline.routes';
+import chickenRunRoutes from './routes/chickenRun.routes';
 import { ensureLimboGameRegistered } from './controllers/limbo.controller';
 import { ensureDiceGameRegistered } from './controllers/dice.controller';
+import { ensureBlackjackGameRegistered } from './controllers/blackjack.controller';
+import { ensurePlinkoGameRegistered } from './controllers/plinko.controller';
+import { ensureKenoGameRegistered } from './controllers/keno.controller';
+import { ensureHiloGameRegistered } from './controllers/hilo.controller';
+import { ensureHotlineGameRegistered } from './controllers/hotline.controller';
+import { ensureChickenRunGameRegistered } from './controllers/chickenRun.controller';
 
 const app = express();
 
@@ -151,6 +163,12 @@ app.use('/api/vortex', vortexRoutes);
 app.use('/api/spiral', spiralRoutes);
 app.use('/api/limbo', limboRoutes);
 app.use('/api/dice', diceRoutes);
+app.use('/api/blackjack', blackjackRoutes);
+app.use('/api/plinko', plinkoRoutes);
+app.use('/api/keno', kenoRoutes);
+app.use('/api/hilo', hiloRoutes);
+app.use('/api/hotline', hotlineRoutes);
+app.use('/api/chicken-run', chickenRunRoutes);
 
 // Global Error Handler
 app.use(errorHandler);
@@ -166,6 +184,12 @@ const startServer = async () => {
     // Ensure built-in games registered
     await ensureLimboGameRegistered();
     await ensureDiceGameRegistered();
+    await ensureBlackjackGameRegistered();
+    await ensurePlinkoGameRegistered();
+    await ensureKenoGameRegistered();
+    await ensureHiloGameRegistered();
+    await ensureHotlineGameRegistered();
+    await ensureChickenRunGameRegistered();
 
     const server = app.listen(PORT, '0.0.0.0', () => {
       logger.info(`🚀 TREASURE Casino Backend running on port ${PORT} (0.0.0.0:${PORT})`);

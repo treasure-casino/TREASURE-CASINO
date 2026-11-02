@@ -18,6 +18,10 @@ import { GameArenaPage } from './pages/lobby/GameArenaPage';
 import { VortexAdminPage } from './pages/games/VortexAdminPage';
 import { VortexPage } from './pages/games/VortexPage';
 import { SpiralAdminPage } from './pages/games/SpiralAdminPage';
+import { KenoAdminPage } from './pages/games/KenoAdminPage';
+import { HiloAdminPage } from './pages/games/HiloAdminPage';
+import { HotlineAdminPage } from './pages/games/HotlineAdminPage';
+import { ChickenRunAdminPage } from './pages/games/ChickenRunAdminPage';
 
 export const App: React.FC = () => {
   return (
@@ -27,10 +31,13 @@ export const App: React.FC = () => {
           {/* Public Player Game Lobby & Arena Routes */}
           <Route path="/lobby" element={<GameLobbyPage />} />
           <Route path="/lobby/arena/:id" element={<GameArenaPage />} />
+          <Route path="/arena/:id" element={<GameArenaPage />} />
           <Route path="/play/:id" element={<GameArenaPage />} />
           <Route path="/game/:id" element={<GameArenaPage />} />
           <Route path="/play" element={<Navigate to="/lobby" replace />} />
           <Route path="/game" element={<Navigate to="/lobby" replace />} />
+          <Route path="/games/hotline/play" element={<Navigate to="/play/game-hotline-01" replace />} />
+          <Route path="/games/chicken-run/play" element={<Navigate to="/play/game-chicken-run-01" replace />} />
 
           {/* Public Admin Login Route */}
           <Route path="/login" element={<LoginPage />} />
@@ -46,6 +53,10 @@ export const App: React.FC = () => {
             <Route path="games/vortex" element={<VortexAdminPage />} />
             <Route path="games/vortex/play" element={<VortexPage />} />
             <Route path="games/spiral" element={<SpiralAdminPage />} />
+            <Route path="games/keno" element={<KenoAdminPage />} />
+            <Route path="games/hilo" element={<HiloAdminPage />} />
+            <Route path="games/hotline" element={<HotlineAdminPage />} />
+            <Route path="games/chicken-run" element={<ChickenRunAdminPage />} />
             <Route path="promotions" element={<PromotionsPage />} />
             <Route path="support" element={<SupportPage />} />
             <Route path="audit-logs" element={<AuditLogsPage />} />

@@ -1,0 +1,11 @@
+<resources>
+    <color name="bg_primary">#0A0A0A</color>
+    <color name="bg_secondary">#111111</color>
+    <color name="bg_surface">#1A1A1A</color>
+    <color name="gold_primary">#D4AF37</color>
+    <color name="gold_light">#F5D060</color>
+    <color name="gold_dark">#C9A227</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#999999</color>
+</resources>
+
