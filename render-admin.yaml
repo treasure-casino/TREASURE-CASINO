@@ -9,7 +9,6 @@ services:
   - type: web
     name: treasure-casino-admin
     runtime: static
-    plan: free
     rootDir: admin
     buildCommand: npm install && npm run build
     staticPublishPath: dist
