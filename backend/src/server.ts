@@ -38,7 +38,7 @@ import { ensureKenoGameRegistered } from './controllers/keno.controller';
 import { ensureHiloGameRegistered } from './controllers/hilo.controller';
 import { ensureHotlineGameRegistered } from './controllers/hotline.controller';
 import { ensureChickenRunGameRegistered } from './controllers/chickenRun.controller';
-import { ensureDatabaseSchema, bootstrapSystem } from './utils/bootstrap';
+import { ensureDatabaseSchema, bootstrapSystem, ensureAllOriginalGamesRegistered } from './utils/bootstrap';
 
 const app = express();
 
@@ -153,6 +153,7 @@ const startServer = async () => {
     // Ensure database tables exist and baseline admin & provider entities are initialized
     await ensureDatabaseSchema();
     await bootstrapSystem();
+    await ensureAllOriginalGamesRegistered();
 
     // Ensure built-in games registered
     await ensureLimboGameRegistered();

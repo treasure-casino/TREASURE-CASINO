@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { prisma } from '../prisma';
 import { ApiError } from '../utils/ApiError';
 import { AuthRequest } from '../middleware/auth';
+import { ensureAllOriginalGamesRegistered } from '../utils/bootstrap';
 
 const STRICTLY_FORBIDDEN_GAMES = [
   'mega wheel of fortune',
@@ -16,6 +17,11 @@ const STRICTLY_FORBIDDEN_GAMES = [
  */
 export const getGames = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
+    const totalExisting = await prisma.game.count();
+    if (totalExisting < 13) {
+      await ensureAllOriginalGamesRegistered();
+    }
+
     const category = req.query.category as string;
     const search = req.query.search as string;
     const featured = req.query.featured as string;

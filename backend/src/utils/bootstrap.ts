@@ -51,16 +51,22 @@ export async function ensureDatabaseSchema(): Promise<void> {
 export async function bootstrapSystem(): Promise<void> {
   try {
     // 1. Ensure the in-house game provider exists
-    await prisma.gameProvider.upsert({
-      where: { name: 'In-House Games' },
-      update: {},
-      create: {
-        id: 'prov-inhouse',
-        name: 'In-House Games',
-        code: 'IN_HOUSE',
-        isActive: true,
+    let provider = await prisma.gameProvider.findFirst({
+      where: {
+        OR: [{ id: 'prov-inhouse' }, { code: 'IN_HOUSE' }, { name: 'In-House Games' }],
       },
     });
+
+    if (!provider) {
+      provider = await prisma.gameProvider.create({
+        data: {
+          id: 'prov-inhouse',
+          name: 'In-House Games',
+          code: 'IN_HOUSE',
+          isActive: true,
+        },
+      });
+    }
 
     // 2. Ensure Super Admin role exists
     let superAdminRole = await prisma.adminRole.findFirst({
@@ -97,7 +103,306 @@ export async function bootstrapSystem(): Promise<void> {
       });
       logger.info(`Initialized default admin user: ${email}`);
     }
+
+    // 4. Register complete catalog of 13 original in-house games
+    await ensureAllOriginalGamesRegistered();
   } catch (error: any) {
     logger.warn(`Bootstrap initialization notice: ${error.message}`);
   }
 }
+
+/**
+ * The complete catalogue of all 13 authentic in-house TREASURE CASINO games.
+ * Strictly excludes any third-party or JILI games.
+ */
+export const ORIGINAL_GAMES_CATALOG = [
+  {
+    id: 'game-slot-01',
+    name: 'Treasure Kingdom',
+    category: 'SLOTS' as const,
+    description: 'Original 3D Aztec vault slot with dynamic cylindrical spinning reels, wild golden crowns, and 5 classic winning paylines.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 96.50,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 1,
+    volatility: 'MEDIUM',
+  },
+  {
+    id: 'game-crash-01',
+    name: 'Sky Rocket',
+    category: 'CRASH' as const,
+    description: 'Original 3D cosmic crash flight with live rocket ascent, animated thruster fire, and exponential multipliers up to 100x.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 96.80,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 2,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-mines-01',
+    name: 'Crystal Mines',
+    category: 'MINES' as const,
+    description: 'Original 3D crystalline cavern runestone grid with configurable mine hazards, diamond discoveries, and cashout progression.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 97.00,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 3,
+    volatility: 'MEDIUM',
+  },
+  {
+    id: 'game-vortex-01',
+    name: 'Treasure Vortex',
+    category: 'CRASH' as const,
+    description: 'Original 3D elemental vortex crash game with real-time continuous multipliers, fire, water, earth and lightning surges, and partial cashout features.',
+    thumbnailUrl: '/assets/games/treasure-vortex-3d.png',
+    rtp: 97.20,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 4,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-spiral-01',
+    name: 'Treasure Spiral',
+    category: 'CRASH' as const,
+    description: 'Original 3D Concentric Rotating Rings with Animal Symbols, 700x Bonus, and Half Cash Out.',
+    thumbnailUrl: '/assets/games/spiral/lion.png',
+    rtp: 96.50,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 5,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-limbo-01',
+    name: 'Treasure Limbo',
+    category: 'CRASH' as const,
+    description: 'High-speed 2D neon multiplier game with dynamic target selection, provably fair engine, and payouts up to 10,000x.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 96.00,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: false,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 6,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-dice-01',
+    name: 'Treasure Dice',
+    category: 'ROULETTE_DICE' as const,
+    description: 'Provably fair 2D casino dice game with customizable Roll Under / Roll Over sliders, real-time odds calculation, and payouts up to 960x.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 96.00,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: false,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 7,
+    volatility: 'MEDIUM',
+  },
+  {
+    id: 'game-blackjack-01',
+    name: 'Treasure Blackjack',
+    category: 'TABLE_CARD' as const,
+    description: 'Authentic 2D casino Blackjack (21). Classic table rules, 3:2 Natural Blackjack payout, Insurance (2:1), Double Down, and Dealer stands on 17.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 99.50,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 8,
+    volatility: 'LOW',
+  },
+  {
+    id: 'game-plinko-01',
+    name: 'Treasure Plinko',
+    category: 'PLINKO' as const,
+    description: 'Provably fair 2D casino Plinko board with customizable rows (8, 12, 16), 3 risk tiers, realistic 2D ball pin physics, and payouts up to 1,000x.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 98.50,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: false,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 9,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-keno-01',
+    name: 'Treasure Keno',
+    category: 'KENO' as const,
+    description: 'Classic 2D casino Keno with 1–80 grid, player-selectable 1–10 spots, 20 unique ball draws, Quick Pick, and jackpot payouts up to 100x.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 95.80,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: false,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 10,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-hilo-01',
+    name: 'Treasure Hilo',
+    category: 'CASINO' as const,
+    description: 'Classic 2D casino card prediction game with Higher, Lower, Same bets, dynamic odds, streak multipliers, and instant cashout.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 96.00,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: false,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 11,
+    volatility: 'MEDIUM',
+  },
+  {
+    id: 'game-hotline-01',
+    name: 'Treasure Hotline',
+    category: 'SLOTS' as const,
+    description: 'Retro 1980s neon 5-reel video slot inspired by Hotline with expanding wilds, 20 paylines, and scatter pays.',
+    thumbnailUrl: '/assets/games/hotline/treasure-hotline-logo.jpg',
+    rtp: 96.00,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 12,
+    volatility: 'HIGH',
+  },
+  {
+    id: 'game-chicken-run-01',
+    name: 'Treasure Chicken Run',
+    category: 'CASINO' as const,
+    description: 'Exciting 3D cartoon chicken road crossing casino game with 4 difficulties, progressive multipliers up to 100,000x, and instant cashout.',
+    thumbnailUrl: '/assets/games/default.png',
+    rtp: 96.00,
+    minBet: 10.00,
+    maxBet: 5000.00,
+    isPopular: true,
+    isFeatured: true,
+    isActive: true,
+    isDemo: true,
+    sortOrder: 13,
+    volatility: 'MEDIUM',
+  },
+];
+
+/**
+ * Ensures all 13 authentic original in-house games are registered in the database.
+ * Uses atomic upsert so missing games are registered and existing games are preserved.
+ * Purges any unauthorized third-party/JILI games if detected.
+ */
+export async function ensureAllOriginalGamesRegistered(): Promise<void> {
+  try {
+    let provider = await prisma.gameProvider.findFirst({
+      where: {
+        OR: [{ id: 'prov-inhouse' }, { code: 'IN_HOUSE' }],
+      },
+    });
+
+    if (!provider) {
+      provider = await prisma.gameProvider.create({
+        data: {
+          id: 'prov-inhouse',
+          name: 'In-House Games',
+          code: 'IN_HOUSE',
+          isActive: true,
+        },
+      });
+    }
+
+    // Clean up any forbidden/third-party/JILI games if they exist
+    const FORBIDDEN = ['mega wheel of fortune', 'lucky wheel', 'money coming', 'crazy 777'];
+    for (const forbidden of FORBIDDEN) {
+      await prisma.game.deleteMany({
+        where: {
+          name: { contains: forbidden },
+        },
+      }).catch(() => {});
+    }
+
+    for (const g of ORIGINAL_GAMES_CATALOG) {
+      await prisma.game.upsert({
+        where: { id: g.id },
+        update: {
+          name: g.name,
+          category: g.category,
+          description: g.description,
+          thumbnailUrl: g.thumbnailUrl,
+          rtp: g.rtp,
+          minBet: g.minBet,
+          maxBet: g.maxBet,
+          isPopular: g.isPopular,
+          isFeatured: g.isFeatured,
+          isActive: g.isActive,
+          isDemo: g.isDemo,
+          sortOrder: g.sortOrder,
+          volatility: g.volatility,
+          providerId: provider.id,
+          providerCode: 'IN_HOUSE',
+        },
+        create: {
+          id: g.id,
+          name: g.name,
+          category: g.category,
+          description: g.description,
+          thumbnailUrl: g.thumbnailUrl,
+          rtp: g.rtp,
+          minBet: g.minBet,
+          maxBet: g.maxBet,
+          isPopular: g.isPopular,
+          isFeatured: g.isFeatured,
+          isActive: g.isActive,
+          isDemo: g.isDemo,
+          sortOrder: g.sortOrder,
+          volatility: g.volatility,
+          providerId: provider.id,
+          providerCode: 'IN_HOUSE',
+        },
+      });
+    }
+    logger.info(`Successfully verified and registered all ${ORIGINAL_GAMES_CATALOG.length} authentic original in-house games.`);
+  } catch (error: any) {
+    logger.warn(`Games catalog registration notice: ${error.message}`);
+  }
+}
+

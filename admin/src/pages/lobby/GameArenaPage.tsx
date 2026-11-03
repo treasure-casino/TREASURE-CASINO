@@ -230,6 +230,102 @@ export const GameArenaPage: React.FC = () => {
         isDemo: true,
         sortOrder: 7,
       });
+    } else if (lower.includes('limbo')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Limbo',
+        category: 'CRASH',
+        description: 'High-speed 2D neon multiplier game with dynamic target selection, provably fair engine, and payouts up to 10,000x.',
+        thumbnailUrl: '/assets/games/default.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 96.0,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 6,
+      });
+    } else if (lower.includes('dice')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Dice',
+        category: 'ROULETTE_DICE',
+        description: 'Provably fair 2D casino dice game with customizable Roll Under / Roll Over sliders, real-time odds calculation, and payouts up to 960x.',
+        thumbnailUrl: '/assets/games/default.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 96.0,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 7,
+      });
+    } else if (lower.includes('blackjack')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Blackjack',
+        category: 'TABLE_CARD',
+        description: 'Authentic 2D casino Blackjack (21). Classic table rules, 3:2 Natural Blackjack payout, Insurance (2:1), Double Down, and Dealer stands on 17.',
+        thumbnailUrl: '/assets/games/default.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 99.5,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 8,
+      });
+    } else if (lower.includes('hilo')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Hilo',
+        category: 'CASINO',
+        description: 'Classic 2D casino card prediction game with Higher, Lower, Same bets, dynamic odds, streak multipliers, and instant cashout.',
+        thumbnailUrl: '/assets/games/default.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 96.0,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 11,
+      });
+    } else if (lower.includes('hotline')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Hotline',
+        category: 'SLOTS',
+        description: 'Retro 1980s neon 5-reel video slot inspired by Hotline with expanding wilds, 20 paylines, and scatter pays.',
+        thumbnailUrl: '/assets/games/hotline/treasure-hotline-logo.jpg',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 96.0,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 12,
+      });
+    } else if (lower.includes('chicken')) {
+      setGame({
+        id: gameId,
+        name: 'Treasure Chicken Run',
+        category: 'CASINO',
+        description: 'Exciting 3D cartoon chicken road crossing casino game with 4 difficulties, progressive multipliers up to 100,000x, and instant cashout.',
+        thumbnailUrl: '/assets/games/default.png',
+        minBet: 10,
+        maxBet: 5000,
+        rtp: 96.0,
+        isActive: true,
+        isPopular: true,
+        providerId: 'prov-inhouse',
+        isDemo: true,
+        sortOrder: 13,
+      });
     }
   };
 
@@ -294,15 +390,15 @@ export const GameArenaPage: React.FC = () => {
       return <TreasureVortex3D />;
     }
 
-    if (name.includes('kingdom') || (name.includes('treasure') && !name.includes('vortex')) || (cat === 'SLOTS' && name.includes('slot-01'))) {
+    if (name.includes('kingdom') || name.includes('slot-01') || name === 'treasure kingdom' || (cat === 'SLOTS' && !name.includes('hotline'))) {
       return <TreasureKingdom3D />;
     }
 
-    if (name.includes('rocket') || name.includes('sky') || cat === 'CRASH') {
+    if (name.includes('rocket') || name.includes('sky') || name.includes('crash-01') || name.includes('aviator')) {
       return <SkyRocket3D />;
     }
 
-    if (name.includes('crystal') || name.includes('mines') || cat === 'MINES') {
+    if (name.includes('crystal') || name.includes('mines') || name.includes('mines-01')) {
       return <CrystalMines3D />;
     }
 

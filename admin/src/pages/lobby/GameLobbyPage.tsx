@@ -33,11 +33,11 @@ const CATEGORIES: { id: string; label: string; icon: string }[] = [
   { id: 'POPULAR', label: 'Popular', icon: '🔥' },
   { id: 'SLOTS', label: 'Slots', icon: '🎰' },
   { id: 'CRASH', label: 'Crash', icon: '🚀' },
+  { id: 'CASINO', label: 'Casino Originals', icon: '🎪' },
   { id: 'MINES', label: 'Puzzle & Mines', icon: '💎' },
-  { id: 'FISHING', label: 'Fishing', icon: '🎣' },
   { id: 'PLINKO', label: 'Plinko', icon: '🟡' },
   { id: 'TABLE_CARD', label: 'Table & Cards', icon: '♠️' },
-  { id: 'BINGO', label: 'Bingo & Keno', icon: '🎱' },
+  { id: 'KENO', label: 'Bingo & Keno', icon: '🎱' },
   { id: 'ROULETTE_DICE', label: 'Dice & Arcade', icon: '🎲' },
 ];
 
@@ -97,7 +97,9 @@ export const GameLobbyPage: React.FC = () => {
     const matchesCategory =
       selectedCategory === 'ALL' ||
       (selectedCategory === 'POPULAR' && g.isPopular) ||
-      g.category === selectedCategory;
+      g.category === selectedCategory ||
+      (selectedCategory === 'KENO' && (g.category === 'KENO' || g.category === 'BINGO')) ||
+      (selectedCategory === 'BINGO' && (g.category === 'KENO' || g.category === 'BINGO'));
 
     const matchesSearch =
       searchQuery.trim() === '' ||

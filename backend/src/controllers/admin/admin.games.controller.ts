@@ -2,10 +2,28 @@ import { Response, NextFunction } from 'express';
 import { prisma } from '../../prisma';
 import { ApiError } from '../../utils/ApiError';
 import { AdminRequest } from '../../middleware/adminAuth';
+import { ensureAllOriginalGamesRegistered } from '../../utils/bootstrap';
+
+const FORBIDDEN_GAMES = [
+  'mega wheel of fortune',
+  'lucky wheel',
+  'money coming',
+  'crazy 777',
+];
 
 export const getAdminGames = async (_req: AdminRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
+    const count = await prisma.game.count();
+    if (count < 13) {
+      await ensureAllOriginalGamesRegistered();
+    }
+
     const games = await prisma.game.findMany({
+      where: {
+        AND: FORBIDDEN_GAMES.map((forbidden) => ({
+          name: { not: { contains: forbidden } },
+        })),
+      },
       include: {
         provider: {
           select: { id: true, name: true },
