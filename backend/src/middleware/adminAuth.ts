@@ -59,7 +59,7 @@ export const requirePermission = (resource: string, action: string) => {
         select: { name: true },
       });
 
-      if (role?.name === 'SuperAdmin') {
+      if (role?.name === 'SuperAdmin' || role?.name === 'Super Admin') {
         return next();
       }
 

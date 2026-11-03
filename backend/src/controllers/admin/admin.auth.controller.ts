@@ -4,6 +4,8 @@ import { comparePassword } from '../../utils/password';
 import { generateAdminToken } from '../../utils/jwt';
 import { ApiError } from '../../utils/ApiError';
 import { AdminRequest } from '../../middleware/adminAuth';
+import { logger } from '../../utils/logger';
+import { bootstrapSystem } from '../../utils/bootstrap';
 
 export const adminLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -12,6 +14,20 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
 
     if (!rawIdentifier || !password) {
       throw ApiError.badRequest('Admin email and password are required');
+    }
+
+    // Diagnostic logging without exposing sensitive secrets
+    logger.info(`Admin login attempt received for identifier: ${rawIdentifier}`);
+
+    // Ensure baseline admin user exists if database was just initialized
+    try {
+      const adminCount = await prisma.adminUser.count();
+      if (adminCount === 0) {
+        await bootstrapSystem();
+      }
+    } catch (countError: any) {
+      logger.warn('Initial admin check notice:', { message: countError.message });
+      await bootstrapSystem();
     }
 
     const admin = await prisma.adminUser.findFirst({
@@ -33,15 +49,18 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
     });
 
     if (!admin) {
+      logger.warn(`Admin login failed: No account found for identifier: ${rawIdentifier}`);
       throw ApiError.unauthorized('Invalid admin credentials');
     }
 
     if (!admin.isActive) {
+      logger.warn(`Admin login failed: Account is deactivated for: ${rawIdentifier}`);
       throw ApiError.forbidden('Admin account has been deactivated');
     }
 
     const isMatch = await comparePassword(password, admin.passwordHash);
     if (!isMatch) {
+      logger.warn(`Admin login failed: Password mismatch for: ${rawIdentifier}`);
       throw ApiError.unauthorized('Invalid admin credentials');
     }
 
@@ -73,12 +92,20 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
           id: admin.id,
           name: admin.name,
           email: admin.email,
-          role: admin.role.name,
-          permissions: admin.role.permissions,
+          role: admin.role?.name || 'Administrator',
+          permissions: admin.role?.permissions || [],
         },
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error instanceof ApiError) {
+      return next(error);
+    }
+    logger.error('Admin login unexpected failure:', {
+      name: error?.name,
+      message: error?.message,
+      code: error?.code,
+    });
     next(error);
   }
 };
@@ -106,12 +133,11 @@ export const getAdminMe = async (req: AdminRequest, res: Response, next: NextFun
         id: admin.id,
         name: admin.name,
         email: admin.email,
-        role: admin.role.name,
-        permissions: admin.role.permissions,
+        role: admin.role?.name || 'Administrator',
+        permissions: admin.role?.permissions || [],
       },
     });
   } catch (error) {
     next(error);
   }
 };
-

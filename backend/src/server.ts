@@ -38,6 +38,7 @@ import { ensureKenoGameRegistered } from './controllers/keno.controller';
 import { ensureHiloGameRegistered } from './controllers/hilo.controller';
 import { ensureHotlineGameRegistered } from './controllers/hotline.controller';
 import { ensureChickenRunGameRegistered } from './controllers/chickenRun.controller';
+import { ensureDatabaseSchema, bootstrapSystem } from './utils/bootstrap';
 
 const app = express();
 
@@ -148,6 +149,10 @@ const startServer = async () => {
     // Test DB connection
     await prisma.$queryRaw`SELECT 1`;
     logger.info(`✅ Successfully connected to MySQL / MariaDB (Database: ${config.database.name})`);
+
+    // Ensure database tables exist and baseline admin & provider entities are initialized
+    await ensureDatabaseSchema();
+    await bootstrapSystem();
 
     // Ensure built-in games registered
     await ensureLimboGameRegistered();

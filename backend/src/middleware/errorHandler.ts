@@ -32,13 +32,20 @@ export const errorHandler = (
   }
 
   logger.error('Unexpected error', {
+    name: err.name,
     message: err.message,
-    stack: err.stack,
+    code: (err as any).code,
   });
+
+  const isDbError =
+    err.message?.includes('Table') ||
+    err.message?.includes('database') ||
+    err.message?.includes('Prisma') ||
+    (err as any).code?.startsWith?.('P');
 
   res.status(500).json({
     success: false,
-    error: 'Internal server error',
-    message: 'Internal server error',
+    error: isDbError ? 'Database service error: tables not initialized or query failed' : 'Internal server error',
+    message: isDbError ? 'Database service error: tables not initialized or query failed' : 'Internal server error',
   });
 };
