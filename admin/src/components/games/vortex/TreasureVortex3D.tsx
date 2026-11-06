@@ -515,7 +515,8 @@ export const TreasureVortex3D: React.FC = () => {
   const potentialPayout = Math.floor(betAmount * currentMultiplier);
 
   return (
-    <div className="relative w-full h-full flex flex-col min-h-0 bg-dark-950 text-white select-none overflow-hidden font-sans">
+    <>
+      <div className="relative w-full h-full flex flex-col min-h-0 bg-dark-950 text-white select-none overflow-hidden font-sans">
       {/* ─── 3D VIEWPORT CANVAS ────────────────────────────────────────────── */}
       <div className="relative flex-1 w-full min-h-0 overflow-hidden">
         <Canvas3DViewport onInit={handleInit} onUpdate={handleUpdate} className="absolute inset-0 w-full h-full">
@@ -958,7 +959,8 @@ export const TreasureVortex3D: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 
