@@ -1031,7 +1031,7 @@ export const TreasureChickenRun2D: React.FC = () => {
       </div>
 
       {/* ─── CENTRAL ROAD & CHICKEN ARENA ───────────────────────────────────── */}
-      <div className="relative p-4 sm:p-6 flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative p-2 sm:p-4 md:p-6 flex flex-col items-center justify-center overflow-hidden">
         {/* Background grass pattern */}
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:20px_20px]" />
 
@@ -1081,7 +1081,7 @@ export const TreasureChickenRun2D: React.FC = () => {
         {/* 24-Step Path Runway Scrollable Track */}
         <div
           ref={runwayContainerRef}
-          className="relative w-full max-w-4xl p-4 sm:p-6 rounded-3xl bg-gradient-to-b from-[#0c2e1c] via-[#092014] to-[#040e08] border-2 border-emerald-600/50 shadow-[inset_0_0_40px_rgba(0,0,0,0.8),0_0_30px_rgba(16,185,129,0.3)] overflow-x-auto scrollbar-thin scrollbar-thumb-emerald-700"
+          className="relative w-full max-w-4xl p-2.5 sm:p-5 rounded-3xl bg-gradient-to-b from-[#0c2e1c] via-[#092014] to-[#040e08] border-2 border-emerald-600/50 shadow-[inset_0_0_40px_rgba(0,0,0,0.8),0_0_30px_rgba(16,185,129,0.3)] overflow-x-auto scrollbar-thin scrollbar-thumb-emerald-700"
         >
           {/* Runway Header Milestone Bar */}
           <div className="flex items-center justify-between mb-3 text-[11px] font-mono text-emerald-300">
@@ -1202,7 +1202,7 @@ export const TreasureChickenRun2D: React.FC = () => {
       </div>
 
       {/* ─── CONTROLS CONSOLE ──────────────────────────────────────────────── */}
-      <div className="p-3 sm:p-6 bg-black/70 border-t border-emerald-900/60 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+      <div className="p-2.5 sm:p-5 bg-black/70 border-t border-emerald-900/60 backdrop-blur-md flex flex-col landscape:flex-row md:flex-row items-center justify-between gap-2.5 sm:gap-4">
         {/* Bet Adjustments */}
         <div className="flex flex-col space-y-1 w-full md:w-auto">
           <div className="flex items-center justify-between">

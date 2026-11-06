@@ -940,7 +940,7 @@ export const SkyRocket3D: React.FC = () => {
       </div>
 
       {/* Auto Bet Toolbar & Master Controls */}
-      <div className="bg-dark-900/90 border-t border-dark-800 px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div className="bg-dark-900/90 border-t border-dark-800 px-2 sm:px-4 py-1.5 sm:py-2 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 text-xs">
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setShowAutoBetModal(!showAutoBetModal)}
@@ -1068,7 +1068,7 @@ export const SkyRocket3D: React.FC = () => {
       )}
 
       {/* ─── DUAL INDEPENDENT BET SLOTS ────────────────────────────────────────── */}
-      <div className="bg-dark-950 border-t border-dark-800 px-3 sm:px-6 py-3 sm:py-3.5 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 z-20 shadow-2xl">
+      <div className="bg-dark-950 border-t border-dark-800 px-2 sm:px-6 py-2 sm:py-3.5 grid grid-cols-1 landscape:grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4 z-20 shadow-2xl">
         {/* ── BET SLOT 1 ── */}
         <div className="slot-panel-1 bg-dark-900 border border-dark-800 hover:border-cyan-500/40 rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between gap-2.5 sm:gap-3 transition">
           {/* Slot Header */}

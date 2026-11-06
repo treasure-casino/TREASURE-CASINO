@@ -6,12 +6,26 @@
   html {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    height: 100%;
+    min-height: 100dvh;
   }
   body {
     background-color: #0a0a0a;
     color: #f3f4f6;
     overflow-x: hidden;
     min-width: 320px;
+    height: 100%;
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+  }
+  #root {
+    height: 100%;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
   }
   /* Prevent browser text auto-zoom on mobile inputs */
   @media (max-width: 640px) {

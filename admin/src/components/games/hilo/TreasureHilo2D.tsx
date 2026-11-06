@@ -214,7 +214,7 @@ const FlippableCard: React.FC<FlippableCardProps> = ({
           {label}
         </span>
       )}
-      <div className={`relative w-24 h-36 sm:w-28 sm:h-40 md:w-32 md:h-48 perspective-1000 select-none ${glowClass} rounded-2xl transition-all duration-300`}>
+      <div className={`relative w-20 h-30 xs:w-24 xs:h-36 sm:w-28 sm:h-40 md:w-32 md:h-48 perspective-1000 select-none ${glowClass} rounded-2xl transition-all duration-300`}>
         <div
           className="w-full h-full relative transform-style-3d transition-transform duration-500 ease-out"
           style={{
@@ -501,9 +501,9 @@ export const TreasureHilo2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Table & HUD ── */}
-      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4">
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-2.5 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Actions HUD */}
-        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl">
+        <div className="order-2 md:order-1 lg:order-1 md:col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-2xl">
           {/* Current Bet Input */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center text-xs font-bold text-gray-400">
@@ -718,7 +718,7 @@ export const TreasureHilo2D: React.FC = () => {
         </div>
 
         {/* Right Side (8 Cols): Felt Gaming Arena */}
-        <div className="order-1 lg:order-2 lg:col-span-8 flex flex-col items-center justify-between bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border border-purple-500/20 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl relative overflow-hidden min-h-[320px] sm:min-h-[460px]">
+        <div className="order-1 md:order-2 lg:order-2 md:col-span-7 lg:col-span-8 flex flex-col items-center justify-between bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border border-purple-500/20 rounded-2xl sm:rounded-3xl p-2.5 sm:p-6 shadow-2xl relative overflow-hidden min-h-[250px] sm:min-h-[400px]">
           {/* Table Background Accent Felt Border */}
           <div className="absolute inset-2 sm:inset-4 rounded-2xl border-2 border-gold/20 pointer-events-none bg-[radial-gradient(#a855f7_0.7px,transparent_0.7px)] [background-size:16px_16px] opacity-20" />
 
@@ -746,7 +746,7 @@ export const TreasureHilo2D: React.FC = () => {
           </div>
 
           {/* ── CARD ARENA ── */}
-          <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 my-6 sm:my-8 z-10 w-full">
+          <div className="flex items-center justify-center gap-3 sm:gap-8 md:gap-12 my-2 sm:my-6 z-10 w-full">
             {/* Card 1: Current Active Card */}
             <div className="flex flex-col items-center">
               <FlippableCard

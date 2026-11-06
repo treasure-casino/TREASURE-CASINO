@@ -459,9 +459,9 @@ export const TreasureKeno2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Board & Controls Grid ── */}
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4">
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-2.5 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Payout Table HUD */}
-        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-2xl">
+        <div className="order-2 md:order-1 lg:order-1 md:col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-2xl">
           {/* Bet Amount Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">
@@ -687,7 +687,7 @@ export const TreasureKeno2D: React.FC = () => {
         </div>
 
         {/* Right Side (8 Cols): 1–80 Keno Board & Drawn Tray */}
-        <div className="order-1 lg:order-2 lg:col-span-8 flex flex-col gap-2.5 sm:gap-3 bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-2.5 sm:p-5">
+        <div className="order-1 md:order-2 lg:order-2 md:col-span-7 lg:col-span-8 flex flex-col gap-2 sm:gap-3 bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-1.5 sm:p-4">
           {/* Top Drawn Tray (20 Drawn Ball Indicators) */}
           <div className="w-full bg-dark-900/90 border border-dark-800 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-inner">
             <div className="flex items-center justify-between text-xs text-gray-400 font-bold mb-1.5 sm:mb-2 px-1">

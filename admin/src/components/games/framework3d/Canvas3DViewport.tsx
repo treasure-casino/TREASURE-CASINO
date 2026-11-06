@@ -86,9 +86,9 @@ export const Canvas3DViewport: React.FC<Canvas3DViewportProps> = ({
   }
 
   return (
-    <div className={`relative overflow-hidden w-full h-full min-h-[420px] select-none ${className}`}>
+    <div className={`relative overflow-hidden w-full h-full min-h-0 select-none ${className}`}>
       {/* 3D Canvas Container */}
-      <div ref={containerRef} className="absolute inset-0 w-full h-full min-h-[420px]" />
+      <div ref={containerRef} className="absolute inset-0 w-full h-full min-h-0" />
 
       {/* HTML / React UI Overlay */}
       {children && <div className="absolute inset-0 z-10 w-full h-full pointer-events-none">{children}</div>}

@@ -78,8 +78,11 @@ export const CrystalMines3D: React.FC = () => {
     sceneRef.current = sceneMgr;
     cameraRef.current = camMgr;
 
-    // Angled top-down perspective view for 5x5 board
-    camMgr.setPosition(new THREE.Vector3(0, -2.8, 6.2), true);
+    // Angled top-down perspective view for 5x5 board (responsive camera distance for mobile framing)
+    const isMobilePortrait = window.innerWidth < 480 && window.innerHeight > window.innerWidth;
+    const camZ = isMobilePortrait ? 7.2 : 6.2;
+    const camY = isMobilePortrait ? -3.2 : -2.8;
+    camMgr.setPosition(new THREE.Vector3(0, camY, camZ), true);
     camMgr.setLookAt(new THREE.Vector3(0, 0, 0), true);
 
     const scene = sceneMgr.scene;
@@ -496,8 +499,8 @@ export const CrystalMines3D: React.FC = () => {
       </div>
 
       {/* Bottom Control Bar */}
-      <div className="bg-dark-900 border-t border-dark-800 px-3 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 z-20 shadow-2xl">
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
+      <div className="bg-dark-900 border-t border-dark-800 px-2 sm:px-6 py-2 sm:py-3.5 flex flex-col landscape:flex-row sm:flex-row items-center justify-between gap-2 sm:gap-4 z-20 shadow-2xl">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3 w-full sm:w-auto">
           {/* Bet Selection */}
           <div className="flex items-center gap-2">
             <span className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">Bet</span>

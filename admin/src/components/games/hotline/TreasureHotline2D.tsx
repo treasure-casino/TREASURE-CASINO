@@ -1258,7 +1258,7 @@ export const TreasureHotline2D: React.FC = () => {
       </div>
 
       {/* ─── 5-REEL 2D SLOT ARENA ───────────────────────────────────────────── */}
-      <div className="relative p-4 sm:p-6 flex flex-col items-center justify-center">
+      <div className="relative p-1.5 sm:p-4 md:p-6 flex flex-col items-center justify-center">
         <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#ff007f_1px,transparent_1px)] [background-size:16px_16px]" />
 
         {/* Slot Cabinet Frame */}
@@ -1380,7 +1380,7 @@ export const TreasureHotline2D: React.FC = () => {
       </div>
 
       {/* ─── CONTROLS CONSOLE ──────────────────────────────────────────────── */}
-      <div className="p-3 sm:p-6 bg-black/60 border-t border-fuchsia-900/50 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+      <div className="p-2.5 sm:p-4 md:p-6 bg-black/60 border-t border-fuchsia-900/50 backdrop-blur-md flex flex-col landscape:flex-row md:flex-row items-center justify-between gap-2.5 sm:gap-4">
         {/* Bet Adjustments & Presets */}
         <div className="flex flex-col space-y-1 w-full md:w-auto">
           <div className="flex items-center justify-between">

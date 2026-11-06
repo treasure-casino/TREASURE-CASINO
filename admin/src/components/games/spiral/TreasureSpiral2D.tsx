@@ -724,19 +724,19 @@ export const TreasureSpiral2D: React.FC = () => {
       {/* ── MAIN 2D GAME VIEWPORT ─────────────────────────────────────────── */}
       <div className="relative flex-1 w-full min-h-0 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
         {/* FLOATING HUD CARDS (MULTIPLIER & POSITIONS) */}
-        <div className="absolute top-2 right-2 sm:top-5 sm:right-6 flex flex-col gap-1.5 sm:gap-2 z-25 pointer-events-auto max-w-[130px] sm:max-w-[220px] w-full">
+        <div className="absolute top-2 right-2 sm:top-5 sm:right-6 flex flex-col gap-1.5 sm:gap-2 z-25 pointer-events-auto max-w-[95px] xs:max-w-[120px] sm:max-w-[220px] w-full">
           {/* TOTAL MULTIPLIER CARD */}
-          <div className="bg-dark-950/90 backdrop-blur-md border border-amber-500/50 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
-            <span className="text-[8px] sm:text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+          <div className="bg-dark-950/90 backdrop-blur-md border border-amber-500/50 rounded-xl sm:rounded-2xl p-1.5 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
+            <span className="text-[7px] xs:text-[8px] sm:text-[9px] font-bold tracking-widest text-gray-400 uppercase">
               MULTIPLIER
             </span>
             <div
               id="total-multiplier-display"
-              className="font-black font-cinzel text-2xl sm:text-4xl text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]"
+              className="font-black font-cinzel text-xl xs:text-2xl sm:text-4xl text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]"
             >
               {totalMultiplier.toFixed(2)}x
             </div>
-            <div className="text-[9px] sm:text-[10px] font-mono text-gray-300 mt-0.5">
+            <div className="text-[8px] xs:text-[9px] sm:text-[10px] font-mono text-gray-300 mt-0.5">
               ₹{activePotential.toLocaleString('en-IN')}
             </div>
             {accumulatedBonus > 0 && (
@@ -1225,8 +1225,8 @@ export const TreasureSpiral2D: React.FC = () => {
       </div>
 
       {/* ── BOTTOM CONTROL BAR (1 SPIN CLICK = 1 BET DEDUCTED) ─────────────── */}
-      <div className="bg-dark-900/95 border-t border-dark-800 px-3 sm:px-6 py-2.5 sm:py-3 z-30 shadow-2xl backdrop-blur-md">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="bg-dark-900/95 border-t border-dark-800 px-2 sm:px-6 py-2 sm:py-3 z-30 shadow-2xl backdrop-blur-md">
+        <div className="max-w-6xl mx-auto flex flex-col landscape:flex-row sm:flex-row items-center justify-between gap-2 sm:gap-3">
           {/* LEFT: BET CONTROLS */}
           <div className="flex flex-col gap-1 w-full sm:w-auto">
             <span className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5">

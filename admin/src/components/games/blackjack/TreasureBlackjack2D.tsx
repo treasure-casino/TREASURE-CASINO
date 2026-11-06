@@ -203,7 +203,7 @@ const PlayingCard: React.FC<PlayingCardProps> = ({ card, isFaceDown, isNewlyDeal
 
   return (
     <div
-      className={`relative w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36 perspective-1000 select-none ${
+      className={`relative w-14 h-20 xs:w-16 xs:h-24 sm:w-20 sm:h-28 md:w-24 md:h-36 perspective-1000 select-none ${
         isNewlyDealt ? 'animate-deal-card' : ''
       }`}
     >
@@ -845,7 +845,7 @@ export const TreasureBlackjack2D: React.FC = () => {
 
       {/* ── Main Casino Felt Table ── */}
       <div
-        className={`relative w-full rounded-2xl sm:rounded-3xl border-4 border-[#2b1f14] shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col justify-between p-3.5 sm:p-6 md:p-8 min-h-[380px] sm:min-h-[460px] md:min-h-[520px] transition-all duration-500 ${
+        className={`relative w-full rounded-2xl sm:rounded-3xl border-4 border-[#2b1f14] shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col justify-between p-2.5 sm:p-6 md:p-8 min-h-[260px] sm:min-h-[400px] md:min-h-[480px] transition-all duration-500 ${
           isWinningRound ? 'win-table-glow' : ''
         }`}
         style={{
@@ -976,7 +976,7 @@ export const TreasureBlackjack2D: React.FC = () => {
           </div>
 
           {/* Dealer Cards Container */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 min-h-[100px] sm:min-h-[144px]">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-3 flex-wrap min-h-[85px] sm:min-h-[144px]">
             {displayedDealerCards.length > 0 ? (
               displayedDealerCards.map((item, idx) => (
                 <PlayingCard
@@ -1030,7 +1030,7 @@ export const TreasureBlackjack2D: React.FC = () => {
         {/* ── PLAYER SECTION ── */}
         <div className="relative z-10 flex flex-col items-center">
           {/* Player Cards Container */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 min-h-[100px] sm:min-h-[144px] mb-2">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-3 flex-wrap min-h-[85px] sm:min-h-[144px] mb-2">
             {displayedPlayerCards.length > 0 ? (
               displayedPlayerCards.map((item, idx) => (
                 <PlayingCard
@@ -1041,7 +1041,7 @@ export const TreasureBlackjack2D: React.FC = () => {
                 />
               ))
             ) : (
-              <div className="w-16 h-24 sm:w-20 sm:h-28 rounded-xl border-2 border-dashed border-emerald-400/20 flex items-center justify-center text-emerald-300/30 text-[10px]">
+              <div className="w-14 h-20 xs:w-16 xs:h-24 sm:w-20 sm:h-28 rounded-xl border-2 border-dashed border-emerald-400/20 flex items-center justify-center text-emerald-300/30 text-[10px]">
                 YOUR HAND
               </div>
             )}
@@ -1069,7 +1069,7 @@ export const TreasureBlackjack2D: React.FC = () => {
       </div>
 
       {/* ── Bottom Controls: Chips, Bet, Action Buttons ── */}
-      <div className="w-full mt-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl p-3 sm:p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+      <div className="w-full mt-2 sm:mt-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl p-2.5 sm:p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4">
         {/* Left: Quick Bet Chips (Active before deal) */}
         <div className="flex flex-col gap-1 w-full md:w-auto">
           <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">

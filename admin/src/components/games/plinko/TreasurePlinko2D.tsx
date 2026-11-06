@@ -335,8 +335,9 @@ export const TreasurePlinko2D: React.FC = () => {
       const rect = container.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const displayWidth = Math.floor(rect.width);
-      // Height proportional to width with minimum constraint
-      const displayHeight = Math.max(540, Math.floor(displayWidth * 0.85));
+      // Height responsive to mobile screen height and aspect ratio
+      const maxHeight = window.innerHeight < 650 ? Math.floor(window.innerHeight * 0.58) : 560;
+      const displayHeight = Math.max(280, Math.min(maxHeight, Math.floor(displayWidth * 0.92)));
 
       canvas.width = displayWidth * dpr;
       canvas.height = displayHeight * dpr;
@@ -820,9 +821,9 @@ export const TreasurePlinko2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Board & Controls Grid ── */}
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-3 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Configuration HUD */}
-        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-3.5 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl">
+        <div className="order-2 md:order-1 lg:order-1 md:col-span-5 lg:col-span-4 flex flex-col gap-3.5 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-2xl">
           {/* Bet Amount Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">
@@ -1024,7 +1025,7 @@ export const TreasurePlinko2D: React.FC = () => {
         {/* Right Side (8 Cols): High-Resolution 2D Plinko Board Canvas */}
         <div
           ref={containerRef}
-          className="order-1 lg:order-2 lg:col-span-8 relative w-full flex flex-col items-center justify-center bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden p-2 sm:p-4 min-h-[360px] sm:min-h-[460px] lg:min-h-[540px]"
+          className="order-1 md:order-2 lg:order-2 md:col-span-7 lg:col-span-8 relative w-full flex flex-col items-center justify-center bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden p-2 sm:p-4 min-h-[260px] sm:min-h-[420px] lg:min-h-[540px]"
           style={{
             background: 'radial-gradient(ellipse at 50% 30%, #0c1824 0%, #070d14 60%, #020407 100%)',
           }}

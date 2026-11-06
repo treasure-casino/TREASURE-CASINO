@@ -477,7 +477,7 @@ export const TreasureKingdom3D: React.FC = () => {
 
     return (
       <div
-        className={`symbol-card relative w-full h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center rounded-lg sm:rounded-xl p-0.5 sm:p-1 transition-all duration-300 select-none ${
+        className={`symbol-card relative w-full h-[54px] xs:h-[64px] sm:h-20 md:h-24 flex flex-col items-center justify-center rounded-lg sm:rounded-xl p-0.5 sm:p-1 transition-all duration-300 select-none ${
           isWinning
             ? 'ring-2 sm:ring-3 ring-amber-400 border-2 border-amber-300 bg-gradient-to-b from-amber-500/30 via-yellow-500/20 to-amber-950/60 shadow-[0_0_20px_rgba(245,158,11,0.9)] scale-[1.03] z-20 animate-pulse'
             : isScatterWinning
@@ -493,7 +493,7 @@ export const TreasureKingdom3D: React.FC = () => {
 
         {/* Proportionally scaled original Symbol Icon */}
         <span
-          className="relative text-2xl sm:text-3xl md:text-4xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] transform transition-transform"
+          className="relative text-xl xs:text-2xl sm:text-3xl md:text-4xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] transform transition-transform"
           style={{ filter: isWinning ? 'drop-shadow(0 0 8px #f59e0b)' : undefined }}
         >
           {sym.icon}
@@ -501,7 +501,7 @@ export const TreasureKingdom3D: React.FC = () => {
 
         {/* Distinctive luxury symbol badge */}
         <div
-          className={`relative text-[7px] sm:text-[8px] md:text-[9px] font-black uppercase tracking-wider px-1 sm:px-1.5 py-0.2 rounded mt-0.5 font-cinzel border ${
+          className={`relative text-[6px] xs:text-[7px] sm:text-[8px] md:text-[9px] font-black uppercase tracking-wider px-1 sm:px-1.5 py-0.2 rounded mt-0.5 font-cinzel border ${
             sym.isWild
               ? 'bg-sky-500/25 text-sky-200 border-sky-400/60 shadow-[0_0_6px_rgba(56,189,248,0.5)]'
               : sym.isScatter
@@ -712,7 +712,7 @@ export const TreasureKingdom3D: React.FC = () => {
       </div>
 
       {/* Bottom Control Bar */}
-      <div className="bg-dark-900 border-t border-dark-800 px-2 sm:px-6 py-2 sm:py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2 z-30 shadow-2xl shrink-0">
+      <div className="bg-dark-900 border-t border-dark-800 px-2 sm:px-6 py-1.5 sm:py-2.5 flex flex-col landscape:flex-row sm:flex-row items-center justify-between gap-1.5 sm:gap-2 z-30 shadow-2xl shrink-0">
         {/* Bet Selection & Increase/Decrease Controls */}
         <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-1 sm:gap-2">
           <span className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider shrink-0">Bet</span>

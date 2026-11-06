@@ -447,9 +447,9 @@ export const TreasureDice2D: React.FC = () => {
       </div>
 
       {/* Main Game Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-6">
         {/* Left Arena Cockpit: Dice Board */}
-        <div className="lg:col-span-8 flex flex-col justify-between bg-gradient-to-b from-[#0e0e1a] via-[#090913] to-[#06060c] border border-purple-900/40 rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 relative overflow-hidden shadow-2xl min-h-[320px] sm:min-h-[460px]">
+        <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between bg-gradient-to-b from-[#0e0e1a] via-[#090913] to-[#06060c] border border-purple-900/40 rounded-2xl sm:rounded-3xl p-2.5 sm:p-6 relative overflow-hidden shadow-2xl min-h-[250px] sm:min-h-[400px]">
           {/* Ambient Lighting */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full pointer-events-none" />
           <div className="absolute top-10 right-10 w-48 h-48 bg-amber-500/10 blur-[90px] rounded-full pointer-events-none" />
@@ -640,7 +640,7 @@ export const TreasureDice2D: React.FC = () => {
         </div>
 
         {/* Right Console: Betting, Mode & Auto Play Controls */}
-        <div className="lg:col-span-4 flex flex-col justify-between bg-dark-900/90 border border-purple-900/40 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-6">
+        <div className="md:col-span-5 lg:col-span-4 flex flex-col justify-between bg-dark-900/90 border border-purple-900/40 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 shadow-2xl space-y-4 sm:space-y-6">
           {/* Navigation Tab: MANUAL vs AUTO */}
           <div className="grid grid-cols-2 p-1 bg-dark-950/90 border border-purple-900/30 rounded-2xl">
             <button

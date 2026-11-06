@@ -574,7 +574,7 @@ export const TreasureVortex3D: React.FC = () => {
           </div>
 
           {/* ── 2. FLOATING RIGHT HUD CARDS (EXACT INFOGRAPHIC LAYOUT) ────────── */}
-          <div className="absolute top-12 right-2 sm:top-20 sm:right-6 flex flex-col gap-1.5 sm:gap-2.5 z-25 pointer-events-auto max-w-[120px] sm:max-w-[240px] w-full">
+          <div className="absolute top-12 right-2 sm:top-20 sm:right-6 flex flex-col gap-1.5 sm:gap-2.5 z-25 pointer-events-auto max-w-[95px] xs:max-w-[120px] sm:max-w-[240px] w-full">
             {/* CURRENT MULTIPLIER CARD */}
             <div className="bg-dark-950/85 backdrop-blur-md border border-cyan-500/50 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
               <div className="absolute -top-6 -right-6 w-16 h-16 bg-cyan-500/10 rounded-full blur-xl pointer-events-none" />
@@ -677,7 +677,7 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
 
             {/* 🌪️ TOP RIGHT: WIND (Tornado) */}
-            <div className="absolute top-24 right-16 sm:top-28 sm:right-28 flex flex-col items-center pointer-events-auto">
+            <div className="absolute top-20 right-6 sm:top-28 sm:right-28 flex flex-col items-center pointer-events-auto">
               <div
                 className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'WIND'
@@ -693,7 +693,7 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
 
             {/* 💀 BOTTOM RIGHT: SKULL */}
-            <div className="absolute bottom-20 right-16 sm:bottom-24 sm:right-28 flex flex-col items-center pointer-events-auto">
+            <div className="absolute bottom-16 right-6 sm:bottom-24 sm:right-28 flex flex-col items-center pointer-events-auto">
               <div
                 className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'SKULL' || gameState === 'CRASHED'
@@ -709,7 +709,7 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
 
             {/* 🌍 BOTTOM LEFT: EARTH (Mountain) */}
-            <div className="absolute bottom-20 left-16 sm:bottom-24 sm:left-28 flex flex-col items-center pointer-events-auto">
+            <div className="absolute bottom-16 left-6 sm:bottom-24 sm:left-28 flex flex-col items-center pointer-events-auto">
               <div
                 className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'EARTH' || levels.earth > 0
@@ -725,7 +725,7 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
 
             {/* 💧 MIDDLE LEFT: WATER (Droplet) */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-6 sm:left-14 flex flex-col items-center pointer-events-auto">
+            <div className="absolute top-1/2 -translate-y-1/2 left-3 sm:left-14 flex flex-col items-center pointer-events-auto">
               <div
                 className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'WATER' || levels.water > 0
@@ -744,8 +744,8 @@ export const TreasureVortex3D: React.FC = () => {
       </div>
 
       {/* ── 4. BOTTOM CONTROL DOCK (METALLIC CASINO PANEL) ─────────────────── */}
-      <div className="bg-dark-900/95 border-t border-dark-800 px-3 sm:px-6 py-2.5 sm:py-3 z-30 shadow-2xl backdrop-blur-md">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="bg-dark-900/95 border-t border-dark-800 px-2 sm:px-6 py-2 sm:py-3 z-30 shadow-2xl backdrop-blur-md">
+        <div className="max-w-6xl mx-auto flex flex-col landscape:flex-row sm:flex-row items-center justify-between gap-2 sm:gap-3">
           {/* LEFT: BET CONTROLS */}
           <div className="flex flex-col gap-1 w-full sm:w-auto">
             <span className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-wider text-center sm:text-left">
