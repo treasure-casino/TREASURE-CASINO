@@ -140,12 +140,42 @@ export const TreasureVortex3D: React.FC = () => {
   };
 
   // ─── 3D SCENE SETUP ──────────────────────────────────────────────────────
+  const updateCameraForViewport = useCallback(() => {
+    if (!cameraRef.current) return;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const aspect = w / Math.max(h, 1);
+
+    // Accretion ring diameter is ~5.8 units with 45 deg vertical FOV
+    let camZ: number;
+    if (aspect < 0.6) {
+      camZ = 11.5; // Narrow mobile portrait (320x568, 360x800)
+    } else if (aspect < 0.85) {
+      camZ = 10.2; // Standard mobile portrait (375x812, 390x844, 430x932)
+    } else if (h < 500) {
+      camZ = 8.6;  // Mobile landscape
+    } else {
+      camZ = 7.5;  // Desktop
+    }
+
+    cameraRef.current.setPosition(new THREE.Vector3(0, 0, camZ), true);
+    cameraRef.current.setLookAt(new THREE.Vector3(0, 0, 0), true);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateCameraForViewport);
+    window.addEventListener('orientationchange', updateCameraForViewport);
+    return () => {
+      window.removeEventListener('resize', updateCameraForViewport);
+      window.removeEventListener('orientationchange', updateCameraForViewport);
+    };
+  }, [updateCameraForViewport]);
+
   const handleInit = (sceneMgr: Scene3DManager, camMgr: CameraManager) => {
     sceneRef.current = sceneMgr;
     cameraRef.current = camMgr;
 
-    camMgr.setPosition(new THREE.Vector3(0, 0, 7.5), true);
-    camMgr.setLookAt(new THREE.Vector3(0, 0, 0), true);
+    updateCameraForViewport();
 
     const scene = sceneMgr.scene;
 
@@ -525,7 +555,7 @@ export const TreasureVortex3D: React.FC = () => {
             {/* Logo */}
             <div className="flex items-center gap-1.5 sm:gap-2">
               <div className="flex items-center gap-1.5 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 bg-dark-900/90 backdrop-blur-md border border-cyan-500/40 rounded-xl sm:rounded-2xl shadow-xl">
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
+                <Sparkles className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
                 <div className="flex flex-col">
                   <span className="font-cinzel text-[11px] sm:text-sm font-black tracking-wider text-cyan-300 drop-shadow">
                     VORTEX
@@ -548,9 +578,9 @@ export const TreasureVortex3D: React.FC = () => {
 
             {/* Right: Demo Balance & Rules */}
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-dark-900/90 backdrop-blur-md border border-amber-500/40 rounded-xl shadow-lg">
+              <div className="hidden sm:flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-dark-900/90 backdrop-blur-md border border-amber-500/40 rounded-xl shadow-lg">
                 <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-[10px] text-gray-400 uppercase font-bold hidden sm:inline">DEMO:</span>
+                <span className="text-[10px] text-gray-400 uppercase font-bold">DEMO:</span>
                 <span className="text-[11px] sm:text-sm font-black text-amber-300 font-mono tracking-tight">
                   ₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
@@ -574,15 +604,15 @@ export const TreasureVortex3D: React.FC = () => {
           </div>
 
           {/* ── 2. FLOATING RIGHT HUD CARDS (EXACT INFOGRAPHIC LAYOUT) ────────── */}
-          <div className="absolute top-12 right-2 sm:top-20 sm:right-6 flex flex-col gap-1.5 sm:gap-2.5 z-25 pointer-events-auto max-w-[95px] xs:max-w-[120px] sm:max-w-[240px] w-full">
+          <div className="absolute top-11 right-2 sm:top-20 sm:right-6 flex flex-col gap-1.5 sm:gap-2.5 z-25 pointer-events-auto max-w-[95px] xs:max-w-[120px] sm:max-w-[240px] w-full">
             {/* CURRENT MULTIPLIER CARD */}
-            <div className="bg-dark-950/85 backdrop-blur-md border border-cyan-500/50 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
+            <div className="bg-dark-950/85 backdrop-blur-md border border-cyan-500/50 rounded-xl sm:rounded-2xl p-1.5 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
               <div className="absolute -top-6 -right-6 w-16 h-16 bg-cyan-500/10 rounded-full blur-xl pointer-events-none" />
-              <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-gray-300 uppercase">
+              <span className="text-[7px] sm:text-[10px] font-bold tracking-widest text-gray-300 uppercase">
                 MULTIPLIER
               </span>
               <div
-                className={`font-black font-cinzel text-xl sm:text-4xl tracking-tight transition-all drop-shadow-[0_0_20px_rgba(56,189,248,0.5)] ${
+                className={`font-black font-cinzel text-lg sm:text-4xl tracking-tight transition-all drop-shadow-[0_0_20px_rgba(56,189,248,0.5)] ${
                   gameState === 'CRASHED'
                     ? 'text-rose-500 animate-pulse'
                     : gameState === 'WON'
@@ -597,11 +627,11 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
 
             {/* LAST CRASH CARD */}
-            <div className="bg-dark-950/85 backdrop-blur-md border border-dark-700 rounded-lg sm:rounded-xl p-1.5 sm:p-2.5 shadow-lg flex items-center justify-between px-2 sm:px-3">
-              <span className="text-[8px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+            <div className="bg-dark-950/85 backdrop-blur-md border border-dark-700 rounded-lg sm:rounded-xl p-1 sm:p-2.5 shadow-lg flex items-center justify-between px-2 sm:px-3">
+              <span className="text-[7px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                 LAST
               </span>
-              <span className="font-mono font-black text-xs sm:text-sm text-rose-400">
+              <span className="font-mono font-black text-[11px] sm:text-sm text-rose-400">
                 {lastCrashMultiplier.toFixed(2)}x
               </span>
             </div>
@@ -638,7 +668,7 @@ export const TreasureVortex3D: React.FC = () => {
             {/* Center Status Banner */}
             <div className="flex flex-col items-center justify-center text-center">
               <div
-                className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider backdrop-blur-md shadow-2xl border transition-all ${
+                className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider backdrop-blur-md shadow-2xl border transition-all ${
                   gameState === 'CRASHED'
                     ? 'bg-rose-950/90 border-rose-500/60 text-rose-200 animate-bounce'
                     : gameState === 'WON'
@@ -654,89 +684,89 @@ export const TreasureVortex3D: React.FC = () => {
               </div>
 
               {lastPayout !== null && gameState === 'WON' && (
-                <div className="mt-2 text-base sm:text-xl font-extrabold text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
+                <div className="mt-1.5 sm:mt-2 text-sm sm:text-xl font-extrabold text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
                   +₹{lastPayout.toLocaleString('en-IN')} WON!
                 </div>
               )}
             </div>
 
             {/* 🔥 TOP: FIRE (Flame) */}
-            <div className="absolute top-14 sm:top-18 flex flex-col items-center pointer-events-auto">
+            <div className="absolute top-11 sm:top-18 flex flex-col items-center pointer-events-auto">
               <div
-                className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all ${
+                className={`w-9 h-9 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'FIRE' || levels.fire > 0
                     ? 'bg-gradient-to-t from-orange-600 to-amber-500 text-white shadow-[0_0_25px_#f97316] scale-110'
                     : 'bg-dark-900/80 border border-orange-500/40 text-orange-400'
                 }`}
               >
-                <Flame className="w-6 h-6 fill-current animate-pulse" />
+                <Flame className="w-4 h-4 sm:w-6 sm:h-6 fill-current animate-pulse" />
               </div>
-              <span className="text-[10px] font-black text-orange-400 uppercase tracking-widest mt-1">
+              <span className="text-[8px] sm:text-[10px] font-black text-orange-400 uppercase tracking-widest mt-0.5 sm:mt-1">
                 FIRE ({levels.fire}/7)
               </span>
             </div>
 
-            {/* 🌪️ TOP RIGHT: WIND (Tornado) */}
-            <div className="absolute top-20 right-6 sm:top-28 sm:right-28 flex flex-col items-center pointer-events-auto">
+            {/* 🌪️ TOP LEFT: WIND (Tornado) */}
+            <div className="absolute top-14 left-3 sm:top-24 sm:left-24 flex flex-col items-center pointer-events-auto">
               <div
-                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
+                className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'WIND'
                     ? 'bg-gradient-to-t from-purple-600 to-indigo-400 text-white shadow-[0_0_25px_#a855f7] scale-110'
                     : 'bg-dark-900/80 border border-purple-500/40 text-purple-400'
                 }`}
               >
-                <Wind className="w-5 h-5 animate-spin" style={{ animationDuration: '3s' }} />
+                <Wind className="w-3.5 h-3.5 sm:w-5 sm:h-5 animate-spin" style={{ animationDuration: '3s' }} />
               </div>
-              <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest mt-1">
+              <span className="text-[8px] sm:text-[10px] font-black text-purple-400 uppercase tracking-widest mt-0.5 sm:mt-1">
                 WIND
               </span>
             </div>
 
-            {/* 💀 BOTTOM RIGHT: SKULL */}
-            <div className="absolute bottom-16 right-6 sm:bottom-24 sm:right-28 flex flex-col items-center pointer-events-auto">
-              <div
-                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
-                  activeSurgeElement === 'SKULL' || gameState === 'CRASHED'
-                    ? 'bg-gradient-to-t from-rose-700 to-red-500 text-white shadow-[0_0_25px_#ef4444] scale-110'
-                    : 'bg-dark-900/80 border border-rose-500/40 text-rose-400'
-                }`}
-              >
-                <Skull className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-black text-rose-400 uppercase tracking-widest mt-1">
-                SKULL
-              </span>
-            </div>
-
-            {/* 🌍 BOTTOM LEFT: EARTH (Mountain) */}
-            <div className="absolute bottom-16 left-6 sm:bottom-24 sm:left-28 flex flex-col items-center pointer-events-auto">
-              <div
-                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
-                  activeSurgeElement === 'EARTH' || levels.earth > 0
-                    ? 'bg-gradient-to-t from-emerald-600 to-green-400 text-white shadow-[0_0_25px_#10b981] scale-110'
-                    : 'bg-dark-900/80 border border-emerald-500/40 text-emerald-400'
-                }`}
-              >
-                <Mountain className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mt-1">
-                EARTH ({levels.earth}/6)
-              </span>
-            </div>
-
             {/* 💧 MIDDLE LEFT: WATER (Droplet) */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-3 sm:left-14 flex flex-col items-center pointer-events-auto">
+            <div className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-12 flex flex-col items-center pointer-events-auto">
               <div
-                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
+                className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
                   activeSurgeElement === 'WATER' || levels.water > 0
                     ? 'bg-gradient-to-t from-cyan-600 to-sky-400 text-white shadow-[0_0_25px_#06b6d4] scale-110'
                     : 'bg-dark-900/80 border border-cyan-500/40 text-cyan-400'
                 }`}
               >
-                <Droplets className="w-5 h-5 fill-current" />
+                <Droplets className="w-3.5 h-3.5 sm:w-5 sm:h-5 fill-current" />
               </div>
-              <span className="text-[10px] font-black text-cyan-400 uppercase tracking-widest mt-1">
+              <span className="text-[8px] sm:text-[10px] font-black text-cyan-400 uppercase tracking-widest mt-0.5 sm:mt-1">
                 WATER ({levels.water}/4)
+              </span>
+            </div>
+
+            {/* 🌍 BOTTOM LEFT: EARTH (Mountain) */}
+            <div className="absolute bottom-10 left-4 sm:bottom-20 sm:left-24 flex flex-col items-center pointer-events-auto">
+              <div
+                className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
+                  activeSurgeElement === 'EARTH' || levels.earth > 0
+                    ? 'bg-gradient-to-t from-emerald-600 to-green-400 text-white shadow-[0_0_25px_#10b981] scale-110'
+                    : 'bg-dark-900/80 border border-emerald-500/40 text-emerald-400'
+                }`}
+              >
+                <Mountain className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+              </div>
+              <span className="text-[8px] sm:text-[10px] font-black text-emerald-400 uppercase tracking-widest mt-0.5 sm:mt-1">
+                EARTH ({levels.earth}/6)
+              </span>
+            </div>
+
+            {/* 💀 BOTTOM RIGHT: SKULL */}
+            <div className="absolute bottom-10 right-4 sm:bottom-20 sm:right-24 flex flex-col items-center pointer-events-auto">
+              <div
+                className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
+                  activeSurgeElement === 'SKULL' || gameState === 'CRASHED'
+                    ? 'bg-gradient-to-t from-rose-700 to-red-500 text-white shadow-[0_0_25px_#ef4444] scale-110'
+                    : 'bg-dark-900/80 border border-rose-500/40 text-rose-400'
+                }`}
+              >
+                <Skull className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+              </div>
+              <span className="text-[8px] sm:text-[10px] font-black text-rose-400 uppercase tracking-widest mt-0.5 sm:mt-1">
+                SKULL
               </span>
             </div>
           </div>

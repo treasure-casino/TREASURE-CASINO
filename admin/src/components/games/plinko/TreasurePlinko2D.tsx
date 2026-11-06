@@ -260,17 +260,22 @@ export const TreasurePlinko2D: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const width = canvas.width;
-    const height = canvas.height;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Logical CSS dimensions
+    const width = canvas.width / dpr;
+    const height = canvas.height / dpr;
     const centerX = width / 2;
 
-    const bottomPadding = 75; // Space for multiplier slots
-    const topY = 40;
+    const isMobile = width < 480;
+    const slotHeight = isMobile ? 26 : 34;
+    const bottomPadding = isMobile ? 50 : 70; // Space for multiplier slots
+    const topY = isMobile ? 24 : 38;
     const availableHeight = height - topY - bottomPadding;
     const rowSpacing = availableHeight / rows;
     // Pin spacing scales with total rows to fill triangular space harmoniously
     const maxPinsBottom = rows + 2;
-    const pinSpacing = Math.min((width - 60) / maxPinsBottom, rowSpacing * 1.25);
+    const horizontalMargin = isMobile ? 20 : 50;
+    const pinSpacing = Math.min((width - horizontalMargin) / maxPinsBottom, rowSpacing * 1.25);
 
     boardLayoutRef.current = {
       width,
@@ -304,9 +309,8 @@ export const TreasurePlinko2D: React.FC = () => {
     // Generate Slots at bottom: rows + 1 slots
     const totalSlots = rows + 1;
     const bottomRowY = topY + rows * rowSpacing;
-    const slotY = bottomRowY + rowSpacing * 0.85;
-    const slotWidth = pinSpacing * 0.92;
-    const slotHeight = 36;
+    const slotY = bottomRowY + rowSpacing * 0.72;
+    const slotWidth = pinSpacing * 0.94;
     const slotsStartX = centerX - ((totalSlots - 1) / 2) * pinSpacing;
 
     const newSlots: MultiplierSlot[] = [];
@@ -336,8 +340,14 @@ export const TreasurePlinko2D: React.FC = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const displayWidth = Math.floor(rect.width);
       // Height responsive to mobile screen height and aspect ratio
-      const maxHeight = window.innerHeight < 650 ? Math.floor(window.innerHeight * 0.58) : 560;
-      const displayHeight = Math.max(280, Math.min(maxHeight, Math.floor(displayWidth * 0.92)));
+      const isLandscape = window.innerHeight < 500;
+      let displayHeight: number;
+      if (isLandscape) {
+        displayHeight = Math.max(220, Math.min(window.innerHeight - 80, 320));
+      } else {
+        const maxHeight = window.innerHeight < 650 ? Math.floor(window.innerHeight * 0.48) : 520;
+        displayHeight = Math.max(260, Math.min(maxHeight, Math.floor(displayWidth * 0.95)));
+      }
 
       canvas.width = displayWidth * dpr;
       canvas.height = displayHeight * dpr;
@@ -346,6 +356,7 @@ export const TreasurePlinko2D: React.FC = () => {
 
       const ctx = canvas.getContext('2d');
       if (ctx) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform before scaling
         ctx.scale(dpr, dpr);
       }
 
@@ -354,7 +365,11 @@ export const TreasurePlinko2D: React.FC = () => {
 
     updateSize();
     window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+    window.addEventListener('orientationchange', updateSize);
+    return () => {
+      window.removeEventListener('resize', updateSize);
+      window.removeEventListener('orientationchange', updateSize);
+    };
   }, [calculateLayout]);
 
   // Color generator for multiplier slots
@@ -668,7 +683,7 @@ export const TreasurePlinko2D: React.FC = () => {
       setLocalDemoBalance(data.balance);
 
       const layout = boardLayoutRef.current;
-      const initialBallRadius = Math.max(5.5, Math.min(8.5, layout.pinSpacing * 0.22));
+      const initialBallRadius = Math.max(3.8, Math.min(8.0, layout.pinSpacing * 0.22));
 
       // Spawn ball at top apex
       const newBall: ActiveBall = {
@@ -681,8 +696,8 @@ export const TreasurePlinko2D: React.FC = () => {
         payout: data.payout,
         profit: data.profit,
         isWin: data.isWin,
-        x: layout.centerX + (Math.random() * 4 - 2),
-        y: layout.topY - 18,
+        x: layout.centerX + (Math.random() * 2 - 1),
+        y: layout.topY - 14,
         vx: (Math.random() - 0.5) * 0.5,
         vy: 1.5,
         currentRow: 0,
@@ -821,9 +836,9 @@ export const TreasurePlinko2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Board & Controls Grid ── */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-3 sm:gap-4">
+      <div className="w-full grid grid-cols-1 landscape:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 gap-2.5 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Configuration HUD */}
-        <div className="order-2 md:order-1 lg:order-1 md:col-span-5 lg:col-span-4 flex flex-col gap-3.5 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-2xl">
+        <div className="order-2 landscape:order-1 md:order-1 lg:order-1 landscape:col-span-5 md:col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-3.5 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-2xl">
           {/* Bet Amount Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">
@@ -1025,7 +1040,7 @@ export const TreasurePlinko2D: React.FC = () => {
         {/* Right Side (8 Cols): High-Resolution 2D Plinko Board Canvas */}
         <div
           ref={containerRef}
-          className="order-1 md:order-2 lg:order-2 md:col-span-7 lg:col-span-8 relative w-full flex flex-col items-center justify-center bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden p-2 sm:p-4 min-h-[260px] sm:min-h-[420px] lg:min-h-[540px]"
+          className="order-1 landscape:order-2 md:order-2 lg:order-2 landscape:col-span-7 md:col-span-7 lg:col-span-8 relative w-full flex flex-col items-center justify-center bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden p-1.5 sm:p-4 min-h-[220px] sm:min-h-[420px] lg:min-h-[540px]"
           style={{
             background: 'radial-gradient(ellipse at 50% 30%, #0c1824 0%, #070d14 60%, #020407 100%)',
           }}

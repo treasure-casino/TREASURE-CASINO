@@ -453,9 +453,9 @@ export const TreasureHilo2D: React.FC = () => {
   const nextMults = roundState?.nextMultipliers;
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-[85vh] w-full p-2 sm:p-4 md:p-6 text-white select-none">
+    <div className="flex flex-col items-center justify-start w-full min-h-0 p-1.5 sm:p-4 md:p-6 text-white select-none">
       {/* ── Top Header Bar ── */}
-      <div className="w-full max-w-5xl flex items-center justify-between bg-dark-900/90 border border-purple-500/30 rounded-2xl p-3 sm:p-4 mb-4 shadow-xl backdrop-blur-md">
+      <div className="w-full max-w-5xl hidden sm:flex items-center justify-between bg-dark-900/90 border border-purple-500/30 rounded-2xl p-3 sm:p-4 mb-3 shadow-xl backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="p-2 sm:p-2.5 bg-gradient-to-br from-purple-600 to-indigo-800 rounded-xl shadow-lg border border-purple-400/40">
             <Trophy className="w-5 h-5 text-gold animate-pulse" />
@@ -501,9 +501,9 @@ export const TreasureHilo2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Table & HUD ── */}
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-2.5 sm:gap-4">
+      <div className="w-full max-w-5xl grid grid-cols-1 landscape:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 gap-2 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Actions HUD */}
-        <div className="order-2 md:order-1 lg:order-1 md:col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-2xl">
+        <div className="order-2 landscape:order-1 md:order-1 lg:order-1 landscape:col-span-5 md:col-span-5 lg:col-span-4 flex flex-col gap-2 sm:gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-2xl">
           {/* Current Bet Input */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center text-xs font-bold text-gray-400">
@@ -598,22 +598,22 @@ export const TreasureHilo2D: React.FC = () => {
                 type="button"
                 disabled={isProcessing || !roundState.canHigher}
                 onClick={() => handlePredict('HIGHER')}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-black text-sm tracking-wide transition shadow-lg ${
+                className={`w-full flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 rounded-2xl font-black text-xs sm:text-sm tracking-wide transition shadow-lg ${
                   roundState.canHigher && !isProcessing
                     ? 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-emerald-500/20 active:scale-98'
                     : 'bg-dark-800 text-gray-500 cursor-not-allowed border border-dark-700'
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <ArrowUp className="w-5 h-5 text-emerald-200 animate-bounce" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-200 animate-bounce" />
                   <span>HIGHER ▲</span>
                 </div>
                 {nextMults?.higherMultiplier ? (
                   <div className="text-right font-mono">
-                    <span className="text-xs bg-emerald-950/80 border border-emerald-400/40 px-2 py-0.5 rounded-full text-emerald-300">
+                    <span className="text-[11px] sm:text-xs bg-emerald-950/80 border border-emerald-400/40 px-2 py-0.5 rounded-full text-emerald-300">
                       {nextMults.higherMultiplier.toFixed(2)}x
                     </span>
-                    <span className="text-[10px] text-emerald-200/80 block mt-0.5">
+                    <span className="text-[9px] sm:text-[10px] text-emerald-200/80 block mt-0.5">
                       {nextMults.higherWinChance}% Chance
                     </span>
                   </div>
@@ -627,22 +627,22 @@ export const TreasureHilo2D: React.FC = () => {
                 type="button"
                 disabled={isProcessing || !roundState.canLower}
                 onClick={() => handlePredict('LOWER')}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-black text-sm tracking-wide transition shadow-lg ${
+                className={`w-full flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 rounded-2xl font-black text-xs sm:text-sm tracking-wide transition shadow-lg ${
                   roundState.canLower && !isProcessing
                     ? 'bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white shadow-rose-500/20 active:scale-98'
                     : 'bg-dark-800 text-gray-500 cursor-not-allowed border border-dark-700'
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <ArrowDown className="w-5 h-5 text-rose-200 animate-bounce" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5 text-rose-200 animate-bounce" />
                   <span>LOWER ▼</span>
                 </div>
                 {nextMults?.lowerMultiplier ? (
                   <div className="text-right font-mono">
-                    <span className="text-xs bg-rose-950/80 border border-rose-400/40 px-2 py-0.5 rounded-full text-rose-300">
+                    <span className="text-[11px] sm:text-xs bg-rose-950/80 border border-rose-400/40 px-2 py-0.5 rounded-full text-rose-300">
                       {nextMults.lowerMultiplier.toFixed(2)}x
                     </span>
-                    <span className="text-[10px] text-rose-200/80 block mt-0.5">
+                    <span className="text-[9px] sm:text-[10px] text-rose-200/80 block mt-0.5">
                       {nextMults.lowerWinChance}% Chance
                     </span>
                   </div>
@@ -718,7 +718,7 @@ export const TreasureHilo2D: React.FC = () => {
         </div>
 
         {/* Right Side (8 Cols): Felt Gaming Arena */}
-        <div className="order-1 md:order-2 lg:order-2 md:col-span-7 lg:col-span-8 flex flex-col items-center justify-between bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border border-purple-500/20 rounded-2xl sm:rounded-3xl p-2.5 sm:p-6 shadow-2xl relative overflow-hidden min-h-[250px] sm:min-h-[400px]">
+        <div className="order-1 landscape:order-2 md:order-2 lg:order-2 landscape:col-span-7 md:col-span-7 lg:col-span-8 flex flex-col items-center justify-between bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border border-purple-500/20 rounded-2xl sm:rounded-3xl p-2 sm:p-6 shadow-2xl relative overflow-hidden min-h-[220px] sm:min-h-[400px]">
           {/* Table Background Accent Felt Border */}
           <div className="absolute inset-2 sm:inset-4 rounded-2xl border-2 border-gold/20 pointer-events-none bg-[radial-gradient(#a855f7_0.7px,transparent_0.7px)] [background-size:16px_16px] opacity-20" />
 

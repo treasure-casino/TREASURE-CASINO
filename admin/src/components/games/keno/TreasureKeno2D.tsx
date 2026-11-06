@@ -459,9 +459,9 @@ export const TreasureKeno2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Board & Controls Grid ── */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-2.5 sm:gap-4">
+      <div className="w-full grid grid-cols-1 landscape:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 gap-2 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Payout Table HUD */}
-        <div className="order-2 md:order-1 lg:order-1 md:col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-2xl">
+        <div className="order-2 landscape:order-1 md:order-1 lg:order-1 landscape:col-span-5 md:col-span-5 lg:col-span-4 flex flex-col gap-2 sm:gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-2 sm:p-5 shadow-2xl">
           {/* Bet Amount Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">
@@ -569,7 +569,7 @@ export const TreasureKeno2D: React.FC = () => {
             </div>
 
             {spotsCount > 0 ? (
-              <div className="space-y-1 max-h-36 overflow-y-auto pr-1">
+              <div className="space-y-1 max-h-24 sm:max-h-36 overflow-y-auto pr-1">
                 {Object.entries(currentPayTable).map(([hits, mult]) => {
                   const hitsNum = Number(hits);
                   const isCurrentHitTier = currentMatchesCount === hitsNum && (isDrawing || currentRound !== null);
@@ -687,7 +687,7 @@ export const TreasureKeno2D: React.FC = () => {
         </div>
 
         {/* Right Side (8 Cols): 1–80 Keno Board & Drawn Tray */}
-        <div className="order-1 md:order-2 lg:order-2 md:col-span-7 lg:col-span-8 flex flex-col gap-2 sm:gap-3 bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-1.5 sm:p-4">
+        <div className="order-1 landscape:order-2 md:order-2 lg:order-2 landscape:col-span-7 md:col-span-7 lg:col-span-8 flex flex-col gap-1.5 sm:gap-3 bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-1 sm:p-4">
           {/* Top Drawn Tray (20 Drawn Ball Indicators) */}
           <div className="w-full bg-dark-900/90 border border-dark-800 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-inner">
             <div className="flex items-center justify-between text-xs text-gray-400 font-bold mb-1.5 sm:mb-2 px-1">
@@ -757,8 +757,8 @@ export const TreasureKeno2D: React.FC = () => {
           </div>
 
           {/* Grid Legend & Status Bar */}
-          <div className="flex items-center justify-between text-[11px] text-gray-400 px-2 pt-1 font-semibold">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-between text-[10px] sm:text-[11px] text-gray-400 px-1 pt-1 font-semibold gap-1.5">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <span className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded bg-purple-600 border border-amber-400 inline-block" />
                 <span>Selected</span>

@@ -950,22 +950,20 @@ export const TreasureChickenRun2D: React.FC = () => {
   return (
     <div className="relative w-full max-w-5xl mx-auto rounded-3xl overflow-hidden bg-gradient-to-b from-[#0a1a12] via-[#08140e] to-[#040806] border-2 border-emerald-600/40 shadow-[0_0_60px_rgba(16,185,129,0.25)] text-white select-none">
       {/* ─── RETRO CARTOON HEADER ─────────────────────────────────────────── */}
-      <div className="relative px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3 border-b border-emerald-900/60 bg-black/50 backdrop-blur-md">
+      <div className="relative px-3 sm:px-6 py-2 sm:py-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 border-b border-emerald-900/60 bg-black/50 backdrop-blur-md">
         {/* Logo & Game Title */}
-        <div className="flex items-center space-x-3 sm:space-x-4">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 p-0.5 shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-yellow-200">
-            <div className="w-full h-full rounded-2xl bg-[#0d2818] flex items-center justify-center overflow-hidden">
-              <Realistic3DChicken isJumping={false} isBusted={false} isVictory={false} scale={0.7} />
+        <div className="flex items-center space-x-2.5 sm:space-x-4">
+          <div className="w-9 h-9 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 p-0.5 shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-yellow-200">
+            <div className="w-full h-full rounded-xl sm:rounded-2xl bg-[#0d2818] flex items-center justify-center overflow-hidden">
+              <Realistic3DChicken isJumping={false} isBusted={false} isVictory={false} scale={0.65} />
             </div>
           </div>
           <div className="flex flex-col">
-            <h1 className="text-lg sm:text-xl md:text-2xl font-black tracking-wider uppercase bg-gradient-to-r from-yellow-300 via-amber-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(251,191,36,0.4)]">
-              TREASURE CHICKEN RUN
+            <h1 className="text-sm sm:text-xl md:text-2xl font-black tracking-wider uppercase bg-gradient-to-r from-yellow-300 via-amber-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(251,191,36,0.4)]">
+              CHICKEN RUN
             </h1>
-            <span className="text-[10px] sm:text-xs text-emerald-300 font-mono tracking-widest flex items-center space-x-1">
-              <span>24 STEP ROAD</span>
-              <span>•</span>
-              <span>96.0% RTP</span>
+            <span className="text-[9px] sm:text-xs text-emerald-300 font-mono tracking-widest flex items-center space-x-1">
+              <span>24 STEPS</span>
               <span>•</span>
               <span className="text-yellow-400">UP TO 100,000X</span>
             </span>
@@ -1098,24 +1096,24 @@ export const TreasureChickenRun2D: React.FC = () => {
           </div>
 
           {/* Stepping Path Tiles Row */}
-          <div className="flex items-end space-x-2.5 sm:space-x-3.5 min-w-max pb-2 pt-16 px-4">
+          <div className="flex items-end space-x-2 sm:space-x-3.5 min-w-max pb-2 pt-14 sm:pt-16 px-2 sm:px-4">
             {/* START PAD */}
             <div
               data-tile-index="0"
-              className={`relative flex flex-col items-center justify-center w-20 h-28 rounded-2xl border-2 transition-all duration-300 ${
+              className={`relative flex flex-col items-center justify-center w-16 h-24 sm:w-20 sm:h-28 rounded-2xl border-2 transition-all duration-300 shrink-0 ${
                 currentStep === 0
                   ? 'border-yellow-400 bg-amber-500/20 shadow-[0_0_20px_rgba(251,191,36,0.6)]'
                   : 'border-emerald-800/60 bg-black/40 text-gray-500'
               }`}
             >
               {currentStep === 0 && (
-                <div className="absolute -top-16 z-20">
-                  <Realistic3DChicken isJumping={isJumping} isBusted={isBusted} isVictory={isVictory} scale={1.05} />
+                <div className="absolute -top-14 sm:-top-16 z-20">
+                  <Realistic3DChicken isJumping={isJumping} isBusted={isBusted} isVictory={isVictory} scale={0.88} />
                 </div>
               )}
-              <span className="text-[10px] font-mono font-bold uppercase text-yellow-300">START</span>
-              <span className="text-xs font-mono font-black text-gray-300">BASE</span>
-              <span className="text-[9px] text-gray-400">1.00x</span>
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase text-yellow-300">START</span>
+              <span className="text-[11px] sm:text-xs font-mono font-black text-gray-300">BASE</span>
+              <span className="text-[8px] sm:text-[9px] text-gray-400">1.00x</span>
             </div>
 
             {/* TILES 1 to 24 */}
@@ -1130,7 +1128,7 @@ export const TreasureChickenRun2D: React.FC = () => {
                 <div
                   key={`tile-${stepNumber}`}
                   data-tile-index={stepNumber}
-                  className={`relative flex flex-col items-center justify-between w-20 h-28 p-2 rounded-2xl border-2 transition-all duration-300 ${
+                  className={`relative flex flex-col items-center justify-between w-16 h-24 sm:w-20 sm:h-28 p-1.5 sm:p-2 rounded-2xl border-2 transition-all duration-300 shrink-0 ${
                     isChickenHere
                       ? 'border-yellow-400 bg-gradient-to-b from-amber-500/30 to-emerald-900/60 shadow-[0_0_25px_rgba(251,191,36,0.8)] scale-105 z-10'
                       : isPassed
@@ -1142,8 +1140,8 @@ export const TreasureChickenRun2D: React.FC = () => {
                 >
                   {/* Chicken positioned on active tile */}
                   {isChickenHere && (
-                    <div className="absolute -top-16 z-20">
-                      <Realistic3DChicken isJumping={isJumping} isBusted={isBusted} isVictory={isVictory} scale={1.05} />
+                    <div className="absolute -top-14 sm:-top-16 z-20">
+                      <Realistic3DChicken isJumping={isJumping} isBusted={isBusted} isVictory={isVictory} scale={0.88} />
                     </div>
                   )}
 
