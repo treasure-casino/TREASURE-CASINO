@@ -5,13 +5,6 @@ import { getUsers, getUserDetails, updateUserStatus } from '../../controllers/ad
 import { getAdminDeposits, getAdminWithdrawals, reviewWithdrawal } from '../../controllers/admin/admin.finance.controller';
 import { getAdminGames, createGame, updateGame, getAdminProviders } from '../../controllers/admin/admin.games.controller';
 import { getAuditLogs, getSettings, updateSetting } from '../../controllers/admin/admin.system.controller';
-import {
-  getGameProbabilities,
-  updateGameProbability,
-  resetGameProbabilities,
-  runProbabilitySimulationPreview,
-  getProbabilityAuditLogs,
-} from '../../controllers/admin/admin.probability.controller';
 import { adminAuthenticate } from '../../middleware/adminAuth';
 
 const router = Router();
@@ -48,13 +41,6 @@ router.get('/games/providers', getAdminProviders);
 router.get('/audit-logs', getAuditLogs);
 router.get('/settings', getSettings);
 router.put('/settings', updateSetting);
-
-// Game Probability Settings (Demo / Simulation Mode Only)
-router.get('/probability-settings', getGameProbabilities);
-router.put('/probability-settings', updateGameProbability);
-router.post('/probability-settings/reset', resetGameProbabilities);
-router.post('/probability-settings/simulate', runProbabilitySimulationPreview);
-router.get('/probability-settings/audit-logs', getProbabilityAuditLogs);
 
 export default router;
 

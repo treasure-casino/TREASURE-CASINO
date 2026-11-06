@@ -15,7 +15,6 @@ import {
   Layers,
   Trophy,
   Zap,
-  Sliders,
   X,
 } from 'lucide-react';
 
@@ -45,7 +44,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
       items: [
         { label: 'Player Game Lobby', path: '/lobby', icon: Gamepad2 },
         { label: 'Game Catalogue', path: '/games', icon: Gamepad2 },
-        { label: 'Probability Settings', path: '/games/probability', icon: Sliders },
         { label: 'Vortex Monitor', path: '/games/vortex', icon: Sparkles },
         { label: 'Spiral Monitor', path: '/games/spiral', icon: Layers },
         { label: 'Keno Monitor', path: '/games/keno', icon: Trophy },
