@@ -22,6 +22,7 @@ import { KenoAdminPage } from './pages/games/KenoAdminPage';
 import { HiloAdminPage } from './pages/games/HiloAdminPage';
 import { HotlineAdminPage } from './pages/games/HotlineAdminPage';
 import { ChickenRunAdminPage } from './pages/games/ChickenRunAdminPage';
+import { GameProbabilityPage } from './pages/games/GameProbabilityPage';
 
 export const App: React.FC = () => {
   return (
@@ -50,6 +51,7 @@ export const App: React.FC = () => {
             <Route path="finance/deposits" element={<FinanceDepositsPage />} />
             <Route path="finance/withdrawals" element={<FinanceWithdrawalsPage />} />
             <Route path="games" element={<GamesPage />} />
+            <Route path="games/probability" element={<GameProbabilityPage />} />
             <Route path="games/vortex" element={<VortexAdminPage />} />
             <Route path="games/vortex/play" element={<VortexPage />} />
             <Route path="games/spiral" element={<SpiralAdminPage />} />
