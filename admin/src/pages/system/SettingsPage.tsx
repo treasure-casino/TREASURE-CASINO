@@ -142,20 +142,20 @@ export const SettingsPage: React.FC = () => {
                     <div className="text-xs text-gray-400 mt-0.5">{setting.description || 'System setting'}</div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
                     <input
                       type="text"
                       value={formValues[setting.key] ?? setting.value}
                       onChange={(e) =>
                         setFormValues({ ...formValues, [setting.key]: e.target.value })
                       }
-                      className="w-48 bg-dark-900 border border-dark-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold font-mono"
+                      className="flex-1 sm:w-48 bg-dark-900 border border-dark-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold font-mono min-w-0"
                     />
 
                     <button
                       onClick={() => handleUpdate(setting.key)}
                       disabled={savingKey === setting.key}
-                      className="px-3.5 py-2 bg-dark-800 hover:bg-dark-700 border border-dark-700 hover:border-gold/50 rounded-lg text-xs font-semibold text-gold transition flex items-center gap-1.5 disabled:opacity-50"
+                      className="px-3.5 py-2 bg-dark-800 hover:bg-dark-700 border border-dark-700 hover:border-gold/50 rounded-lg text-xs font-semibold text-gold transition flex items-center gap-1.5 disabled:opacity-50 shrink-0"
                     >
                       {savingKey === setting.key ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />

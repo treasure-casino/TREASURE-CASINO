@@ -845,7 +845,7 @@ export const TreasureBlackjack2D: React.FC = () => {
 
       {/* ── Main Casino Felt Table ── */}
       <div
-        className={`relative w-full rounded-3xl border-4 border-[#2b1f14] shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col justify-between p-4 sm:p-6 md:p-8 min-h-[460px] md:min-h-[520px] transition-all duration-500 ${
+        className={`relative w-full rounded-2xl sm:rounded-3xl border-4 border-[#2b1f14] shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col justify-between p-3.5 sm:p-6 md:p-8 min-h-[380px] sm:min-h-[460px] md:min-h-[520px] transition-all duration-500 ${
           isWinningRound ? 'win-table-glow' : ''
         }`}
         style={{
@@ -1069,15 +1069,15 @@ export const TreasureBlackjack2D: React.FC = () => {
       </div>
 
       {/* ── Bottom Controls: Chips, Bet, Action Buttons ── */}
-      <div className="w-full mt-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="w-full mt-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl p-3 sm:p-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
         {/* Left: Quick Bet Chips (Active before deal) */}
-        <div className="flex flex-col gap-1.5 w-full md:w-auto">
+        <div className="flex flex-col gap-1 w-full md:w-auto">
           <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">
             <span>BET AMOUNT</span>
-            <span className="font-mono text-gold">Min: ₹{config.minBet} • Max: ₹{config.maxBet}</span>
+            <span className="font-mono text-gold text-[11px] sm:text-xs">Min: ₹{config.minBet} • Max: ₹{config.maxBet}</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar">
             {QUICK_CHIPS.map((chip) => (
               <button
                 key={chip}
@@ -1086,7 +1086,7 @@ export const TreasureBlackjack2D: React.FC = () => {
                   audio.playChip();
                   setBetAmount(chip);
                 }}
-                className={`px-2.5 py-1.5 rounded-xl text-xs font-extrabold font-mono transition border ${
+                className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl text-xs font-extrabold font-mono transition border shrink-0 ${
                   betAmount === chip
                     ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-black border-yellow-200 shadow-md scale-105'
                     : 'bg-dark-800 hover:bg-dark-750 text-gray-300 border-dark-700 disabled:opacity-40'
@@ -1097,7 +1097,7 @@ export const TreasureBlackjack2D: React.FC = () => {
             ))}
 
             {/* Bet Step Increment/Decrement Controls */}
-            <div className="flex items-center bg-dark-800 border border-dark-700 rounded-xl px-2 py-1 ml-2">
+            <div className="flex items-center bg-dark-800 border border-dark-700 rounded-xl px-1.5 sm:px-2 py-0.5 sm:py-1 ml-1 sm:ml-2 shrink-0">
               <button
                 disabled={isRoundActive || isActionDisabled || betAmount <= config.minBet}
                 onClick={() => {
@@ -1108,7 +1108,7 @@ export const TreasureBlackjack2D: React.FC = () => {
               >
                 −
               </button>
-              <span className="font-mono text-xs font-black text-gold px-2">₹{betAmount}</span>
+              <span className="font-mono text-xs font-black text-gold px-1.5 sm:px-2">₹{betAmount}</span>
               <button
                 disabled={isRoundActive || isActionDisabled || betAmount >= config.maxBet}
                 onClick={() => {
@@ -1124,16 +1124,16 @@ export const TreasureBlackjack2D: React.FC = () => {
         </div>
 
         {/* Right: In-Play Actions (HIT, STAND, DOUBLE) OR Big DEAL Button */}
-        <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
+        <div className="flex items-center gap-2 sm:gap-2.5 w-full md:w-auto justify-end">
           {isRoundActive ? (
             <>
               {/* HIT BUTTON */}
               <button
                 onClick={handleHit}
                 disabled={isActionDisabled || !round?.canHit}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-extrabold text-sm uppercase shadow-lg shadow-emerald-950/40 transition active:scale-95 disabled:opacity-40"
+                className="flex-1 md:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-extrabold text-xs sm:text-sm uppercase shadow-lg shadow-emerald-950/40 transition active:scale-95 disabled:opacity-40"
               >
-                <PlusCircle className="w-4 h-4" />
+                <PlusCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>HIT</span>
                 <span className="hidden sm:inline text-[10px] font-mono opacity-80">(H)</span>
               </button>
@@ -1142,9 +1142,9 @@ export const TreasureBlackjack2D: React.FC = () => {
               <button
                 onClick={handleStand}
                 disabled={isActionDisabled || !round?.canStand}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-black font-extrabold text-sm uppercase shadow-lg shadow-amber-950/40 transition active:scale-95 disabled:opacity-40"
+                className="flex-1 md:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-black font-extrabold text-xs sm:text-sm uppercase shadow-lg shadow-amber-950/40 transition active:scale-95 disabled:opacity-40"
               >
-                <Hand className="w-4 h-4" />
+                <Hand className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>STAND</span>
                 <span className="hidden sm:inline text-[10px] font-mono opacity-80">(S)</span>
               </button>
@@ -1154,9 +1154,9 @@ export const TreasureBlackjack2D: React.FC = () => {
                 <button
                   onClick={handleDoubleDown}
                   disabled={isActionDisabled || !round?.canDoubleDown || balance < round.betAmount}
-                  className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-sm uppercase shadow-lg shadow-purple-950/40 transition active:scale-95 disabled:opacity-40"
+                  className="flex-1 md:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm uppercase shadow-lg shadow-purple-950/40 transition active:scale-95 disabled:opacity-40"
                 >
-                  <Zap className="w-4 h-4 text-yellow-300" />
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-300" />
                   <span>DOUBLE</span>
                   <span className="hidden sm:inline text-[10px] font-mono opacity-80">(D)</span>
                 </button>
@@ -1167,7 +1167,7 @@ export const TreasureBlackjack2D: React.FC = () => {
             <button
               onClick={handleDeal}
               disabled={isActionDisabled || betAmount > balance}
-              className="w-full md:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-black font-black text-sm uppercase tracking-wider shadow-lg shadow-amber-950/50 transition active:scale-95 disabled:opacity-40"
+              className="w-full md:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-black font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-amber-950/50 transition active:scale-95 disabled:opacity-40"
             >
               <Sparkles className="w-4 h-4" />
               <span>DEAL HAND (₹{betAmount})</span>

@@ -529,14 +529,14 @@ export const TreasureKingdom3D: React.FC = () => {
       <div className="relative flex-1 w-full min-h-0 overflow-hidden">
         <Canvas3DViewport onInit={handleInit} onUpdate={handleUpdate} className="absolute inset-0 w-full h-full">
           {/* Top Brand Banner & Controls */}
-          <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-6 sm:right-6 flex justify-between items-center pointer-events-auto z-30 gap-2">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-dark-900/90 backdrop-blur-md border border-gold/40 rounded-2xl shadow-lg">
-                <Crown className="w-5 h-5 text-gold animate-pulse" />
-                <span className="font-cinzel text-xs sm:text-sm font-black tracking-wider text-gold">
+          <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-6 sm:right-6 flex justify-between items-center pointer-events-auto z-30 gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-dark-900/90 backdrop-blur-md border border-gold/40 rounded-2xl shadow-lg min-w-0">
+                <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-gold animate-pulse shrink-0" />
+                <span className="font-cinzel text-xs sm:text-sm font-black tracking-wider text-gold truncate">
                   TREASURE KINGDOM
                 </span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
+                <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30 hidden xs:inline shrink-0">
                   5 REELS • 10 LINES
                 </span>
               </div>
@@ -544,14 +544,14 @@ export const TreasureKingdom3D: React.FC = () => {
               {/* In-Game Sound Toggle */}
               <button
                 onClick={toggleSound}
-                className="p-1.5 bg-dark-900/90 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-gold/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
+                className="p-1.5 sm:p-2 bg-dark-900/90 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-gold/50 rounded-xl text-gray-300 hover:text-white transition shadow-md shrink-0"
                 title={isMuted ? 'Turn Sound ON' : 'Turn Sound OFF'}
               >
                 {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-gold" />}
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               {/* History Ribbon */}
               <div className="hidden sm:flex items-center gap-1 overflow-x-auto max-w-xs py-1">
                 <History className="w-3.5 h-3.5 text-gray-400 mr-1" />
@@ -572,17 +572,17 @@ export const TreasureKingdom3D: React.FC = () => {
               {/* Paytable Button */}
               <button
                 onClick={() => setShowPaytable(!showPaytable)}
-                className="btn-paytable flex items-center gap-1.5 px-3 py-1.5 bg-dark-900/90 hover:bg-dark-800 text-gray-300 hover:text-white rounded-xl text-xs font-semibold border border-dark-700 hover:border-gold/50 transition shadow-md"
+                className="btn-paytable flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-dark-900/90 hover:bg-dark-800 text-gray-300 hover:text-white rounded-xl text-xs font-semibold border border-dark-700 hover:border-gold/50 transition shadow-md"
               >
                 <HelpCircle className="w-4 h-4 text-gold" />
-                <span>Paytable</span>
+                <span className="hidden xs:inline">Paytable</span>
               </button>
             </div>
           </div>
 
           {/* ─── CENTRAL 5x3 SLOT GRID (COMPACT & ELEGANT 25-30% REDUCTION) ──── */}
-          <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 z-20 pointer-events-none">
-            <div className="slot-grid-frame relative w-full max-w-[560px] sm:max-w-[620px] md:max-w-[660px] bg-dark-950/85 backdrop-blur-md border-2 border-amber-500/60 rounded-xl sm:rounded-2xl p-1.5 sm:p-2.5 md:p-3 shadow-2xl shadow-black/80 pointer-events-auto">
+          <div className="absolute inset-0 flex items-center justify-center p-1 sm:p-4 z-20 pointer-events-none">
+            <div className="slot-grid-frame relative w-full max-w-[96%] sm:max-w-[620px] md:max-w-[660px] bg-dark-950/85 backdrop-blur-md border-2 border-amber-500/60 rounded-xl sm:rounded-2xl p-1 sm:p-2.5 md:p-3 shadow-2xl shadow-black/80 pointer-events-auto">
               {/* Aztec Top Header Bar */}
               <div className="flex items-center justify-between mb-1 sm:mb-1.5 px-1 text-[9px] sm:text-[10px] text-amber-400/80 font-cinzel font-bold border-b border-amber-500/20 pb-0.5">
                 <span className="flex items-center gap-1">
@@ -712,23 +712,23 @@ export const TreasureKingdom3D: React.FC = () => {
       </div>
 
       {/* Bottom Control Bar */}
-      <div className="bg-dark-900 border-t border-dark-800 px-3 sm:px-6 py-2 sm:py-2.5 flex flex-wrap items-center justify-between gap-2 z-30 shadow-2xl">
+      <div className="bg-dark-900 border-t border-dark-800 px-2 sm:px-6 py-2 sm:py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2 z-30 shadow-2xl shrink-0">
         {/* Bet Selection & Increase/Decrease Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5">
-          <span className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">Bet</span>
+        <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-1 sm:gap-2">
+          <span className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider shrink-0">Bet</span>
 
           {/* Minus Button */}
           <button
             disabled={isSpinning || betAmount <= 10}
             onClick={() => handleBetChange(-10)}
-            className="btn-bet-minus p-1.5 bg-dark-950 border border-dark-700 hover:border-gold/50 rounded-lg sm:rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition"
+            className="btn-bet-minus p-1.5 bg-dark-950 border border-dark-700 hover:border-gold/50 rounded-lg sm:rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition shrink-0"
             title="Decrease Bet (-₹10)"
           >
             <Minus className="w-3.5 h-3.5" />
           </button>
 
           {/* Quick Bet Chips */}
-          <div className="flex items-center gap-1 bg-dark-950 p-0.5 sm:p-1 rounded-lg sm:rounded-xl border border-dark-700">
+          <div className="flex items-center gap-1 bg-dark-950 p-0.5 sm:p-1 rounded-lg sm:rounded-xl border border-dark-700 overflow-x-auto no-scrollbar">
             {[10, 50, 100, 500, 1000].map((amt) => (
               <button
                 key={amt}
@@ -737,7 +737,7 @@ export const TreasureKingdom3D: React.FC = () => {
                   soundManager.play('buttonClick');
                   setBetAmount(amt);
                 }}
-                className={`btn-chip-${amt} px-2 sm:px-2.5 py-1 rounded-md sm:rounded-lg text-[11px] sm:text-xs font-bold transition ${
+                className={`btn-chip-${amt} px-2 sm:px-2.5 py-1 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-bold transition shrink-0 ${
                   betAmount === amt
                     ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-black shadow-md'
                     : 'text-gray-400 hover:text-white disabled:opacity-40'
@@ -752,7 +752,7 @@ export const TreasureKingdom3D: React.FC = () => {
           <button
             disabled={isSpinning || betAmount >= 5000}
             onClick={() => handleBetChange(10)}
-            className="btn-bet-plus p-1.5 bg-dark-950 border border-dark-700 hover:border-gold/50 rounded-lg sm:rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition"
+            className="btn-bet-plus p-1.5 bg-dark-950 border border-dark-700 hover:border-gold/50 rounded-lg sm:rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition shrink-0"
             title="Increase Bet (+₹10)"
           >
             <Plus className="w-3.5 h-3.5" />
@@ -760,10 +760,10 @@ export const TreasureKingdom3D: React.FC = () => {
         </div>
 
         {/* Win & Spin Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2 sm:gap-3">
           {/* Total Win Status */}
-          <div className="hidden sm:flex flex-col items-end mr-1">
-            <span className="text-[9px] text-gray-400 uppercase font-semibold">Last Win</span>
+          <div className="flex flex-col items-start sm:items-end">
+            <span className="text-[8px] sm:text-[9px] text-gray-400 uppercase font-semibold">Last Win</span>
             <span className="text-xs sm:text-sm font-black text-gold">
               ₹{lastWin.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </span>
@@ -772,21 +772,21 @@ export const TreasureKingdom3D: React.FC = () => {
           {/* Autoplay Button */}
           <button
             onClick={() => toggleAutoPlay(25)}
-            className={`btn-auto-spin flex items-center gap-1 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-bold transition ${
+            className={`btn-auto-spin flex items-center gap-1 px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition shrink-0 ${
               autoPlayCount > 0
                 ? 'bg-rose-600 text-white animate-pulse'
                 : 'bg-dark-800 hover:bg-dark-750 text-gray-300 border border-dark-700'
             }`}
           >
             <RotateCw className={`w-3.5 h-3.5 ${autoPlayCount > 0 ? 'animate-spin' : ''}`} />
-            <span>{autoPlayCount > 0 ? `STOP (${autoPlayCount})` : 'AUTO (25)'}</span>
+            <span>{autoPlayCount > 0 ? `STOP (${autoPlayCount})` : 'AUTO'}</span>
           </button>
 
           {/* Master Spin Button */}
           <button
             disabled={isSpinning || balance < betAmount}
             onClick={spin}
-            className={`btn-spin flex items-center gap-1.5 px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all duration-200 shadow-lg ${
+            className={`btn-spin flex items-center justify-center gap-1.5 flex-1 sm:flex-none px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all duration-200 shadow-lg ${
               isSpinning || balance < betAmount
                 ? 'bg-dark-800 text-gray-500 cursor-not-allowed border border-dark-700'
                 : 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-black shadow-gold/25 hover:scale-105 active:scale-95'

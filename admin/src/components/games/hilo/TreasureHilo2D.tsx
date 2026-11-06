@@ -501,9 +501,9 @@ export const TreasureHilo2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Table & HUD ── */}
-      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Actions HUD */}
-        <div className="lg:col-span-4 flex flex-col gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-3xl p-4 sm:p-5 shadow-2xl">
+        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl">
           {/* Current Bet Input */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center text-xs font-bold text-gray-400">
@@ -718,7 +718,7 @@ export const TreasureHilo2D: React.FC = () => {
         </div>
 
         {/* Right Side (8 Cols): Felt Gaming Arena */}
-        <div className="lg:col-span-8 flex flex-col items-center justify-between bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border border-purple-500/20 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden min-h-[460px]">
+        <div className="order-1 lg:order-2 lg:col-span-8 flex flex-col items-center justify-between bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border border-purple-500/20 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl relative overflow-hidden min-h-[320px] sm:min-h-[460px]">
           {/* Table Background Accent Felt Border */}
           <div className="absolute inset-2 sm:inset-4 rounded-2xl border-2 border-gold/20 pointer-events-none bg-[radial-gradient(#a855f7_0.7px,transparent_0.7px)] [background-size:16px_16px] opacity-20" />
 

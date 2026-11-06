@@ -101,28 +101,29 @@ export const UserDetailPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Back button & Title */}
-      <div className="flex items-center justify-between pb-6 border-b border-dark-800">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-dark-800">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <Link
             to="/users"
-            className="p-2 bg-dark-900 border border-dark-700 hover:border-gold/50 rounded-xl text-gray-400 hover:text-white transition"
+            className="p-2 bg-dark-900 border border-dark-700 hover:border-gold/50 rounded-xl text-gray-400 hover:text-white transition shrink-0"
+            title="Return to Users"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-black text-white font-cinzel">{userData.email}</h1>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-black text-white font-cinzel truncate max-w-xs sm:max-w-md">{userData.email}</h1>
               <Badge status={userData.status} />
             </div>
-            <p className="text-xs text-gray-400 mt-1 font-mono">User ID: {userData.id}</p>
+            <p className="text-xs text-gray-400 mt-1 font-mono truncate">User ID: {userData.id}</p>
           </div>
         </div>
 
         <button
           onClick={() => setStatusModalOpen(true)}
-          className="px-4 py-2 bg-dark-800 hover:bg-dark-750 border border-amber-600/50 hover:border-amber-500 text-amber-400 rounded-xl text-xs font-semibold flex items-center gap-2 transition"
+          className="self-start sm:self-auto px-4 py-2 bg-dark-800 hover:bg-dark-750 border border-amber-600/50 hover:border-amber-500 text-amber-400 rounded-xl text-xs font-semibold flex items-center gap-2 transition"
         >
-          <ShieldAlert className="w-4 h-4" />
+          <ShieldAlert className="w-4 h-4 shrink-0" />
           <span>Change Account Status</span>
         </button>
       </div>

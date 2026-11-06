@@ -459,9 +459,9 @@ export const TreasureKeno2D: React.FC = () => {
       </div>
 
       {/* ── Main Arena: Board & Controls Grid ── */}
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4">
         {/* Left Side (4 Cols): Betting & Payout Table HUD */}
-        <div className="lg:col-span-4 flex flex-col gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-3xl p-4 sm:p-5 shadow-2xl">
+        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-3 bg-dark-900/90 backdrop-blur border border-dark-800 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-2xl">
           {/* Bet Amount Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs text-gray-400 font-semibold px-1">
@@ -687,27 +687,27 @@ export const TreasureKeno2D: React.FC = () => {
         </div>
 
         {/* Right Side (8 Cols): 1–80 Keno Board & Drawn Tray */}
-        <div className="lg:col-span-8 flex flex-col gap-3 bg-dark-950 rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-3 sm:p-5">
+        <div className="order-1 lg:order-2 lg:col-span-8 flex flex-col gap-2.5 sm:gap-3 bg-dark-950 rounded-2xl sm:rounded-3xl border-4 border-[#251d14] shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-2.5 sm:p-5">
           {/* Top Drawn Tray (20 Drawn Ball Indicators) */}
-          <div className="w-full bg-dark-900/90 border border-dark-800 rounded-2xl p-2.5 sm:p-3 shadow-inner">
-            <div className="flex items-center justify-between text-xs text-gray-400 font-bold mb-2 px-1">
+          <div className="w-full bg-dark-900/90 border border-dark-800 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-inner">
+            <div className="flex items-center justify-between text-xs text-gray-400 font-bold mb-1.5 sm:mb-2 px-1">
               <span className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-gold" />
-                <span>DRAWN NUMBERS ({drawnSoFar.length} / 20)</span>
+                <span>DRAWN ({drawnSoFar.length} / 20)</span>
               </span>
               <span className="font-mono text-gold">
                 {currentMatchesCount} MATCH{currentMatchesCount === 1 ? '' : 'ES'}
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 min-h-[38px] px-1">
+            <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1 min-h-[38px] px-1 no-scrollbar">
               {drawnSoFar.length > 0 ? (
                 drawnSoFar.map((ballNum, idx) => {
                   const isHit = selectedNumbers.includes(ballNum);
                   return (
                     <div
                       key={`drawn-${idx}-${ballNum}`}
-                      className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-mono font-black text-xs shadow-lg transition-transform animate-in zoom-in-75 duration-200 ${
+                      className={`flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-mono font-black text-[11px] sm:text-xs shadow-lg transition-transform animate-in zoom-in-75 duration-200 ${
                         isHit
                           ? 'bg-gradient-to-tr from-amber-500 to-yellow-300 text-black border-2 border-yellow-100 shadow-yellow-500/50 scale-110'
                           : 'bg-dark-800 text-cyan-300 border border-cyan-500/40'
@@ -726,7 +726,7 @@ export const TreasureKeno2D: React.FC = () => {
           </div>
 
           {/* 1–80 Keno Interactive Tile Grid (10 Columns x 8 Rows) */}
-          <div className="w-full grid grid-cols-10 gap-1 sm:gap-1.5 p-1 sm:p-2 bg-dark-900/60 rounded-2xl border border-dark-800/80">
+          <div className="w-full grid grid-cols-10 gap-0.5 sm:gap-1.5 p-1 sm:p-2 bg-dark-900/60 rounded-xl sm:rounded-2xl border border-dark-800/80">
             {ALL_NUMBERS.map((num) => {
               const isSelected = selectedNumbers.includes(num);
               const isDrawn = drawnSoFar.includes(num);
@@ -737,7 +737,7 @@ export const TreasureKeno2D: React.FC = () => {
                   key={num}
                   disabled={isDrawing}
                   onClick={() => toggleNumber(num)}
-                  className={`aspect-square rounded-xl sm:rounded-2xl font-mono font-black text-xs sm:text-sm flex items-center justify-center transition-all duration-200 relative select-none ${
+                  className={`aspect-square rounded-md sm:rounded-xl font-mono font-black text-[10px] sm:text-sm flex items-center justify-center transition-all duration-200 relative select-none ${
                     isHit
                       ? 'bg-gradient-to-tr from-amber-500 to-yellow-300 text-black border-2 border-yellow-200 shadow-[0_0_18px_rgba(234,179,8,0.8)] scale-105 z-10 animate-bounce'
                       : isSelected

@@ -395,34 +395,34 @@ export const TreasureDice2D: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-6 font-sans select-none text-white">
+    <div className="w-full max-w-7xl mx-auto p-2 sm:p-6 space-y-3 sm:space-y-6 font-sans select-none text-white">
       {/* Top Header Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-3 bg-[#0d0d17]/80 backdrop-blur-md border border-purple-900/40 rounded-2xl p-3 sm:p-4 shadow-xl">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-700 via-fuchsia-600 to-amber-400 p-0.5 shadow-lg shadow-purple-500/20">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-3 bg-[#0d0d17]/80 backdrop-blur-md border border-purple-900/40 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 shadow-xl">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-purple-700 via-fuchsia-600 to-amber-400 p-0.5 shadow-lg shadow-purple-500/20">
             <div className="w-full h-full bg-[#0a0a12] rounded-[10px] flex items-center justify-center">
-              <Dices className="w-5 h-5 text-amber-400 animate-pulse" />
+              <Dices className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 animate-pulse" />
             </div>
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg sm:text-xl font-cinzel font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-200 to-amber-300">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <h1 className="text-base sm:text-xl font-cinzel font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-200 to-amber-300">
                 TREASURE DICE
               </h1>
-              <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-purple-950/80 border border-purple-500/40 text-purple-300 uppercase tracking-wide">
-                2D PROVABLY FAIR
+              <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-mono font-bold bg-purple-950/80 border border-purple-500/40 text-purple-300 uppercase tracking-wide">
+                2D FAIR
               </span>
             </div>
-            <p className="text-[11px] text-gray-400 font-mono">
-              RTP 96.0% • ROLL UNDER / ROLL OVER • INSTANT SETTLEMENT
+            <p className="text-[10px] sm:text-[11px] text-gray-400 font-mono">
+              RTP 96.0% • ROLL UNDER / OVER • INSTANT
             </p>
           </div>
         </div>
 
         {/* Recent History Badges */}
-        <div className="w-full md:w-auto flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-none">
-          <div className="flex items-center gap-1 text-[11px] font-mono text-gray-400 mr-2 flex-shrink-0">
-            <History className="w-3.5 h-3.5 text-purple-400" />
+        <div className="w-full md:w-auto flex items-center gap-1 sm:gap-1.5 overflow-x-auto py-1 no-scrollbar">
+          <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-mono text-gray-400 mr-1.5 flex-shrink-0">
+            <History className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400" />
             <span>RECENT:</span>
           </div>
           {history.length === 0 ? (
@@ -432,7 +432,7 @@ export const TreasureDice2D: React.FC = () => {
               <span
                 key={item.id || idx}
                 id={`dice-history-pill-${idx}`}
-                className={`px-2.5 py-1 rounded-lg text-xs font-mono font-black border transition-all flex-shrink-0 ${
+                className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-mono font-black border transition-all flex-shrink-0 ${
                   item.isWin
                     ? 'bg-emerald-950/70 border-emerald-500/60 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
                     : 'bg-rose-950/70 border-rose-500/60 text-rose-300 shadow-[0_0_10px_rgba(244,63,94,0.3)]'
@@ -447,46 +447,46 @@ export const TreasureDice2D: React.FC = () => {
       </div>
 
       {/* Main Game Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6">
         {/* Left Arena Cockpit: Dice Board */}
-        <div className="lg:col-span-8 flex flex-col justify-between bg-gradient-to-b from-[#0e0e1a] via-[#090913] to-[#06060c] border border-purple-900/40 rounded-3xl p-4 sm:p-8 relative overflow-hidden shadow-2xl min-h-[380px] sm:min-h-[460px]">
+        <div className="lg:col-span-8 flex flex-col justify-between bg-gradient-to-b from-[#0e0e1a] via-[#090913] to-[#06060c] border border-purple-900/40 rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 relative overflow-hidden shadow-2xl min-h-[320px] sm:min-h-[460px]">
           {/* Ambient Lighting */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full pointer-events-none" />
           <div className="absolute top-10 right-10 w-48 h-48 bg-amber-500/10 blur-[90px] rounded-full pointer-events-none" />
 
           {/* Top HUD: Multiplier, Win Chance, Roll Mode */}
-          <div className="relative z-10 grid grid-cols-3 gap-2 border-b border-purple-900/30 pb-4 text-center">
-            <div className="bg-dark-950/80 p-2.5 rounded-2xl border border-purple-900/40">
-              <span className="text-[10px] uppercase font-mono font-bold text-gray-400 block">
+          <div className="relative z-10 grid grid-cols-3 gap-1.5 sm:gap-2 border-b border-purple-900/30 pb-3 sm:pb-4 text-center">
+            <div className="bg-dark-950/80 p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl border border-purple-900/40">
+              <span className="text-[8px] sm:text-[10px] uppercase font-mono font-bold text-gray-400 block">
                 MULTIPLIER
               </span>
               <span
                 id="dice-multiplier-badge"
-                className="text-base sm:text-lg font-mono font-black text-amber-300"
+                className="text-xs sm:text-lg font-mono font-black text-amber-300"
               >
                 {multiplier.toFixed(2)}x
               </span>
             </div>
 
-            <div className="bg-dark-950/80 p-2.5 rounded-2xl border border-purple-900/40">
-              <span className="text-[10px] uppercase font-mono font-bold text-gray-400 block">
+            <div className="bg-dark-950/80 p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl border border-purple-900/40">
+              <span className="text-[8px] sm:text-[10px] uppercase font-mono font-bold text-gray-400 block">
                 WIN CHANCE
               </span>
               <span
                 id="dice-win-chance-badge"
-                className="text-base sm:text-lg font-mono font-black text-emerald-400"
+                className="text-xs sm:text-lg font-mono font-black text-emerald-400"
               >
                 {winChance.toFixed(2)}%
               </span>
             </div>
 
-            <div className="bg-dark-950/80 p-2.5 rounded-2xl border border-purple-900/40">
-              <span className="text-[10px] uppercase font-mono font-bold text-gray-400 block">
+            <div className="bg-dark-950/80 p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl border border-purple-900/40">
+              <span className="text-[8px] sm:text-[10px] uppercase font-mono font-bold text-gray-400 block">
                 TARGET ({mode === 'ROLL_UNDER' ? '<' : '>'})
               </span>
               <span
                 id="dice-target-badge"
-                className="text-base sm:text-lg font-mono font-black text-purple-300"
+                className="text-xs sm:text-lg font-mono font-black text-purple-300"
               >
                 {target.toFixed(2)}
               </span>

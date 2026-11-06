@@ -1036,8 +1036,8 @@ export const TreasureChickenRun2D: React.FC = () => {
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:20px_20px]" />
 
         {/* Difficulty Banner Selector */}
-        <div className="w-full max-w-4xl mb-4 flex flex-wrap items-center justify-between gap-2 p-1.5 rounded-2xl bg-black/60 border border-emerald-900/60 backdrop-blur-md">
-          <div className="flex items-center space-x-1 sm:space-x-2">
+        <div className="w-full max-w-4xl mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-2 p-1.5 rounded-2xl bg-black/60 border border-emerald-900/60 backdrop-blur-md">
+          <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar max-w-full">
             {(['EASY', 'MEDIUM', 'HARD', 'HARDCORE'] as ChickenDifficulty[]).map((d) => {
               const cfg = gameConfig?.difficulties[d];
               const isSelected = difficulty === d;
@@ -1049,7 +1049,7 @@ export const TreasureChickenRun2D: React.FC = () => {
                     audio.playClick();
                     setDifficulty(d);
                   }}
-                  className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition-all flex items-center space-x-1.5 disabled:opacity-40 disabled:cursor-not-allowed ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl font-mono text-xs font-bold transition-all flex items-center space-x-1 sm:space-x-1.5 disabled:opacity-40 disabled:cursor-not-allowed shrink-0 ${
                     isSelected
                       ? d === 'EASY'
                         ? 'bg-emerald-600 text-white shadow-[0_0_14px_rgba(16,185,129,0.7)]'
@@ -1202,15 +1202,15 @@ export const TreasureChickenRun2D: React.FC = () => {
       </div>
 
       {/* ─── CONTROLS CONSOLE ──────────────────────────────────────────────── */}
-      <div className="p-4 sm:p-6 bg-black/70 border-t border-emerald-900/60 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="p-3 sm:p-6 bg-black/70 border-t border-emerald-900/60 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
         {/* Bet Adjustments */}
-        <div className="flex flex-col space-y-1.5 w-full md:w-auto">
+        <div className="flex flex-col space-y-1 w-full md:w-auto">
           <div className="flex items-center justify-between">
             <label className="text-[10px] uppercase font-mono tracking-widest text-gray-400">
-              DEMO BET AMOUNT (₹)
+              DEMO BET (₹)
             </label>
             <span className="text-[10px] font-mono text-emerald-400">
-              POTENTIAL PAYOUT:{' '}
+              POTENTIAL:{' '}
               <strong className="text-white">
                 ₹{((roundStatus === 'ACTIVE' ? currentMultiplier : tiles[0]?.multiplier || 1.14) * betAmount).toFixed(
                   2
@@ -1219,7 +1219,7 @@ export const TreasureChickenRun2D: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center space-x-1.5">
+          <div className="flex items-center space-x-1 sm:space-x-1.5 overflow-x-auto no-scrollbar">
             <button
               disabled={roundStatus === 'ACTIVE' || isAutoPlayActive}
               onClick={() => setBetAmount(10)}
@@ -1324,15 +1324,15 @@ export const TreasureChickenRun2D: React.FC = () => {
               )
             )}
 
-            {/* Active Round: STEP or CASHOUT Buttons (Reduced 35-40% with subtle gold styling) */}
+            {/* Active Round: STEP or CASHOUT Buttons */}
             {roundStatus === 'ACTIVE' ? (
-              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 {/* COMPACT HOP FORWARD BUTTON */}
                 <button
                   data-testid="chicken-step-button"
                   disabled={isActionPending}
                   onClick={handleStepForward}
-                  className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm tracking-wide uppercase text-stone-900 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 border border-yellow-300/80 shadow-[0_0_12px_rgba(251,191,36,0.35)] active:scale-95 transition-all flex items-center space-x-1.5 disabled:opacity-50"
+                  className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm tracking-wide uppercase text-stone-900 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 border border-yellow-300/80 shadow-[0_0_12px_rgba(251,191,36,0.35)] active:scale-95 transition-all flex items-center justify-center space-x-1.5 disabled:opacity-50"
                   title="Hop chicken forward one tile"
                 >
                   <ArrowRight className="w-4 h-4 text-stone-900" />
@@ -1344,7 +1344,7 @@ export const TreasureChickenRun2D: React.FC = () => {
                   data-testid="chicken-cashout-button"
                   disabled={isActionPending || currentStep < 1}
                   onClick={handleCashout}
-                  className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm tracking-wide uppercase transition-all flex items-center space-x-1.5 active:scale-95 ${
+                  className={`flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm tracking-wide uppercase transition-all flex items-center justify-center space-x-1.5 active:scale-95 ${
                     currentStep >= 1
                       ? 'text-stone-950 bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 hover:from-yellow-200 hover:to-amber-300 border border-yellow-200/90 shadow-[0_0_15px_rgba(251,191,36,0.45)] animate-pulse hover:scale-105'
                       : 'bg-stone-800/80 text-stone-500 border border-stone-700/50 opacity-40 cursor-not-allowed shadow-none'
@@ -1356,12 +1356,12 @@ export const TreasureChickenRun2D: React.FC = () => {
                 </button>
               </div>
             ) : (
-              /* COMPACT START RUN BUTTON */
+              /* START RUN BUTTON */
               <button
                 data-testid="chicken-start-button"
                 disabled={isActionPending || isAutoPlayActive || balance < betAmount}
                 onClick={handleStartRun}
-                className="px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-950 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-300 border border-yellow-200/90 shadow-[0_0_15px_rgba(251,191,36,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-950 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-300 border border-yellow-200/90 shadow-[0_0_15px_rgba(251,191,36,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <Play className="w-4 h-4 fill-stone-950" />
                 <span>START RUN (₹{betAmount})</span>

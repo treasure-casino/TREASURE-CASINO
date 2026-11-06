@@ -452,14 +452,14 @@ export const CrystalMines3D: React.FC = () => {
       >
         <Canvas3DViewport onInit={handleInit} onUpdate={handleUpdate} className="absolute inset-0 w-full h-full">
           {/* Top Brand Banner & Multiplier Stats */}
-          <div className="absolute top-4 left-6 right-6 flex items-center justify-between pointer-events-auto">
+          <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-6 sm:right-6 flex items-center justify-between pointer-events-auto gap-2">
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-dark-900/85 backdrop-blur-md border border-fuchsia-500/40 rounded-xl shadow-lg">
-                <Gem className="w-4 h-4 text-fuchsia-400 animate-pulse" />
-                <span className="font-cinzel text-xs font-black tracking-wider text-fuchsia-300">
-                  CRYSTAL MINES 3D
+              <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-dark-900/85 backdrop-blur-md border border-fuchsia-500/40 rounded-xl shadow-lg">
+                <Gem className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-fuchsia-400 animate-pulse" />
+                <span className="font-cinzel text-[11px] sm:text-xs font-black tracking-wider text-fuchsia-300">
+                  CRYSTAL MINES
                 </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 font-bold">
+                <span className="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 font-bold">
                   PUZZLE & MINES
                 </span>
               </div>
@@ -467,15 +467,15 @@ export const CrystalMines3D: React.FC = () => {
 
             {/* Active Multiplier Progression Card */}
             {isPlaying && (
-              <div className="flex items-center gap-3 px-4 py-1.5 bg-dark-900/90 border border-fuchsia-500/40 rounded-xl shadow-xl">
+              <div className="flex items-center gap-2 sm:gap-3 px-2.5 sm:px-4 py-1 sm:py-1.5 bg-dark-900/90 border border-fuchsia-500/40 rounded-xl shadow-xl">
                 <div>
-                  <div className="text-[10px] text-gray-400 uppercase font-semibold">Current</div>
-                  <div className="text-sm font-extrabold text-emerald-400">{currentMultiplier.toFixed(2)}x</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-semibold">Current</div>
+                  <div className="text-xs sm:text-sm font-extrabold text-emerald-400">{currentMultiplier.toFixed(2)}x</div>
                 </div>
-                <div className="w-px h-6 bg-dark-700" />
+                <div className="w-px h-5 sm:h-6 bg-dark-700" />
                 <div>
-                  <div className="text-[10px] text-gray-400 uppercase font-semibold">Next Tile</div>
-                  <div className="text-sm font-extrabold text-cyan-300">{nextMultiplier.toFixed(2)}x</div>
+                  <div className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-semibold">Next</div>
+                  <div className="text-xs sm:text-sm font-extrabold text-cyan-300">{nextMultiplier.toFixed(2)}x</div>
                 </div>
               </div>
             )}
@@ -483,11 +483,11 @@ export const CrystalMines3D: React.FC = () => {
 
           {/* Win/Loss Status Banner */}
           {lastWinAmount > 0 && (
-            <div className="absolute top-20 left-1/2 -translate-x-1/2 px-8 py-3 bg-gradient-to-r from-emerald-600/90 via-teal-500/95 to-emerald-600/90 border-2 border-emerald-400 rounded-3xl shadow-2xl shadow-emerald-500/30 text-center animate-bounce pointer-events-none z-20">
-              <div className="text-[11px] font-extrabold text-black uppercase tracking-widest">
+            <div className="absolute top-16 sm:top-20 left-1/2 -translate-x-1/2 px-5 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-emerald-600/90 via-teal-500/95 to-emerald-600/90 border-2 border-emerald-400 rounded-2xl sm:rounded-3xl shadow-2xl shadow-emerald-500/30 text-center animate-bounce pointer-events-none z-20">
+              <div className="text-[10px] sm:text-[11px] font-extrabold text-black uppercase tracking-widest">
                 CAVERN CONQUERED!
               </div>
-              <div className="text-2xl font-black font-cinzel text-black">
+              <div className="text-xl sm:text-2xl font-black font-cinzel text-black">
                 +₹{lastWinAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </div>
             </div>
@@ -496,69 +496,71 @@ export const CrystalMines3D: React.FC = () => {
       </div>
 
       {/* Bottom Control Bar */}
-      <div className="bg-dark-900 border-t border-dark-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-20 shadow-2xl">
-        {/* Bet Selection */}
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Bet</span>
-          <div className="flex items-center gap-1.5 bg-dark-950 p-1 rounded-xl border border-dark-700">
-            {[10, 50, 100, 500, 1000].map((amt) => (
-              <button
-                key={amt}
-                disabled={isPlaying}
-                onClick={() => {
-                  soundManager.play('buttonClick');
-                  setBetAmount(amt);
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition ${
-                  betAmount === amt
-                    ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-black shadow-md'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                ₹{amt}
-              </button>
-            ))}
+      <div className="bg-dark-900 border-t border-dark-800 px-3 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 z-20 shadow-2xl">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
+          {/* Bet Selection */}
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">Bet</span>
+            <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 overflow-x-auto no-scrollbar">
+              {[10, 50, 100, 500, 1000].map((amt) => (
+                <button
+                  key={amt}
+                  disabled={isPlaying}
+                  onClick={() => {
+                    soundManager.play('buttonClick');
+                    setBetAmount(amt);
+                  }}
+                  className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition shrink-0 ${
+                    betAmount === amt
+                      ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-black shadow-md'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  ₹{amt}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Mines Selector */}
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Mines</span>
-          <div className="flex items-center gap-1.5 bg-dark-950 p-1 rounded-xl border border-dark-700">
-            {[1, 3, 5, 10].map((m) => (
-              <button
-                key={m}
-                disabled={isPlaying}
-                onClick={() => {
-                  soundManager.play('buttonClick');
-                  setMineCount(m);
-                }}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
-                  mineCount === m
-                    ? 'bg-rose-600 text-white shadow-md'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                <Bomb className="w-3 h-3" />
-                <span>{m}</span>
-              </button>
-            ))}
+          {/* Mines Selector */}
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">Mines</span>
+            <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700">
+              {[1, 3, 5, 10].map((m) => (
+                <button
+                  key={m}
+                  disabled={isPlaying}
+                  onClick={() => {
+                    soundManager.play('buttonClick');
+                    setMineCount(m);
+                  }}
+                  className={`flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition ${
+                    mineCount === m
+                      ? 'bg-rose-600 text-white shadow-md'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <Bomb className="w-3 h-3" />
+                  <span>{m}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Action Button: START GAME or CASHOUT */}
-        <div>
+        <div className="w-full sm:w-auto">
           {isPlaying ? (
             <button
               disabled={revealedCount === 0}
               onClick={cashout}
-              className={`flex items-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-black uppercase tracking-wider transition-all duration-200 shadow-xl ${
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all duration-200 shadow-xl ${
                 revealedCount === 0
                   ? 'bg-dark-800 text-gray-500 cursor-not-allowed border border-dark-700'
                   : 'bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 hover:from-emerald-400 hover:to-green-300 text-black shadow-emerald-500/25 hover:scale-105 active:scale-95 animate-pulse'
               }`}
             >
-              <Sparkles className="w-5 h-5 fill-current" />
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
               <span>
                 {revealedCount === 0
                   ? 'PICK A TILE'
@@ -569,13 +571,13 @@ export const CrystalMines3D: React.FC = () => {
             <button
               disabled={balance < betAmount}
               onClick={startGame}
-              className={`flex items-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-black uppercase tracking-wider transition-all duration-200 shadow-xl ${
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all duration-200 shadow-xl ${
                 balance < betAmount
                   ? 'bg-dark-800 text-gray-500 cursor-not-allowed border border-dark-700'
                   : 'bg-gradient-to-r from-fuchsia-500 via-purple-400 to-pink-500 hover:from-fuchsia-400 hover:to-pink-400 text-black shadow-fuchsia-500/25 hover:scale-105 active:scale-95'
               }`}
             >
-              <Gem className="w-5 h-5" />
+              <Gem className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>START GAME (₹{betAmount})</span>
             </button>
           )}

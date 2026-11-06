@@ -778,17 +778,17 @@ export const SkyRocket3D: React.FC = () => {
   return (
     <div className="relative w-full h-full flex flex-col min-h-0 bg-dark-950 text-white select-none">
       {/* 3D Flight Viewport Area */}
-      <div className="relative flex-1 w-full min-h-0 overflow-hidden">
+      <div className="relative flex-1 w-full min-h-[250px] sm:min-h-0 overflow-hidden">
         <Canvas3DViewport onInit={handleInit} onUpdate={handleUpdate} className="absolute inset-0 w-full h-full">
           {/* Top HUD: Brand, Sound, and Multipliers */}
-          <div className="absolute top-4 left-4 right-4 sm:left-6 sm:right-6 flex items-center justify-between pointer-events-auto z-10 gap-2">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-dark-900/85 backdrop-blur-md border border-cyan-500/40 rounded-xl shadow-lg">
-                <Rocket className="w-4 h-4 text-cyan-400 animate-pulse" />
-                <span className="font-cinzel text-xs font-black tracking-wider text-cyan-300">
-                  SKY ROCKET 3D
+          <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-6 sm:right-6 flex items-center justify-between pointer-events-auto z-10 gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-dark-900/85 backdrop-blur-md border border-cyan-500/40 rounded-xl shadow-lg">
+                <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 animate-pulse" />
+                <span className="font-cinzel text-[11px] sm:text-xs font-black tracking-wider text-cyan-300">
+                  SKY ROCKET
                 </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold">
+                <span className="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold">
                   AVIATOR CRASH
                 </span>
               </div>
@@ -796,30 +796,30 @@ export const SkyRocket3D: React.FC = () => {
               {/* In-Game Sound Toggle */}
               <button
                 onClick={toggleSound}
-                className="p-1.5 bg-dark-900/85 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
+                className="p-1 sm:p-1.5 bg-dark-900/85 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
                 title={isMuted ? 'Turn Sound ON' : 'Turn Sound OFF'}
               >
-                {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
+                {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />}
               </button>
 
               {/* Auto Bet Indicator */}
               {autoBetActive && (
-                <div className="flex items-center gap-1.5 px-3 py-1 bg-amber-500/20 border border-amber-500/50 rounded-xl text-amber-300 text-xs font-bold animate-pulse">
-                  <RotateCcw className="w-3.5 h-3.5 animate-spin" />
-                  <span>AUTO BET: {autoBetRemaining} LEFT</span>
+                <div className="flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-amber-500/20 border border-amber-500/50 rounded-xl text-amber-300 text-[10px] sm:text-xs font-bold animate-pulse">
+                  <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5 animate-spin" />
+                  <span>{autoBetRemaining} LEFT</span>
                 </div>
               )}
             </div>
 
             {/* History Ribbon */}
-            <div className="flex items-center gap-1.5 overflow-x-auto max-w-[200px] sm:max-w-md py-1 scrollbar-none">
+            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-[140px] sm:max-w-md py-1 no-scrollbar">
               <span className="hidden sm:flex items-center gap-1 text-[10px] text-gray-400 font-bold uppercase tracking-wider mr-1">
                 <History className="w-3 h-3 text-gray-500" />
               </span>
               {history.map((h, i) => (
                 <span
                   key={i}
-                  className={`px-2 py-0.5 rounded-lg text-xs font-extrabold shadow-sm whitespace-nowrap ${
+                  className={`px-1.5 sm:px-2 py-0.5 rounded-lg text-[10px] sm:text-xs font-extrabold shadow-sm whitespace-nowrap ${
                     h >= 2.0
                       ? 'bg-emerald-950/80 border border-emerald-500/50 text-emerald-300'
                       : 'bg-rose-950/80 border border-rose-500/50 text-rose-300'
@@ -832,45 +832,45 @@ export const SkyRocket3D: React.FC = () => {
           </div>
 
           {/* Central Live HUD */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-4">
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-3 sm:p-4">
             {gameState === 'IDLE' && nextRoundCountdown === 0 && (
-              <div className="text-center space-y-2">
-                <div className="text-xs uppercase tracking-widest font-bold text-cyan-400">
+              <div className="text-center space-y-1.5 sm:space-y-2">
+                <div className="text-[11px] sm:text-xs uppercase tracking-widest font-bold text-cyan-400">
                   READY FOR LAUNCH
                 </div>
-                <div className="text-5xl sm:text-6xl font-black font-cinzel text-white drop-shadow-lg">
+                <div className="text-4xl sm:text-6xl font-black font-cinzel text-white drop-shadow-lg">
                   1.00x
                 </div>
-                <div className="text-xs text-gray-400">Configure Bet Slot 1 and/or Slot 2 and launch</div>
+                <div className="text-[11px] sm:text-xs text-gray-400">Configure Bet Slot 1 and/or Slot 2 and launch</div>
               </div>
             )}
 
             {nextRoundCountdown > 0 && (
-              <div className="next-round-countdown-overlay text-center space-y-3 pointer-events-auto bg-dark-950/90 backdrop-blur-md px-6 py-5 rounded-3xl border border-cyan-500/40 shadow-2xl max-w-sm mx-auto">
+              <div className="next-round-countdown-overlay text-center space-y-2 sm:space-y-3 pointer-events-auto bg-dark-950/90 backdrop-blur-md px-4 py-3 sm:px-6 sm:py-5 rounded-2xl sm:rounded-3xl border border-cyan-500/40 shadow-2xl max-w-[92%] sm:max-w-sm mx-auto">
                 {/* Last Crash Multiplier */}
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-rose-400">
+                <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-rose-400">
                     ROUND CRASHED AT
                   </span>
-                  <span className="px-2 py-0.5 rounded-lg bg-rose-500/20 border border-rose-500/50 text-rose-300 font-black text-sm">
+                  <span className="px-1.5 py-0.5 rounded-lg bg-rose-500/20 border border-rose-500/50 text-rose-300 font-black text-xs sm:text-sm">
                     {multiplier.toFixed(2)}x
                   </span>
                 </div>
 
                 {/* Next Round Starting Headline */}
-                <div className="text-xs uppercase font-black tracking-widest text-amber-400 animate-pulse">
+                <div className="text-[11px] sm:text-xs uppercase font-black tracking-widest text-amber-400 animate-pulse">
                   NEXT ROUND STARTING IN
                 </div>
 
                 {/* Big 10s Countdown Number */}
-                <div className="relative flex items-center justify-center my-1">
-                  <div className="countdown-number text-7xl sm:text-8xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 via-sky-100 to-blue-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.6)]">
+                <div className="relative flex items-center justify-center my-0.5 sm:my-1">
+                  <div className="countdown-number text-5xl sm:text-7xl md:text-8xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 via-sky-100 to-blue-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.6)]">
                     {nextRoundCountdown}
                   </div>
                 </div>
 
                 {/* Progress Bar (10s to 0s) */}
-                <div className="w-full h-2 bg-dark-800 rounded-full overflow-hidden border border-cyan-500/30 p-0.5">
+                <div className="w-full h-1.5 sm:h-2 bg-dark-800 rounded-full overflow-hidden border border-cyan-500/30 p-0.5">
                   <div
                     className="h-full bg-gradient-to-r from-cyan-400 via-sky-300 to-emerald-400 rounded-full transition-all duration-1000 ease-linear shadow-[0_0_10px_rgba(34,211,238,0.8)]"
                     style={{ width: `${(nextRoundCountdown / 10) * 100}%` }}
@@ -878,12 +878,12 @@ export const SkyRocket3D: React.FC = () => {
                 </div>
 
                 {/* Betting Window Status Pill */}
-                <div className="flex items-center justify-center gap-2 pt-1">
+                <div className="flex items-center justify-center gap-1.5 sm:gap-2 pt-0.5 sm:pt-1">
                   <span className="flex h-2 w-2 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span className="text-xs font-black tracking-wider uppercase text-emerald-300">
+                  <span className="text-[10px] sm:text-xs font-black tracking-wider uppercase text-emerald-300">
                     BETTING OPEN • PLACE YOUR BETS
                   </span>
                 </div>
@@ -891,39 +891,39 @@ export const SkyRocket3D: React.FC = () => {
             )}
 
             {gameState === 'COUNTDOWN' && (
-              <div className="text-center space-y-2 animate-bounce">
-                <div className="text-xs uppercase tracking-widest font-extrabold text-amber-400">
+              <div className="text-center space-y-1 sm:space-y-2 animate-bounce">
+                <div className="text-[11px] sm:text-xs uppercase tracking-widest font-extrabold text-amber-400">
                   IGNITION IN
                 </div>
-                <div className="text-7xl sm:text-8xl font-black font-cinzel text-amber-300 drop-shadow-2xl">
+                <div className="text-5xl sm:text-7xl md:text-8xl font-black font-cinzel text-amber-300 drop-shadow-2xl">
                   {countdown}
                 </div>
-                <div className="text-xs text-amber-300/80 font-bold tracking-wider">
+                <div className="text-[11px] sm:text-xs text-amber-300/80 font-bold tracking-wider">
                   PREPARING FLIGHT
                 </div>
               </div>
             )}
 
             {gameState === 'RUNNING' && (
-              <div className="text-center space-y-1">
-                <div className="text-6xl sm:text-8xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-blue-400 drop-shadow-2xl">
+              <div className="text-center space-y-0.5 sm:space-y-1">
+                <div className="text-5xl sm:text-7xl md:text-8xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-blue-400 drop-shadow-2xl">
                   {multiplier.toFixed(2)}x
                 </div>
-                <div className="text-xs font-bold text-cyan-300 uppercase tracking-widest animate-pulse">
+                <div className="text-[10px] sm:text-xs font-bold text-cyan-300 uppercase tracking-widest animate-pulse">
                   ALTITUDE RISING
                 </div>
               </div>
             )}
 
             {gameState === 'CRASHED' && nextRoundCountdown === 0 && (
-              <div className="text-center space-y-2 animate-shake pointer-events-auto">
-                <div className="text-xs font-extrabold text-rose-400 uppercase tracking-widest">
+              <div className="text-center space-y-1.5 sm:space-y-2 animate-shake pointer-events-auto">
+                <div className="text-[11px] sm:text-xs font-extrabold text-rose-400 uppercase tracking-widest">
                   ROCKET CRASHED AT
                 </div>
-                <div className="text-6xl sm:text-7xl font-black font-cinzel text-rose-500 drop-shadow-2xl">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-black font-cinzel text-rose-500 drop-shadow-2xl">
                   {multiplier.toFixed(2)}x
                 </div>
-                <div className="text-xs text-rose-300/80 font-semibold">
+                <div className="text-[10px] sm:text-xs text-rose-300/80 font-semibold">
                   Round Settled • Results recorded in Demo Wallet
                 </div>
               </div>
@@ -1068,9 +1068,9 @@ export const SkyRocket3D: React.FC = () => {
       )}
 
       {/* ─── DUAL INDEPENDENT BET SLOTS ────────────────────────────────────────── */}
-      <div className="bg-dark-950 border-t border-dark-800 px-4 sm:px-6 py-3.5 grid grid-cols-1 md:grid-cols-2 gap-4 z-20 shadow-2xl">
+      <div className="bg-dark-950 border-t border-dark-800 px-3 sm:px-6 py-3 sm:py-3.5 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 z-20 shadow-2xl">
         {/* ── BET SLOT 1 ── */}
-        <div className="slot-panel-1 bg-dark-900 border border-dark-800 hover:border-cyan-500/40 rounded-2xl p-3.5 flex flex-col justify-between gap-3 transition">
+        <div className="slot-panel-1 bg-dark-900 border border-dark-800 hover:border-cyan-500/40 rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between gap-2.5 sm:gap-3 transition">
           {/* Slot Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -1105,7 +1105,7 @@ export const SkyRocket3D: React.FC = () => {
 
           {/* Quick Bet Buttons & Inputs */}
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700">
+            <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 overflow-x-auto no-scrollbar max-w-full">
               {[10, 50, 100, 500, 1000].map((amt) => (
                 <button
                   key={amt}
@@ -1114,7 +1114,7 @@ export const SkyRocket3D: React.FC = () => {
                     soundManager.play('buttonClick');
                     setSlot1((prev) => ({ ...prev, betAmount: amt }));
                   }}
-                  className={`px-2 py-1 rounded-lg text-xs font-bold transition ${
+                  className={`px-2 py-1 rounded-lg text-xs font-bold transition shrink-0 ${
                     slot1.betAmount === amt
                       ? 'bg-cyan-500 text-black shadow-md'
                       : 'text-gray-400 hover:text-white disabled:opacity-40'
@@ -1126,7 +1126,7 @@ export const SkyRocket3D: React.FC = () => {
             </div>
 
             {/* Auto Cash Out Setting */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 shrink-0">
               <label className="flex items-center gap-1 cursor-pointer text-xs font-semibold text-gray-300">
                 <input
                   type="checkbox"
@@ -1161,7 +1161,7 @@ export const SkyRocket3D: React.FC = () => {
             {gameState === 'RUNNING' && slot1.status === 'RUNNING' ? (
               <button
                 onClick={() => cashoutSlot(1)}
-                className="btn-cashout-slot-1 w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 hover:from-emerald-400 text-black font-black text-sm uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-500/25 transition-transform hover:scale-[1.02] active:scale-95 animate-pulse"
+                className="btn-cashout-slot-1 w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 hover:from-emerald-400 text-black font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-500/25 transition-transform hover:scale-[1.02] active:scale-95 animate-pulse"
               >
                 <TrendingUp className="w-4 h-4 fill-current" />
                 <span>CASHOUT ₹{(slot1.betAmount * multiplier).toFixed(2)}</span>
@@ -1177,7 +1177,7 @@ export const SkyRocket3D: React.FC = () => {
                     status: !prev.placed ? 'PLACED' : 'IDLE',
                   }));
                 }}
-                className={`btn-bet-slot-1 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all shadow-md ${
+                className={`btn-bet-slot-1 w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all shadow-md ${
                   slot1.placed
                     ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-black shadow-cyan-500/25 hover:scale-[1.02]'
                     : 'bg-dark-800 text-gray-400 hover:text-white border border-dark-700'
@@ -1186,20 +1186,20 @@ export const SkyRocket3D: React.FC = () => {
                 {slot1.placed ? <Check className="w-4 h-4" /> : <Rocket className="w-4 h-4" />}
                 <span>
                   {slot1.placed
-                    ? `✓ BET ARMED SLOT 1 (₹${slot1.betAmount}) - CANCEL`
-                    : `PLACE BET SLOT 1 (₹${slot1.betAmount})`}
+                    ? `✓ ARMED SLOT 1 (₹${slot1.betAmount})`
+                    : `BET SLOT 1 (₹${slot1.betAmount})`}
                 </span>
               </button>
             ) : slot1.status === 'CASHOUT' ? (
-              <div className="w-full py-3 bg-emerald-950/80 border border-emerald-500/50 rounded-xl text-center text-xs font-black text-emerald-300">
+              <div className="w-full py-2.5 sm:py-3 bg-emerald-950/80 border border-emerald-500/50 rounded-xl text-center text-xs font-black text-emerald-300">
                 ✓ CASHED OUT: +₹{slot1.winAmount?.toFixed(2)} ({slot1.cashedOutMultiplier}x)
               </div>
             ) : slot1.status === 'LOST' ? (
-              <div className="w-full py-3 bg-rose-950/80 border border-rose-500/50 rounded-xl text-center text-xs font-black text-rose-400">
+              <div className="w-full py-2.5 sm:py-3 bg-rose-950/80 border border-rose-500/50 rounded-xl text-center text-xs font-black text-rose-400">
                 ✕ CRASHED (₹{slot1.betAmount} LOST)
               </div>
             ) : (
-              <div className="w-full py-3 bg-dark-800 border border-dark-700 rounded-xl text-center text-xs font-bold text-gray-500">
+              <div className="w-full py-2.5 sm:py-3 bg-dark-800 border border-dark-700 rounded-xl text-center text-xs font-bold text-gray-500">
                 WAITING FOR NEXT ROUND
               </div>
             )}
@@ -1207,7 +1207,7 @@ export const SkyRocket3D: React.FC = () => {
         </div>
 
         {/* ── BET SLOT 2 ── */}
-        <div className="slot-panel-2 bg-dark-900 border border-dark-800 hover:border-amber-500/40 rounded-2xl p-3.5 flex flex-col justify-between gap-3 transition">
+        <div className="slot-panel-2 bg-dark-900 border border-dark-800 hover:border-amber-500/40 rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between gap-2.5 sm:gap-3 transition">
           {/* Slot Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -1242,7 +1242,7 @@ export const SkyRocket3D: React.FC = () => {
 
           {/* Quick Bet Buttons & Inputs */}
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700">
+            <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 overflow-x-auto no-scrollbar max-w-full">
               {[10, 50, 100, 500, 1000].map((amt) => (
                 <button
                   key={amt}
@@ -1251,7 +1251,7 @@ export const SkyRocket3D: React.FC = () => {
                     soundManager.play('buttonClick');
                     setSlot2((prev) => ({ ...prev, betAmount: amt }));
                   }}
-                  className={`px-2 py-1 rounded-lg text-xs font-bold transition ${
+                  className={`px-2 py-1 rounded-lg text-xs font-bold transition shrink-0 ${
                     slot2.betAmount === amt
                       ? 'bg-amber-400 text-black shadow-md'
                       : 'text-gray-400 hover:text-white disabled:opacity-40'
@@ -1263,7 +1263,7 @@ export const SkyRocket3D: React.FC = () => {
             </div>
 
             {/* Auto Cash Out Setting */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 shrink-0">
               <label className="flex items-center gap-1 cursor-pointer text-xs font-semibold text-gray-300">
                 <input
                   type="checkbox"
@@ -1298,7 +1298,7 @@ export const SkyRocket3D: React.FC = () => {
             {gameState === 'RUNNING' && slot2.status === 'RUNNING' ? (
               <button
                 onClick={() => cashoutSlot(2)}
-                className="btn-cashout-slot-2 w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 hover:from-emerald-400 text-black font-black text-sm uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-500/25 transition-transform hover:scale-[1.02] active:scale-95 animate-pulse"
+                className="btn-cashout-slot-2 w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 hover:from-emerald-400 text-black font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-500/25 transition-transform hover:scale-[1.02] active:scale-95 animate-pulse"
               >
                 <TrendingUp className="w-4 h-4 fill-current" />
                 <span>CASHOUT ₹{(slot2.betAmount * multiplier).toFixed(2)}</span>
@@ -1314,7 +1314,7 @@ export const SkyRocket3D: React.FC = () => {
                     status: !prev.placed ? 'PLACED' : 'IDLE',
                   }));
                 }}
-                className={`btn-bet-slot-2 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all shadow-md ${
+                className={`btn-bet-slot-2 w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all shadow-md ${
                   slot2.placed
                     ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black shadow-amber-400/25 hover:scale-[1.02]'
                     : 'bg-dark-800 text-gray-400 hover:text-white border border-dark-700'
@@ -1323,20 +1323,20 @@ export const SkyRocket3D: React.FC = () => {
                 {slot2.placed ? <Check className="w-4 h-4" /> : <Rocket className="w-4 h-4" />}
                 <span>
                   {slot2.placed
-                    ? `✓ BET ARMED SLOT 2 (₹${slot2.betAmount}) - CANCEL`
-                    : `PLACE BET SLOT 2 (₹${slot2.betAmount})`}
+                    ? `✓ ARMED SLOT 2 (₹${slot2.betAmount})`
+                    : `BET SLOT 2 (₹${slot2.betAmount})`}
                 </span>
               </button>
             ) : slot2.status === 'CASHOUT' ? (
-              <div className="w-full py-3 bg-emerald-950/80 border border-emerald-500/50 rounded-xl text-center text-xs font-black text-emerald-300">
+              <div className="w-full py-2.5 sm:py-3 bg-emerald-950/80 border border-emerald-500/50 rounded-xl text-center text-xs font-black text-emerald-300">
                 ✓ CASHED OUT: +₹{slot2.winAmount?.toFixed(2)} ({slot2.cashedOutMultiplier}x)
               </div>
             ) : slot2.status === 'LOST' ? (
-              <div className="w-full py-3 bg-rose-950/80 border border-rose-500/50 rounded-xl text-center text-xs font-black text-rose-400">
+              <div className="w-full py-2.5 sm:py-3 bg-rose-950/80 border border-rose-500/50 rounded-xl text-center text-xs font-black text-rose-400">
                 ✕ CRASHED (₹{slot2.betAmount} LOST)
               </div>
             ) : (
-              <div className="w-full py-3 bg-dark-800 border border-dark-700 rounded-xl text-center text-xs font-bold text-gray-500">
+              <div className="w-full py-2.5 sm:py-3 bg-dark-800 border border-dark-700 rounded-xl text-center text-xs font-bold text-gray-500">
                 WAITING FOR NEXT ROUND
               </div>
             )}

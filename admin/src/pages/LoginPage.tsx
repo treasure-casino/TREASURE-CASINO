@@ -45,21 +45,21 @@ export const LoginPage: React.FC = () => {
       {/* Background radial glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="w-full max-w-md relative z-10 px-2 sm:px-0">
         {/* Brand Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex p-3 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 text-black shadow-xl shadow-gold/20 mb-4">
-            <Crown className="w-10 h-10 fill-current" />
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex p-2.5 sm:p-3 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 text-black shadow-xl shadow-gold/20 mb-3 sm:mb-4">
+            <Crown className="w-8 h-8 sm:w-10 sm:h-10 fill-current" />
           </div>
-          <h1 className="text-3xl font-black tracking-widest text-gold font-cinzel">TREASURE</h1>
-          <p className="text-sm font-medium tracking-wider uppercase text-gray-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-widest text-gold font-cinzel">TREASURE</h1>
+          <p className="text-xs sm:text-sm font-medium tracking-wider uppercase text-gray-400 mt-1">
             Admin Management Portal
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-dark-900/90 backdrop-blur border border-gold/30 rounded-2xl p-8 shadow-2xl">
-          <h2 className="text-xl font-bold text-white mb-6">Administrator Sign In</h2>
+        <div className="bg-dark-900/90 backdrop-blur border border-gold/30 rounded-2xl p-5 sm:p-8 shadow-2xl">
+          <h2 className="text-lg sm:text-xl font-bold text-white mb-5 sm:mb-6">Administrator Sign In</h2>
 
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-rose-950/60 border border-rose-800/80 flex items-start gap-3 text-rose-300 text-sm">

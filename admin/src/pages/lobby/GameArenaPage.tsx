@@ -436,75 +436,76 @@ export const GameArenaPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-dark-950 text-white flex flex-col font-sans select-none">
       {/* Top HUD Bar */}
-      <header className="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-dark-800 px-4 py-3 flex items-center justify-between gap-4 shadow-xl">
+      <header className="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-dark-800 px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 shadow-xl">
         {/* Left: Back to Lobby Button */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
             onClick={() => {
               soundManager.play('buttonClick');
               navigate('/lobby');
             }}
-            className="flex items-center gap-2 px-3.5 py-2 bg-dark-800 hover:bg-dark-750 text-gold hover:text-white rounded-xl text-xs font-bold border border-gold/40 hover:border-gold transition shadow-md"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-dark-800 hover:bg-dark-750 text-gold hover:text-white rounded-xl text-xs font-bold border border-gold/40 hover:border-gold transition shadow-md shrink-0"
+            title="Back to Lobby"
           >
             <ArrowLeft className="w-4 h-4 text-gold" />
-            <span className="hidden sm:inline">BACK TO LOBBY</span>
+            <span className="hidden sm:inline">LOBBY</span>
           </button>
 
-          <div className="flex items-center gap-2">
-            <Crown className="w-4 h-4 text-gold" />
-            <span className="font-cinzel text-sm font-black tracking-wide text-white">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 truncate">
+            <Crown className="w-4 h-4 text-gold shrink-0 hidden xs:inline" />
+            <span className="font-cinzel text-xs sm:text-sm font-black tracking-wide text-white truncate">
               {game?.name || 'TREASURE CASINO 3D'}
             </span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-gold font-bold border border-gold/30">
+            <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/20 text-gold font-bold border border-gold/30 shrink-0 hidden md:inline">
               DEMO MODE
             </span>
           </div>
         </div>
 
         {/* Right: Demo Wallet & Audio Controls */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Demo Balance Pill */}
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-dark-950 border border-dark-700 rounded-xl shadow-inner">
-            <Coins className="w-4 h-4 text-gold" />
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-dark-950 border border-dark-700 rounded-xl shadow-inner">
+            <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0" />
             <div>
-              <div className="text-[9px] text-gray-400 uppercase font-semibold leading-none">
+              <div className="text-[8px] sm:text-[9px] text-gray-400 uppercase font-semibold leading-none hidden sm:block">
                 Demo Balance
               </div>
-              <div className="text-xs font-extrabold text-gold leading-tight">
+              <div className="text-[11px] sm:text-xs font-extrabold text-gold leading-tight">
                 ₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             </div>
             <button
               onClick={handleResetBalance}
               title="Reset Demo Balance (₹10,000)"
-              className="p-1 hover:bg-dark-800 text-gray-400 hover:text-gold rounded-lg transition"
+              className="p-0.5 sm:p-1 hover:bg-dark-800 text-gray-400 hover:text-gold rounded-lg transition"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             </button>
           </div>
 
           {/* Sound Toggle */}
           <button
             onClick={() => soundManager.toggleMute()}
-            className="p-2 bg-dark-800 hover:bg-dark-750 text-gray-300 hover:text-white rounded-xl border border-dark-700 transition"
+            className="p-1.5 sm:p-2 bg-dark-800 hover:bg-dark-750 text-gray-300 hover:text-white rounded-xl border border-dark-700 transition"
             title={isMuted ? 'Unmute Sound' : 'Mute Sound'}
           >
-            {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-gold" />}
+            {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />}
           </button>
 
           {/* Fullscreen Button */}
           <button
             onClick={toggleFullscreen}
-            className="p-2 bg-dark-800 hover:bg-dark-750 text-gray-300 hover:text-white rounded-xl border border-dark-700 transition"
+            className="p-1.5 sm:p-2 bg-dark-800 hover:bg-dark-750 text-gray-300 hover:text-white rounded-xl border border-dark-700 transition hidden sm:flex"
             title="Toggle Fullscreen"
           >
-            <Maximize2 className="w-4 h-4 text-gray-300" />
+            <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-300" />
           </button>
         </div>
       </header>
 
       {/* Main 3D Game Container */}
-      <main className="flex-1 flex flex-col relative w-full h-[calc(100vh-60px)] min-h-[500px] overflow-hidden">
+      <main className="flex-1 flex flex-col relative w-full h-[calc(100vh-56px)] min-h-0 overflow-y-auto lg:overflow-hidden">
         {renderGameContent()}
       </main>
     </div>

@@ -460,32 +460,32 @@ export const TreasureLimbo2D: React.FC = () => {
       {/* Main Game Layout: Arena Cockpit + Control Console */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left / Top: Interactive Rolling Arena Cockpit */}
-        <div className="lg:col-span-8 flex flex-col justify-between bg-gradient-to-b from-[#0e0e1a] via-[#090913] to-[#06060c] border border-purple-900/40 rounded-3xl p-4 sm:p-8 relative overflow-hidden shadow-2xl min-h-[380px] sm:min-h-[460px]">
+        <div className="lg:col-span-8 flex flex-col justify-between bg-gradient-to-b from-[#0e0e1a] via-[#090913] to-[#06060c] border border-purple-900/40 rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 relative overflow-hidden shadow-2xl min-h-[300px] sm:min-h-[460px]">
           {/* Ambient Neon Glow Backdrops */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full pointer-events-none" />
           <div className="absolute top-10 right-10 w-48 h-48 bg-amber-500/10 blur-[90px] rounded-full pointer-events-none" />
 
           {/* Top HUD inside arena: Target & Win Probability */}
-          <div className="relative z-10 flex items-center justify-between gap-3 border-b border-purple-900/30 pb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-mono font-bold tracking-wider text-purple-300">
-                TARGET MULTIPLIER
+          <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-3 border-b border-purple-900/30 pb-3 sm:pb-4">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-[10px] sm:text-xs uppercase font-mono font-bold tracking-wider text-purple-300">
+                TARGET
               </span>
               <span
                 id="limbo-target-badge"
-                className="px-2.5 py-0.5 rounded-lg text-xs font-mono font-black bg-purple-900/50 border border-purple-500/50 text-amber-300"
+                className="px-2 sm:px-2.5 py-0.5 rounded-lg text-xs font-mono font-black bg-purple-900/50 border border-purple-500/50 text-amber-300"
               >
                 {targetMultiplier.toFixed(2)}x
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-mono font-bold tracking-wider text-gray-400">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-[10px] sm:text-xs uppercase font-mono font-bold tracking-wider text-gray-400">
                 WIN CHANCE
               </span>
               <span
                 id="limbo-win-chance-badge"
-                className="px-2.5 py-0.5 rounded-lg text-xs font-mono font-black bg-dark-900/80 border border-purple-500/30 text-emerald-400"
+                className="px-2 sm:px-2.5 py-0.5 rounded-lg text-xs font-mono font-black bg-dark-900/80 border border-purple-500/30 text-emerald-400"
               >
                 {winChance.toFixed(2)}%
               </span>
@@ -493,11 +493,11 @@ export const TreasureLimbo2D: React.FC = () => {
           </div>
 
           {/* Central Multiplier Display */}
-          <div className="relative z-10 my-auto py-8 sm:py-12 flex flex-col items-center justify-center text-center space-y-4">
+          <div className="relative z-10 my-auto py-6 sm:py-12 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4">
             <div className="relative flex items-center justify-center">
               {/* Outer Ring Ambient Pulse */}
               <div
-                className={`absolute w-64 sm:w-80 h-64 sm:h-80 rounded-full blur-2xl transition-all duration-300 pointer-events-none ${
+                className={`absolute w-48 sm:w-80 h-48 sm:h-80 rounded-full blur-2xl transition-all duration-300 pointer-events-none ${
                   lastResult?.isWin && !isRolling
                     ? 'bg-emerald-500/20 shadow-[0_0_60px_rgba(16,185,129,0.3)]'
                     : lastResult && !lastResult.isWin && !isRolling
@@ -509,7 +509,7 @@ export const TreasureLimbo2D: React.FC = () => {
               {/* Large Neon Multiplier Readout */}
               <div
                 id="limbo-multiplier-display"
-                className={`relative text-6xl sm:text-8xl md:text-9xl font-black font-mono tracking-tight transition-all duration-150 ${
+                className={`relative text-5xl sm:text-7xl md:text-9xl font-black font-mono tracking-tight transition-all duration-150 ${
                   isRolling
                     ? 'text-purple-300 scale-105 filter drop-shadow-[0_0_35px_rgba(168,85,247,0.7)] animate-pulse'
                     : lastResult?.isWin
@@ -520,7 +520,7 @@ export const TreasureLimbo2D: React.FC = () => {
                 }`}
               >
                 {currentDisplayMultiplier.toFixed(2)}
-                <span className="text-3xl sm:text-5xl ml-1 text-amber-400">x</span>
+                <span className="text-2xl sm:text-5xl ml-1 text-amber-400">x</span>
               </div>
             </div>
 
@@ -529,14 +529,14 @@ export const TreasureLimbo2D: React.FC = () => {
               {isRolling ? (
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-mono font-bold text-purple-300 animate-pulse">
                   <Sparkles className="w-4 h-4 text-purple-400 animate-spin" />
-                  <span>CALCULATING PROVABLY FAIR OUTCOME...</span>
+                  <span>CALCULATING OUTCOME...</span>
                 </div>
               ) : lastResult?.isWin ? (
                 <div
                   id="limbo-win-banner"
-                  className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/70 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.4)] animate-bounce"
+                  className="flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/70 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.4)] animate-bounce"
                 >
-                  <Trophy className="w-4 h-4 text-amber-400" />
+                  <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
                   <span className="text-xs sm:text-sm font-black font-mono">
                     TARGET HIT! WON ₹{lastResult.payout.toFixed(2)} (+₹
                     {lastResult.netProfit.toFixed(2)})
@@ -545,9 +545,9 @@ export const TreasureLimbo2D: React.FC = () => {
               ) : lastResult && !lastResult.isWin ? (
                 <div
                   id="limbo-loss-banner"
-                  className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-950/80 border border-rose-500/70 text-rose-300 shadow-[0_0_20px_rgba(244,63,94,0.3)]"
+                  className="flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-rose-950/80 border border-rose-500/70 text-rose-300 shadow-[0_0_20px_rgba(244,63,94,0.3)]"
                 >
-                  <XCircle className="w-4 h-4 text-rose-400" />
+                  <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400" />
                   <span className="text-xs sm:text-sm font-bold font-mono">
                     CRASHED BELOW TARGET {targetMultiplier.toFixed(2)}x (-₹
                     {lastResult.betAmount.toFixed(2)})
@@ -564,7 +564,7 @@ export const TreasureLimbo2D: React.FC = () => {
           {/* Interactive Target Slider & Quick Multipliers */}
           <div className="relative z-10 space-y-3 pt-4 border-t border-purple-900/30">
             {/* Quick Multiplier Chips */}
-            <div className="flex items-center justify-between gap-1.5 overflow-x-auto scrollbar-none">
+            <div className="flex items-center justify-between gap-1.5 overflow-x-auto no-scrollbar">
               <span className="text-[10px] font-mono font-bold text-gray-400 mr-1 flex-shrink-0">
                 PRESETS:
               </span>
@@ -577,7 +577,7 @@ export const TreasureLimbo2D: React.FC = () => {
                     soundManager.play('buttonClick');
                     handleTargetChange(preset);
                   }}
-                  className={`px-3 py-1 rounded-xl text-xs font-mono font-bold border transition-all ${
+                  className={`px-2.5 sm:px-3 py-1 rounded-xl text-xs font-mono font-bold border transition-all shrink-0 ${
                     targetMultiplier === preset
                       ? 'bg-gradient-to-r from-purple-600 to-amber-500 text-white border-gold shadow-md'
                       : 'bg-dark-900/90 hover:bg-purple-950/60 border-purple-900/40 text-gray-300 hover:text-white'

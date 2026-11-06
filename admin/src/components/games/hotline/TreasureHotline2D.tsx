@@ -1136,13 +1136,13 @@ export const TreasureHotline2D: React.FC = () => {
   return (
     <div className="relative w-full max-w-5xl mx-auto rounded-3xl overflow-hidden bg-gradient-to-b from-[#16062c] via-[#0d031c] to-[#080212] border-2 border-fuchsia-600/40 shadow-[0_0_60px_rgba(255,0,128,0.25)] text-white select-none">
       {/* ─── RETRO 80S HEADER (WITH CUSTOM OFFICIAL LOGO) ────────────────── */}
-      <div className="relative px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3 border-b border-fuchsia-900/50 bg-black/40 backdrop-blur-md">
-        <div className="flex items-center space-x-3 sm:space-x-4">
+      <div className="relative px-3 sm:px-6 py-2.5 sm:py-4 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 border-b border-fuchsia-900/50 bg-black/40 backdrop-blur-md">
+        <div className="flex items-center space-x-2.5 sm:space-x-4">
           <div className="relative flex items-center">
             <img
               src="/assets/games/hotline/treasure-hotline-logo.jpg"
               alt="TREASURE HOTLINE"
-              className="h-14 sm:h-16 md:h-20 w-auto object-contain rounded-2xl shadow-[0_0_25px_rgba(255,0,128,0.5)] border border-yellow-400/40 transition-transform duration-300 hover:scale-[1.02]"
+              className="h-10 sm:h-16 md:h-20 w-auto object-contain rounded-xl sm:rounded-2xl shadow-[0_0_25px_rgba(255,0,128,0.5)] border border-yellow-400/40 transition-transform duration-300 hover:scale-[1.02]"
               loading="eager"
             />
           </div>
@@ -1279,20 +1279,20 @@ export const TreasureHotline2D: React.FC = () => {
           />
 
           {/* 5-Reel Grid Container */}
-          <div className="grid grid-cols-5 gap-2 sm:gap-3 bg-black/70 p-2 sm:p-3 rounded-xl border border-fuchsia-900/80 shadow-inner">
+          <div className="grid grid-cols-5 gap-1 sm:gap-3 bg-black/70 p-1 sm:p-3 rounded-xl border border-fuchsia-900/80 shadow-inner">
             {[0, 1, 2, 3, 4].map((col) => {
               const isColExpanding = activeExpandedReels.includes(col);
 
               return (
                 <div
                   key={`reel-${col}`}
-                  className={`relative flex flex-col gap-2 rounded-xl p-1 bg-gradient-to-b from-black/80 to-purple-950/40 border transition-all duration-300 ${
+                  className={`relative flex flex-col gap-1 sm:gap-2 rounded-lg sm:rounded-xl p-0.5 sm:p-1 bg-gradient-to-b from-black/80 to-purple-950/40 border transition-all duration-300 ${
                     isColExpanding
                       ? 'border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.8)]'
                       : 'border-fuchsia-900/40'
                   }`}
                 >
-                  <div className="text-[10px] text-center text-gray-500 font-mono font-bold tracking-widest uppercase">
+                  <div className="text-[9px] sm:text-[10px] text-center text-gray-500 font-mono font-bold tracking-widest uppercase">
                     R{col + 1}
                   </div>
 
@@ -1303,7 +1303,7 @@ export const TreasureHotline2D: React.FC = () => {
                     return (
                       <div
                         key={`cell-${row}-${col}`}
-                        className={`relative aspect-square rounded-lg flex items-center justify-center p-2 transition-transform duration-200 ${
+                        className={`relative aspect-square rounded-lg flex items-center justify-center p-0.5 sm:p-2 transition-transform duration-200 ${
                           isWinning
                             ? 'scale-105 bg-fuchsia-500/20 border-2 border-yellow-400 shadow-[0_0_18px_rgba(255,215,0,0.8)] animate-pulse z-10'
                             : 'bg-black/40 border border-white/5 hover:border-white/20'
@@ -1380,23 +1380,23 @@ export const TreasureHotline2D: React.FC = () => {
       </div>
 
       {/* ─── CONTROLS CONSOLE ──────────────────────────────────────────────── */}
-      <div className="p-4 sm:p-6 bg-black/60 border-t border-fuchsia-900/50 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="p-3 sm:p-6 bg-black/60 border-t border-fuchsia-900/50 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
         {/* Bet Adjustments & Presets */}
-        <div className="flex flex-col space-y-1.5 w-full md:w-auto">
+        <div className="flex flex-col space-y-1 w-full md:w-auto">
           <div className="flex items-center justify-between">
             <label className="text-[10px] uppercase font-mono tracking-widest text-gray-400">
               BASE BET (₹)
             </label>
             <span className="text-[10px] font-mono text-cyan-300">
-              TOTAL BET: <strong className="text-white">₹{effectiveTotalBet.toFixed(2)}</strong>
+              TOTAL: <strong className="text-white">₹{effectiveTotalBet.toFixed(2)}</strong>
             </span>
           </div>
 
-          <div className="flex items-center space-x-1.5">
+          <div className="flex items-center space-x-1 sm:space-x-1.5 overflow-x-auto no-scrollbar">
             <button
               disabled={isSpinning || isFreeSpinsMode}
               onClick={() => setBetAmount(10)}
-              className="px-2 py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10 text-gray-400"
+              className="px-2 py-1 sm:py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10 text-gray-400 shrink-0"
             >
               MIN
             </button>
@@ -1405,7 +1405,7 @@ export const TreasureHotline2D: React.FC = () => {
                 key={preset}
                 disabled={isSpinning || isFreeSpinsMode}
                 onClick={() => setBetAmount(preset)}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs font-mono font-bold transition-all shrink-0 ${
                   betAmount === preset
                     ? 'bg-fuchsia-600 text-white shadow-[0_0_12px_rgba(255,0,128,0.7)]'
                     : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'
@@ -1417,21 +1417,21 @@ export const TreasureHotline2D: React.FC = () => {
             <button
               disabled={isSpinning || isFreeSpinsMode}
               onClick={() => setBetAmount((b) => Math.max(10, Math.floor(b / 2)))}
-              className="px-2 py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10"
+              className="px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10 shrink-0"
             >
               /2
             </button>
             <button
               disabled={isSpinning || isFreeSpinsMode}
               onClick={() => setBetAmount((b) => Math.min(5000, b * 2))}
-              className="px-2 py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10"
+              className="px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10 shrink-0"
             >
               2X
             </button>
             <button
               disabled={isSpinning || isFreeSpinsMode}
               onClick={() => setBetAmount(5000)}
-              className="px-2 py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10 text-gray-400"
+              className="px-2 py-1 sm:py-1.5 rounded-lg text-xs font-mono bg-white/5 border border-white/10 hover:bg-white/10 text-gray-400 shrink-0"
             >
               MAX
             </button>

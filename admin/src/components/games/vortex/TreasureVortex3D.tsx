@@ -520,17 +520,17 @@ export const TreasureVortex3D: React.FC = () => {
       <div className="relative flex-1 w-full min-h-0 overflow-hidden">
         <Canvas3DViewport onInit={handleInit} onUpdate={handleUpdate} className="absolute inset-0 w-full h-full">
           {/* ── 1. TOP HEADER ──────────────────────────────────────────────── */}
-          <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-6 sm:right-6 flex justify-between items-center pointer-events-auto z-30 gap-2">
+          <div className="absolute top-2 sm:top-4 left-2 right-2 sm:left-6 sm:right-6 flex justify-between items-center pointer-events-auto z-30 gap-1.5 sm:gap-2">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-dark-900/90 backdrop-blur-md border border-cyan-500/40 rounded-2xl shadow-xl">
-                <Sparkles className="w-5 h-5 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 bg-dark-900/90 backdrop-blur-md border border-cyan-500/40 rounded-xl sm:rounded-2xl shadow-xl">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
                 <div className="flex flex-col">
-                  <span className="font-cinzel text-xs sm:text-sm font-black tracking-wider text-cyan-300 drop-shadow">
-                    TREASURE VORTEX
+                  <span className="font-cinzel text-[11px] sm:text-sm font-black tracking-wider text-cyan-300 drop-shadow">
+                    VORTEX
                   </span>
-                  <span className="text-[9px] text-cyan-400 font-bold uppercase tracking-widest -mt-0.5">
-                    3D ELEMENTAL CRASH GAME
+                  <span className="hidden sm:inline-block text-[9px] text-cyan-400 font-bold uppercase tracking-widest -mt-0.5">
+                    3D ELEMENTAL CRASH
                   </span>
                 </div>
               </div>
@@ -538,50 +538,50 @@ export const TreasureVortex3D: React.FC = () => {
               {/* Sound Toggle */}
               <button
                 onClick={toggleSound}
-                className="p-2 bg-dark-900/90 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
+                className="p-1.5 sm:p-2 bg-dark-900/90 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
                 title={isMuted ? 'Sound OFF' : 'Sound ON'}
               >
-                {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
+                {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />}
               </button>
             </div>
 
             {/* Right: Demo Balance & Rules */}
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-dark-900/90 backdrop-blur-md border border-amber-500/40 rounded-xl shadow-lg">
-                <Coins className="w-4 h-4 text-amber-400" />
-                <span className="text-[10px] text-gray-400 uppercase font-bold hidden sm:inline">DEMO BALANCE:</span>
-                <span className="text-xs sm:text-sm font-black text-amber-300 font-mono tracking-tight">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-dark-900/90 backdrop-blur-md border border-amber-500/40 rounded-xl shadow-lg">
+                <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+                <span className="text-[10px] text-gray-400 uppercase font-bold hidden sm:inline">DEMO:</span>
+                <span className="text-[11px] sm:text-sm font-black text-amber-300 font-mono tracking-tight">
                   ₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
                 <button
                   onClick={handleResetBalance}
-                  className="btn-reset-balance ml-1 p-1 hover:bg-dark-800 rounded text-amber-400 hover:text-amber-200 transition"
+                  className="btn-reset-balance ml-0.5 p-0.5 hover:bg-dark-800 rounded text-amber-400 hover:text-amber-200 transition"
                   title="Reset Demo Balance (₹10,000)"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                  <RefreshCw className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
 
               <button
                 onClick={() => setShowRulesModal(true)}
-                className="p-2 bg-dark-900/90 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
+                className="p-1.5 sm:p-2 bg-dark-900/90 hover:bg-dark-800 backdrop-blur-md border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white transition shadow-md"
                 title="Game Rules"
               >
-                <HelpCircle className="w-4 h-4 text-cyan-400" />
+                <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
               </button>
             </div>
           </div>
 
           {/* ── 2. FLOATING RIGHT HUD CARDS (EXACT INFOGRAPHIC LAYOUT) ────────── */}
-          <div className="absolute top-16 right-3 sm:top-20 sm:right-6 flex flex-col gap-2.5 z-25 pointer-events-auto max-w-[210px] sm:max-w-[240px] w-full">
+          <div className="absolute top-12 right-2 sm:top-20 sm:right-6 flex flex-col gap-1.5 sm:gap-2.5 z-25 pointer-events-auto max-w-[120px] sm:max-w-[240px] w-full">
             {/* CURRENT MULTIPLIER CARD */}
-            <div className="bg-dark-950/85 backdrop-blur-md border border-cyan-500/50 rounded-2xl p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
+            <div className="bg-dark-950/85 backdrop-blur-md border border-cyan-500/50 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
               <div className="absolute -top-6 -right-6 w-16 h-16 bg-cyan-500/10 rounded-full blur-xl pointer-events-none" />
-              <span className="text-[10px] font-bold tracking-widest text-gray-300 uppercase">
-                CURRENT MULTIPLIER
+              <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-gray-300 uppercase">
+                MULTIPLIER
               </span>
               <div
-                className={`font-black font-cinzel text-3xl sm:text-4xl tracking-tight transition-all drop-shadow-[0_0_20px_rgba(56,189,248,0.5)] ${
+                className={`font-black font-cinzel text-xl sm:text-4xl tracking-tight transition-all drop-shadow-[0_0_20px_rgba(56,189,248,0.5)] ${
                   gameState === 'CRASHED'
                     ? 'text-rose-500 animate-pulse'
                     : gameState === 'WON'
@@ -596,17 +596,17 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
 
             {/* LAST CRASH CARD */}
-            <div className="bg-dark-950/85 backdrop-blur-md border border-dark-700 rounded-xl p-2.5 shadow-lg flex items-center justify-between px-3">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                LAST CRASH
+            <div className="bg-dark-950/85 backdrop-blur-md border border-dark-700 rounded-lg sm:rounded-xl p-1.5 sm:p-2.5 shadow-lg flex items-center justify-between px-2 sm:px-3">
+              <span className="text-[8px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                LAST
               </span>
-              <span className="font-mono font-black text-sm text-rose-400">
+              <span className="font-mono font-black text-xs sm:text-sm text-rose-400">
                 {lastCrashMultiplier.toFixed(2)}x
               </span>
             </div>
 
-            {/* RECENT RESULTS CARD */}
-            <div className="bg-dark-950/85 backdrop-blur-md border border-dark-700 rounded-xl p-2.5 shadow-lg flex flex-col gap-1.5">
+            {/* RECENT RESULTS CARD (Hidden on mobile to save screen space) */}
+            <div className="hidden sm:flex bg-dark-950/85 backdrop-blur-md border border-dark-700 rounded-xl p-2.5 shadow-lg flex-col gap-1.5">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                 RECENT RESULTS
               </span>
@@ -743,51 +743,51 @@ export const TreasureVortex3D: React.FC = () => {
       </div>
 
       {/* ── 4. BOTTOM CONTROL DOCK (METALLIC CASINO PANEL) ─────────────────── */}
-      <div className="bg-dark-900/95 border-t border-dark-800 px-3 sm:px-6 py-3 z-30 shadow-2xl backdrop-blur-md">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-dark-900/95 border-t border-dark-800 px-3 sm:px-6 py-2.5 sm:py-3 z-30 shadow-2xl backdrop-blur-md">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* LEFT: BET CONTROLS */}
-          <div className="flex flex-col gap-1">
-            <span className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-wider">
+          <div className="flex flex-col gap-1 w-full sm:w-auto">
+            <span className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-wider text-center sm:text-left">
               BET AMOUNT
             </span>
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
               <button
                 disabled={gameState === 'FLYING' || betAmount <= 10}
                 onClick={() => handleBetChange(-10)}
-                className="btn-bet-minus p-2 bg-dark-950 border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition"
+                className="btn-bet-minus p-1.5 sm:p-2 bg-dark-950 border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition"
                 title="-₹10"
               >
-                <Minus className="w-4 h-4" />
+                <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
-              <div className="flex items-center bg-dark-950 border border-dark-700 px-3 py-1.5 rounded-xl gap-1">
+              <div className="flex items-center bg-dark-950 border border-dark-700 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl gap-1">
                 <Coins className="w-3.5 h-3.5 text-amber-400" />
                 <input
                   type="number"
                   disabled={gameState === 'FLYING'}
                   value={betAmount}
                   onChange={(e) => setBetAmount(Math.max(10, Math.min(5000, parseInt(e.target.value) || 10)))}
-                  className="w-16 sm:w-20 bg-transparent text-amber-300 text-center font-mono font-black text-sm outline-none"
+                  className="w-14 sm:w-20 bg-transparent text-amber-300 text-center font-mono font-black text-xs sm:text-sm outline-none"
                 />
               </div>
 
               <button
                 disabled={gameState === 'FLYING' || betAmount >= 5000}
                 onClick={() => handleBetChange(10)}
-                className="btn-bet-plus p-2 bg-dark-950 border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition"
+                className="btn-bet-plus p-1.5 sm:p-2 bg-dark-950 border border-dark-700 hover:border-cyan-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition"
                 title="+₹10"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
               {/* Quick Chips */}
-              <div className="hidden md:flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 ml-1">
+              <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 ml-1 overflow-x-auto no-scrollbar">
                 {[10, 50, 100, 500, 1000].map((amt) => (
                   <button
                     key={amt}
                     disabled={gameState === 'FLYING'}
                     onClick={() => handleChipSelect(amt)}
-                    className={`btn-chip-${amt} px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                    className={`btn-chip-${amt} px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-bold transition shrink-0 ${
                       betAmount === amt
                         ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-md'
                         : 'text-gray-400 hover:text-white disabled:opacity-40'
@@ -800,13 +800,13 @@ export const TreasureVortex3D: React.FC = () => {
             </div>
           </div>
 
-          {/* CENTER: START & SPIN VORTEX BUTTONS */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* 1. START BUTTON: Prepares game, zero bet deduction, sets status to READY */}
+          {/* RIGHT / ACTIONS GROUP */}
+          <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-4 w-full sm:w-auto">
+            {/* 1. START BUTTON */}
             <button
               disabled={gameState === 'FLYING' || balance < betAmount}
               onClick={handleStartReady}
-              className={`btn-start px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex items-center gap-2 ${
+              className={`btn-start flex-1 sm:flex-initial px-3 sm:px-7 py-2 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${
                 gameState === 'READY'
                   ? 'bg-emerald-600 text-white ring-2 ring-emerald-400 shadow-emerald-500/40'
                   : 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-emerald-500/30 hover:scale-105 active:scale-95'
@@ -815,42 +815,39 @@ export const TreasureVortex3D: React.FC = () => {
             >
               {gameState === 'READY' ? (
                 <>
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>READY</span>
                 </>
               ) : (
                 <>
-                  <Play className="w-4 h-4 fill-current" />
+                  <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                   <span>START</span>
                 </>
               )}
             </button>
 
-            {/* 2. SPIN VORTEX: Centerpiece large circular button, deducts bet once, launches round */}
+            {/* 2. SPIN VORTEX: Centerpiece large circular button */}
             <button
               disabled={gameState === 'FLYING' || balance < betAmount}
               onClick={handleSpinVortex}
-              className={`btn-spin relative w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 border-2 transition-all ${
+              className={`btn-spin relative w-14 h-14 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 border-2 transition-all shrink-0 ${
                 gameState === 'FLYING'
                   ? 'border-cyan-400 bg-dark-900 text-cyan-400 shadow-[0_0_20px_#06b6d4] animate-pulse'
                   : 'border-cyan-400 bg-gradient-to-b from-cyan-600 via-sky-600 to-blue-700 text-white shadow-[0_0_25px_rgba(6,182,212,0.6)] hover:scale-105 active:scale-95'
               } disabled:opacity-50 disabled:cursor-not-allowed`}
               title="Deducts bet once. Starts the round. Multiplier rises from 1.00x."
             >
-              <Sparkles className="w-4 h-4 mb-0.5" />
-              <span className="text-[9px] sm:text-[10px] font-black uppercase text-center leading-tight">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 mb-0.5" />
+              <span className="text-[8px] sm:text-[10px] font-black uppercase text-center leading-tight">
                 SPIN<br />VORTEX
               </span>
             </button>
-          </div>
 
-          {/* RIGHT: COLLECT BUTTON */}
-          <div className="flex items-center">
-            {/* 3. COLLECT: Pays out (bet * multiplier), credits demo balance, ends round */}
+            {/* 3. COLLECT: Pays out */}
             <button
               disabled={gameState !== 'FLYING'}
               onClick={handleCollect}
-              className={`btn-collect min-w-[130px] sm:min-w-[160px] px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex flex-col items-center justify-center ${
+              className={`btn-collect flex-1 sm:flex-initial min-w-[95px] sm:min-w-[160px] px-3 sm:px-7 py-2 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex flex-col items-center justify-center ${
                 gameState === 'FLYING'
                   ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black shadow-amber-400/40 hover:scale-105 active:scale-95 animate-pulse'
                   : 'bg-dark-800 text-gray-500 border border-dark-700 cursor-not-allowed opacity-50'
@@ -858,7 +855,7 @@ export const TreasureVortex3D: React.FC = () => {
               title="Collect payout before crash!"
             >
               <span>COLLECT</span>
-              <span className="text-[11px] font-mono font-black">
+              <span className="text-[10px] sm:text-[11px] font-mono font-black">
                 {gameState === 'FLYING' ? `₹${potentialPayout.toLocaleString('en-IN')}` : '₹0'}
               </span>
             </button>

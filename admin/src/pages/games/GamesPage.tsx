@@ -192,23 +192,23 @@ export const GamesPage: React.FC = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-dark-800">
         <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-black tracking-wide text-white font-cinzel">
+          <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+            <h1 className="text-xl sm:text-2xl font-black tracking-wide text-white font-cinzel">
               GAME CATALOGUE MANAGEMENT
             </h1>
             <span className="px-2.5 py-0.5 rounded-full bg-amber-950 border border-gold/40 text-gold text-xs font-bold font-mono">
               {games.length} Games
             </span>
           </div>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-xs sm:text-sm text-gray-400 mt-1">
             Curate authorized casino games, manage return-to-player (RTP) parameters, visibility, and featured banners.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <button
             onClick={() => navigate('/lobby')}
-            className="flex items-center gap-1.5 px-4 py-2 bg-dark-800 hover:bg-dark-700 text-gold font-bold text-xs rounded-xl border border-gold/30 hover:border-gold transition shadow-md"
+            className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 bg-dark-800 hover:bg-dark-750 text-gold font-bold text-xs rounded-xl border border-gold/30 hover:border-gold transition shadow-md"
           >
             <ExternalLink className="w-4 h-4" />
             <span>PLAYER LOBBY</span>
@@ -216,7 +216,7 @@ export const GamesPage: React.FC = () => {
 
           <button
             onClick={openCreateModal}
-            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-amber-600 to-yellow-600 text-black font-bold text-xs rounded-xl hover:from-amber-500 hover:to-yellow-500 transition shadow-lg shadow-gold/10"
+            className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-600 to-yellow-600 text-black font-bold text-xs rounded-xl hover:from-amber-500 hover:to-yellow-500 transition shadow-lg shadow-gold/10"
           >
             <Plus className="w-4 h-4" />
             <span>ADD GAME</span>

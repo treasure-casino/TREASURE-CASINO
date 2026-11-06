@@ -724,35 +724,35 @@ export const TreasureSpiral2D: React.FC = () => {
       {/* ── MAIN 2D GAME VIEWPORT ─────────────────────────────────────────── */}
       <div className="relative flex-1 w-full min-h-0 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
         {/* FLOATING HUD CARDS (MULTIPLIER & POSITIONS) */}
-        <div className="absolute top-3 right-3 sm:top-5 sm:right-6 flex flex-col gap-2 z-25 pointer-events-auto max-w-[190px] sm:max-w-[220px] w-full">
+        <div className="absolute top-2 right-2 sm:top-5 sm:right-6 flex flex-col gap-1.5 sm:gap-2 z-25 pointer-events-auto max-w-[130px] sm:max-w-[220px] w-full">
           {/* TOTAL MULTIPLIER CARD */}
-          <div className="bg-dark-950/90 backdrop-blur-md border border-amber-500/50 rounded-2xl p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
-            <span className="text-[9px] font-bold tracking-widest text-gray-400 uppercase">
-              TOTAL MULTIPLIER
+          <div className="bg-dark-950/90 backdrop-blur-md border border-amber-500/50 rounded-xl sm:rounded-2xl p-2 sm:p-3 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
+            <span className="text-[8px] sm:text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+              MULTIPLIER
             </span>
             <div
               id="total-multiplier-display"
-              className="font-black font-cinzel text-3xl sm:text-4xl text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]"
+              className="font-black font-cinzel text-2xl sm:text-4xl text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]"
             >
               {totalMultiplier.toFixed(2)}x
             </div>
-            <div className="text-[10px] font-mono text-gray-300 mt-0.5">
-              Potential: ₹{activePotential.toLocaleString('en-IN')}
+            <div className="text-[9px] sm:text-[10px] font-mono text-gray-300 mt-0.5">
+              ₹{activePotential.toLocaleString('en-IN')}
             </div>
             {accumulatedBonus > 0 && (
-              <div className="mt-1 px-2 py-0.5 bg-amber-500/20 border border-amber-500/50 rounded text-[9px] font-bold text-amber-300">
-                Bonus: +{accumulatedBonus}x
+              <div className="mt-1 px-1.5 py-0.5 bg-amber-500/20 border border-amber-500/50 rounded text-[8px] sm:text-[9px] font-bold text-amber-300">
+                +{accumulatedBonus}x
               </div>
             )}
             {halfCashedOut && (
-              <div className="mt-1 px-2 py-0.5 bg-emerald-950/80 border border-emerald-500/50 rounded text-[9px] font-bold text-emerald-300">
-                Locked 50%: ₹{halfCashoutAmount.toLocaleString('en-IN')}
+              <div className="mt-1 px-1.5 py-0.5 bg-emerald-950/80 border border-emerald-500/50 rounded text-[8px] sm:text-[9px] font-bold text-emerald-300">
+                50%: ₹{halfCashoutAmount.toLocaleString('en-IN')}
               </div>
             )}
           </div>
 
-          {/* ACTIVE MULTIPLIER SECTIONS CARD */}
-          <div className="bg-dark-950/90 backdrop-blur-md border border-dark-800 rounded-xl p-2.5 text-[10px] space-y-1.5 font-mono shadow-lg">
+          {/* ACTIVE MULTIPLIER SECTIONS CARD (Hidden on mobile to keep circular arena unobstructed) */}
+          <div className="hidden sm:block bg-dark-950/90 backdrop-blur-md border border-dark-800 rounded-xl p-2.5 text-[10px] space-y-1.5 font-mono shadow-lg">
             <div className="flex justify-between items-center text-amber-400">
               <span className="font-bold">OUTER:</span>
               <span className={`font-black ${activeOuter && outerPos !== null ? 'text-amber-300' : 'text-gray-500'}`}>
@@ -1225,11 +1225,11 @@ export const TreasureSpiral2D: React.FC = () => {
       </div>
 
       {/* ── BOTTOM CONTROL BAR (1 SPIN CLICK = 1 BET DEDUCTED) ─────────────── */}
-      <div className="bg-dark-900/95 border-t border-dark-800 px-3 sm:px-6 py-3 z-30 shadow-2xl backdrop-blur-md">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-dark-900/95 border-t border-dark-800 px-3 sm:px-6 py-2.5 sm:py-3 z-30 shadow-2xl backdrop-blur-md">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* LEFT: BET CONTROLS */}
-          <div className="flex flex-col gap-1">
-            <span className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+          <div className="flex flex-col gap-1 w-full sm:w-auto">
+            <span className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5">
               BET AMOUNT (PER SPIN)
               {isBetLocked && (
                 <span
@@ -1242,20 +1242,20 @@ export const TreasureSpiral2D: React.FC = () => {
                 </span>
               )}
             </span>
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
               <button
                 disabled={isSpinning || isBetLocked || betAmount <= 10}
                 onClick={() => handleBetChange(-10)}
-                className={`btn-bet-minus p-2 bg-dark-950 border border-dark-700 hover:border-amber-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition ${
+                className={`btn-bet-minus p-1.5 sm:p-2 bg-dark-950 border border-dark-700 hover:border-amber-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition ${
                   isBetLocked ? 'cursor-not-allowed opacity-40 bg-dark-900 border-dark-800' : ''
                 }`}
                 title={isBetLocked ? 'BET LOCKED — CASH OUT OR REACH 0.00x TO CHANGE BET' : '-₹10'}
               >
-                <Minus className="w-4 h-4" />
+                <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
               <div
-                className={`flex items-center bg-dark-950 border px-3 py-1.5 rounded-xl gap-1 transition ${
+                className={`flex items-center bg-dark-950 border px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl gap-1 transition ${
                   isBetLocked ? 'border-amber-500/40 bg-dark-900/80 cursor-not-allowed' : 'border-dark-700'
                 }`}
                 title={isBetLocked ? 'BET LOCKED — CASH OUT OR REACH 0.00x TO CHANGE BET' : 'Bet Amount'}
@@ -1266,7 +1266,7 @@ export const TreasureSpiral2D: React.FC = () => {
                   disabled={isSpinning || isBetLocked}
                   value={betAmount}
                   onChange={(e) => setBetAmount(Math.max(10, Math.min(5000, parseInt(e.target.value) || 10)))}
-                  className={`w-16 sm:w-20 bg-transparent text-center font-mono font-black text-sm outline-none ${
+                  className={`w-14 sm:w-20 bg-transparent text-center font-mono font-black text-xs sm:text-sm outline-none ${
                     isBetLocked ? 'cursor-not-allowed text-gray-400' : 'text-amber-300'
                   }`}
                 />
@@ -1276,23 +1276,23 @@ export const TreasureSpiral2D: React.FC = () => {
               <button
                 disabled={isSpinning || isBetLocked || betAmount >= 5000}
                 onClick={() => handleBetChange(10)}
-                className={`btn-bet-plus p-2 bg-dark-950 border border-dark-700 hover:border-amber-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition ${
+                className={`btn-bet-plus p-1.5 sm:p-2 bg-dark-950 border border-dark-700 hover:border-amber-500/50 rounded-xl text-gray-300 hover:text-white disabled:opacity-40 transition ${
                   isBetLocked ? 'cursor-not-allowed opacity-40 bg-dark-900 border-dark-800' : ''
                 }`}
                 title={isBetLocked ? 'BET LOCKED — CASH OUT OR REACH 0.00x TO CHANGE BET' : '+₹10'}
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
               {/* Quick Chips */}
-              <div className="hidden md:flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 ml-1">
+              <div className="flex items-center gap-1 bg-dark-950 p-1 rounded-xl border border-dark-700 ml-1 overflow-x-auto no-scrollbar">
                 {[10, 50, 100, 500, 1000].map((amt) => (
                   <button
                     key={amt}
                     disabled={isSpinning || isBetLocked}
                     onClick={() => handleChipSelect(amt)}
                     title={isBetLocked ? 'BET LOCKED — CASH OUT OR REACH 0.00x TO CHANGE BET' : `₹${amt}`}
-                    className={`btn-chip-${amt} px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                    className={`btn-chip-${amt} px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-bold transition shrink-0 ${
                       betAmount === amt
                         ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-black shadow-md font-black'
                         : isBetLocked
@@ -1308,16 +1308,16 @@ export const TreasureSpiral2D: React.FC = () => {
           </div>
 
           {/* CENTER & RIGHT: ACTION BUTTONS */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center justify-between sm:justify-end gap-1.5 sm:gap-3 w-full sm:w-auto">
             {/* 1. SPIN BUTTON (1 CLICK = 1 BET, HOLD 2S = AUTO BET) */}
-            <div className="relative">
+            <div className="relative flex-1 sm:flex-initial">
               <button
                 disabled={isSpinning || balance < betAmount}
                 onMouseDown={handleSpinPointerDown}
                 onMouseUp={handleSpinPointerUp}
                 onTouchStart={handleSpinPointerDown}
                 onTouchEnd={handleSpinPointerUp}
-                className={`btn-spin relative px-6 sm:px-8 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex items-center gap-2 overflow-hidden ${
+                className={`btn-spin relative w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 overflow-hidden ${
                   isAutoBetActive
                     ? 'bg-rose-600 hover:bg-rose-500 text-white animate-pulse'
                     : 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-black shadow-amber-500/30 hover:scale-105 active:scale-95'
@@ -1334,25 +1334,25 @@ export const TreasureSpiral2D: React.FC = () => {
 
                 {isAutoBetActive ? (
                   <>
-                    <Square className="w-4 h-4 fill-current" />
-                    <span>STOP AUTO</span>
+                    <Square className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                    <span>STOP</span>
                   </>
                 ) : isSpinning ? (
                   <>
-                    <RotateCw className="w-4 h-4 animate-spin" />
-                    <span>SPINNING...</span>
+                    <RotateCw className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
+                    <span>SPINNING</span>
                   </>
                 ) : (
                   <>
-                    <Play className="w-4 h-4 fill-current" />
-                    <span>SPIN (₹{betAmount})</span>
+                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                    <span>SPIN ₹{betAmount}</span>
                   </>
                 )}
               </button>
 
               {autoHoldProgress > 0 && !isAutoBetActive && (
                 <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-black/80 px-2 py-0.5 rounded text-[9px] font-mono font-bold text-amber-300 whitespace-nowrap">
-                  Hold for Auto ({autoHoldProgress}%)
+                  Auto ({autoHoldProgress}%)
                 </div>
               )}
             </div>
@@ -1361,7 +1361,7 @@ export const TreasureSpiral2D: React.FC = () => {
             <button
               disabled={!isActive || halfCashedOut || isSpinning || totalMultiplier <= 0}
               onClick={handleHalfCashout}
-              className={`btn-half-cashout px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex flex-col items-center justify-center ${
+              className={`btn-half-cashout px-2.5 sm:px-5 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-[11px] sm:text-sm uppercase tracking-wider shadow-lg transition-all flex flex-col items-center justify-center ${
                 isActive && !halfCashedOut && totalMultiplier > 0
                   ? 'bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-black shadow-sky-500/30 hover:scale-105 active:scale-95'
                   : 'bg-dark-800 text-gray-500 border border-dark-700 cursor-not-allowed opacity-50'
@@ -1369,10 +1369,10 @@ export const TreasureSpiral2D: React.FC = () => {
               title="Lock 50% payout now and continue playing with remaining 50%!"
             >
               <div className="flex items-center gap-1">
-                <Percent className="w-3.5 h-3.5" />
-                <span>1/2 CASHOUT</span>
+                <Percent className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <span>1/2 CASH</span>
               </div>
-              <span className="text-[10px] font-mono font-black">
+              <span className="text-[9px] sm:text-[10px] font-mono font-black">
                 {isActive && !halfCashedOut && totalMultiplier > 0 ? `₹${halfCashoutValue.toLocaleString('en-IN')}` : '₹0'}
               </span>
             </button>
@@ -1381,7 +1381,7 @@ export const TreasureSpiral2D: React.FC = () => {
             <button
               disabled={!isActive || isSpinning || totalMultiplier <= 0}
               onClick={handleFullCashout}
-              className={`btn-cashout min-w-[120px] sm:min-w-[150px] px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex flex-col items-center justify-center ${
+              className={`btn-cashout flex-1 sm:flex-initial min-w-[90px] sm:min-w-[150px] px-3 sm:px-7 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all flex flex-col items-center justify-center ${
                 isActive && totalMultiplier > 0
                   ? 'bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 hover:from-emerald-400 hover:to-green-300 text-black shadow-emerald-500/30 hover:scale-105 active:scale-95 animate-pulse'
                   : 'bg-dark-800 text-gray-500 border border-dark-700 cursor-not-allowed opacity-50'
@@ -1389,7 +1389,7 @@ export const TreasureSpiral2D: React.FC = () => {
               title="Collect current potential payout and end the round."
             >
               <span>CASH OUT</span>
-              <span className="text-[11px] font-mono font-black">
+              <span className="text-[10px] sm:text-[11px] font-mono font-black">
                 {isActive && totalMultiplier > 0 ? `₹${activePotential.toLocaleString('en-IN')}` : '₹0'}
               </span>
             </button>

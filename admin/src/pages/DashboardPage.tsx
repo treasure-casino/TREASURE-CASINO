@@ -137,43 +137,43 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Secondary Financial Totals */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="bg-dark-900 border border-dark-800 rounded-xl p-5 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-emerald-950/50 border border-emerald-800/40 rounded-lg text-emerald-400">
-              <ArrowDownLeft className="w-6 h-6" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <div className="bg-dark-900 border border-dark-800 rounded-xl p-3.5 sm:p-5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="p-2.5 sm:p-3 bg-emerald-950/50 border border-emerald-800/40 rounded-lg text-emerald-400">
+              <ArrowDownLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <div className="text-xs uppercase tracking-wider text-gray-400">Total Simulated Deposits</div>
-              <div className="text-xl font-bold text-white font-cinzel">
+              <div className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400">Total Deposits</div>
+              <div className="text-lg sm:text-xl font-bold text-white font-cinzel">
                 ₹{Number(stats?.totalDeposits ?? 0).toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           <Link
             to="/finance/deposits"
-            className="text-xs text-gold hover:underline flex items-center gap-1 font-medium"
+            className="text-xs text-gold hover:underline flex items-center gap-1 font-medium shrink-0"
           >
             <span>View All</span>
             <ExternalLink className="w-3 h-3" />
           </Link>
         </div>
 
-        <div className="bg-dark-900 border border-dark-800 rounded-xl p-5 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-amber-950/50 border border-amber-800/40 rounded-lg text-amber-400">
-              <ArrowUpRight className="w-6 h-6" />
+        <div className="bg-dark-900 border border-dark-800 rounded-xl p-3.5 sm:p-5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="p-2.5 sm:p-3 bg-amber-950/50 border border-amber-800/40 rounded-lg text-amber-400">
+              <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <div className="text-xs uppercase tracking-wider text-gray-400">Total Completed Payouts</div>
-              <div className="text-xl font-bold text-white font-cinzel">
+              <div className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400">Total Payouts</div>
+              <div className="text-lg sm:text-xl font-bold text-white font-cinzel">
                 ₹{Number(stats?.totalWithdrawals ?? 0).toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           <Link
             to="/finance/withdrawals"
-            className="text-xs text-gold hover:underline flex items-center gap-1 font-medium"
+            className="text-xs text-gold hover:underline flex items-center gap-1 font-medium shrink-0"
           >
             <span>Review Desk</span>
             <ExternalLink className="w-3 h-3" />
