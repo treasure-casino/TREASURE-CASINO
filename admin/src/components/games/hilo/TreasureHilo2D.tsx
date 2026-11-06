@@ -181,7 +181,7 @@ class HiloAudio {
 const audio = new HiloAudio();
 const QUICK_CHIPS = [10, 50, 100, 500, 1000];
 
-// ── 3D Flippable Card Component ──
+// ── 3D Flippable Playing Card Component ──
 interface FlippableCardProps {
   card: HiloCard | null;
   isFaceDown: boolean;
@@ -190,6 +190,11 @@ interface FlippableCardProps {
   label?: string;
 }
 
+const isRedSuit = (suit?: string): boolean => {
+  if (!suit) return false;
+  return suit === '♥' || suit === '♦' || suit === 'H' || suit === 'D';
+};
+
 const FlippableCard: React.FC<FlippableCardProps> = ({
   card,
   isFaceDown,
@@ -197,78 +202,143 @@ const FlippableCard: React.FC<FlippableCardProps> = ({
   glowColor = 'gold',
   label,
 }) => {
-  const isRed = card?.suit === '♥' || card?.suit === '♦';
+  const isRed = isRedSuit(card?.suit);
 
   const glowClass = isGlowing
     ? glowColor === 'gold'
-      ? 'ring-4 ring-gold shadow-[0_0_35px_rgba(234,179,8,0.6)]'
+      ? 'ring-2 sm:ring-4 ring-gold shadow-[0_0_30px_rgba(234,179,8,0.6)]'
       : glowColor === 'red'
-      ? 'ring-4 ring-rose-500 shadow-[0_0_35px_rgba(244,63,94,0.6)]'
-      : 'ring-4 ring-cyan-400 shadow-[0_0_35px_rgba(34,211,238,0.6)]'
+      ? 'ring-2 sm:ring-4 ring-rose-500 shadow-[0_0_30px_rgba(244,63,94,0.6)]'
+      : 'ring-2 sm:ring-4 ring-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.6)]'
     : 'shadow-2xl';
 
+  // Force Unicode text-presentation selector (\uFE0E) to prevent OS emoji substitution on Android / iOS
+  const suitSymbol = card?.suit ? `${card.suit}\uFE0E` : '';
+  const isFaceCard = card?.rank === 'A' || card?.rank === 'K' || card?.rank === 'Q' || card?.rank === 'J';
+
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-1.5 sm:gap-2">
       {label && (
-        <span className="text-[11px] sm:text-xs font-bold tracking-wider uppercase text-gray-400 font-mono">
+        <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase text-gray-400 font-mono">
           {label}
         </span>
       )}
-      <div className={`relative w-20 h-30 xs:w-24 xs:h-36 sm:w-28 sm:h-40 md:w-32 md:h-48 perspective-1000 select-none ${glowClass} rounded-2xl transition-all duration-300`}>
+      <div
+        className={`relative w-24 h-36 sm:w-28 sm:h-40 md:w-32 md:h-48 lg:w-36 lg:h-52 perspective-1000 select-none ${glowClass} rounded-xl transition-all duration-300`}
+        style={{
+          aspectRatio: '2.5 / 3.5',
+          minWidth: '88px',
+          minHeight: '130px',
+        }}
+      >
         <div
-          className="w-full h-full relative transform-style-3d transition-transform duration-500 ease-out"
+          className="w-full h-full relative transition-transform duration-500 ease-out"
           style={{
             transform: isFaceDown ? 'rotateY(180deg)' : 'rotateY(0deg)',
+            transformStyle: 'preserve-3d',
+            WebkitTransformStyle: 'preserve-3d',
           }}
         >
           {/* Card Front (Face-Up) */}
           <div
-            className="absolute inset-0 backface-hidden bg-white rounded-2xl border-2 border-gray-200 flex flex-col justify-between p-2 sm:p-2.5 overflow-hidden"
-            style={{ transform: 'rotateY(0deg)' }}
+            className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-gray-100 rounded-xl border border-gray-300/90 shadow-2xl flex flex-col justify-between p-2 sm:p-2.5 overflow-hidden"
+            style={{
+              transform: 'rotateY(0deg)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+            }}
           >
             {card ? (
               <>
-                {/* Top-Left Rank & Suit */}
-                <div className={`flex flex-col items-start leading-none font-black ${isRed ? 'text-red-600' : 'text-gray-900'}`}>
-                  <span className="text-base sm:text-lg md:text-xl">{card.rank}</span>
-                  <span className="text-xs sm:text-sm">{card.suit}</span>
-                </div>
-
-                {/* Giant Center Watermark Suit */}
+                {/* Top-Left Rank & Suit Index */}
                 <div
-                  className={`absolute inset-0 flex items-center justify-center text-4xl sm:text-5xl md:text-6xl pointer-events-none opacity-85 ${
-                    isRed ? 'text-red-600' : 'text-gray-900'
+                  className={`flex flex-col items-start leading-none font-black z-10 ${
+                    isRed ? 'text-red-600' : 'text-slate-900'
                   }`}
                 >
-                  {card.suit}
+                  <span className="text-base sm:text-lg md:text-xl font-bold font-sans tracking-tight">
+                    {card.rank}
+                  </span>
+                  <span className="text-xs sm:text-sm font-sans mt-0.5 font-bold">
+                    {suitSymbol}
+                  </span>
                 </div>
 
-                {/* Bottom-Right Rank & Suit */}
-                <div className={`flex flex-col items-end leading-none font-black self-end rotate-180 ${isRed ? 'text-red-600' : 'text-gray-900'}`}>
-                  <span className="text-base sm:text-lg md:text-xl">{card.rank}</span>
-                  <span className="text-xs sm:text-sm">{card.suit}</span>
+                {/* Center Graphic: Face card portrait or prominent suit emblem */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-0">
+                  {isFaceCard ? (
+                    <div className="flex flex-col items-center justify-center">
+                      <span
+                        className={`text-3xl sm:text-4xl md:text-5xl font-black font-cinzel leading-none ${
+                          isRed ? 'text-red-600' : 'text-slate-900'
+                        }`}
+                      >
+                        {card.rank}
+                      </span>
+                      <span
+                        className={`text-lg sm:text-xl md:text-2xl mt-0.5 leading-none font-bold ${
+                          isRed ? 'text-red-600' : 'text-slate-900'
+                        }`}
+                      >
+                        {suitSymbol}
+                      </span>
+                    </div>
+                  ) : (
+                    <span
+                      className={`text-4xl sm:text-5xl md:text-6xl leading-none font-bold drop-shadow-sm ${
+                        isRed ? 'text-red-600' : 'text-slate-900'
+                      }`}
+                    >
+                      {suitSymbol}
+                    </span>
+                  )}
+
+                  {/* Subtle Background Watermark */}
+                  <div
+                    className={`absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl md:text-7xl opacity-5 pointer-events-none font-bold ${
+                      isRed ? 'text-red-600' : 'text-slate-900'
+                    }`}
+                  >
+                    {suitSymbol}
+                  </div>
+                </div>
+
+                {/* Bottom-Right Inverted Rank & Suit Index */}
+                <div
+                  className={`flex flex-col items-end leading-none font-black self-end rotate-180 z-10 ${
+                    isRed ? 'text-red-600' : 'text-slate-900'
+                  }`}
+                >
+                  <span className="text-base sm:text-lg md:text-xl font-bold font-sans tracking-tight">
+                    {card.rank}
+                  </span>
+                  <span className="text-xs sm:text-sm font-sans mt-0.5 font-bold">
+                    {suitSymbol}
+                  </span>
                 </div>
               </>
             ) : (
               <div className="flex items-center justify-center h-full text-gray-300">
-                <HelpCircle className="w-8 h-8 opacity-40" />
+                <HelpCircle className="w-8 h-8 opacity-40 text-gray-400" />
               </div>
             )}
           </div>
 
           {/* Card Back (Face-Down) */}
           <div
-            className="absolute inset-0 backface-hidden rounded-2xl border-2 border-amber-500/80 shadow-2xl overflow-hidden p-1.5"
+            className="absolute inset-0 rounded-xl border-2 border-amber-500/80 shadow-2xl p-1 sm:p-1.5 overflow-hidden"
             style={{
               transform: 'rotateY(180deg)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
               background: 'linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)',
             }}
           >
-            <div className="w-full h-full rounded-xl border border-gold/40 flex flex-col items-center justify-center p-2 bg-[radial-gradient(#d97706_1px,transparent_1px)] [background-size:6px_6px]">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gold/70 flex items-center justify-center bg-dark-900/90 shadow">
+            <div className="w-full h-full rounded-lg border border-gold/40 flex flex-col items-center justify-center p-1.5 bg-[radial-gradient(#d97706_1px,transparent_1px)] [background-size:6px_6px]">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gold/70 flex items-center justify-center bg-dark-900/90 shadow-lg">
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-gold animate-spin" />
               </div>
-              <span className="text-[8px] sm:text-[9px] font-cinzel font-black text-gold tracking-widest mt-2">
+              <span className="text-[7.5px] sm:text-[9px] font-cinzel font-black text-gold tracking-widest mt-1.5">
                 TREASURE
               </span>
             </div>
@@ -289,13 +359,23 @@ export const TreasureHilo2D: React.FC = () => {
   // Active Round State
   const [roundState, setRoundState] = useState<HiloRoundState | null>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [revealFaceDown, setRevealFaceDown] = useState<boolean>(true);
+  const [baseCardDisplay, setBaseCardDisplay] = useState<HiloCard | null>(null);
+  const [isBaseFaceDown, setIsBaseFaceDown] = useState<boolean>(true);
   const [revealedCardDisplay, setRevealedCardDisplay] = useState<HiloCard | null>(null);
+  const [isRevealFaceDown, setIsRevealFaceDown] = useState<boolean>(true);
   const [lastOutcome, setLastOutcome] = useState<'WIN' | 'LOSS' | 'PUSH' | null>(null);
   const [bannerMessage, setBannerMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HiloHistoryItem[]>([]);
   const [showRulesModal, setShowRulesModal] = useState<boolean>(false);
+  const transitionTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clear transition timer on unmount
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+    };
+  }, []);
 
   // Sync Audio Mute
   const toggleMute = () => {
@@ -341,16 +421,25 @@ export const TreasureHilo2D: React.FC = () => {
       return;
     }
 
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
+
     try {
       setIsProcessing(true);
       setError(null);
       setLastOutcome(null);
       setRevealedCardDisplay(null);
-      setRevealFaceDown(true);
+      setIsRevealFaceDown(true);
+      setIsBaseFaceDown(true);
       audio.playCardSlide();
 
       const data = await hiloApi.startRound(betAmount);
       setRoundState(data);
+      setBaseCardDisplay(data.currentCard);
+      setIsBaseFaceDown(false);
+      audio.playCardFlip();
       setBalance(data.balance);
       setLocalDemoBalance(data.balance);
       setBannerMessage(data.message);
@@ -365,19 +454,29 @@ export const TreasureHilo2D: React.FC = () => {
   const handlePredict = async (prediction: HiloPrediction) => {
     if (!roundState || isProcessing || roundState.status !== 'ACTIVE') return;
 
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
+
+    const currentBase = baseCardDisplay || roundState.currentCard;
+
     try {
       setIsProcessing(true);
       setError(null);
-      setRevealFaceDown(true);
+      setIsRevealFaceDown(true);
 
       audio.playCardSlide();
 
       const data = await hiloApi.predict(roundState.roundId, prediction);
 
+      // Lock current base card on Card 1 and set upcoming revealed card on Card 2
+      setBaseCardDisplay(currentBase);
+      setRevealedCardDisplay(data.revealedCard);
+
       // Trigger card flip animation
       setTimeout(() => {
-        setRevealedCardDisplay(data.revealedCard);
-        setRevealFaceDown(false);
+        setIsRevealFaceDown(false);
         audio.playCardFlip();
         setLastOutcome(data.stepOutcome);
 
@@ -398,18 +497,32 @@ export const TreasureHilo2D: React.FC = () => {
         // Update history if settled
         if (data.status !== 'ACTIVE') {
           hiloApi.getHistory(15).then((h) => setHistory(h)).catch(() => {});
+        } else {
+          // If round remains active (win/push in streak), let player view showdown result,
+          // then smoothly shift revealed card to become the new base card for next guess
+          transitionTimerRef.current = setTimeout(() => {
+            setBaseCardDisplay(data.currentCard);
+            setIsRevealFaceDown(true);
+            setRevealedCardDisplay(null);
+            transitionTimerRef.current = null;
+          }, 850);
         }
       }, 250);
     } catch (err: any) {
       setError(err?.response?.data?.message || err.message || 'Prediction failed');
     } finally {
-      setTimeout(() => setIsProcessing(false), 500);
+      setTimeout(() => setIsProcessing(false), 550);
     }
   };
 
   // ── Action: Collect Winnings ──
   const handleCollect = async () => {
     if (!roundState || isProcessing || roundState.status !== 'ACTIVE' || roundState.streak === 0) return;
+
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
 
     try {
       setIsProcessing(true);
@@ -746,29 +859,29 @@ export const TreasureHilo2D: React.FC = () => {
           </div>
 
           {/* ── CARD ARENA ── */}
-          <div className="flex items-center justify-center gap-3 sm:gap-8 md:gap-12 my-2 sm:my-6 z-10 w-full">
-            {/* Card 1: Current Active Card */}
+          <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-10 my-2 sm:my-4 z-10 w-full max-w-lg">
+            {/* Card 1: Current Base Card */}
             <div className="flex flex-col items-center">
               <FlippableCard
-                card={currentCard}
-                isFaceDown={!currentCard}
+                card={baseCardDisplay}
+                isFaceDown={isBaseFaceDown}
                 isGlowing={isRoundActive}
                 glowColor="gold"
-                label="Current Card"
+                label="Base Card"
               />
-              {currentCard && (
-                <div className="mt-2 text-xs font-mono font-bold text-gray-300 bg-dark-950/80 px-2.5 py-1 rounded-lg border border-dark-800">
-                  Rank: <span className="text-gold">{currentCard.rank}</span> ({currentCard.value})
+              {baseCardDisplay && !isBaseFaceDown && (
+                <div className="mt-2 text-[11px] sm:text-xs font-mono font-bold text-gray-300 bg-dark-950/80 px-2.5 py-1 rounded-lg border border-dark-800 shadow">
+                  Rank: <span className="text-gold">{baseCardDisplay.rank}</span> ({baseCardDisplay.value})
                 </div>
               )}
             </div>
 
             {/* Center VS Indicator */}
-            <div className="flex flex-col items-center justify-center gap-2">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-purple-500/40 bg-dark-900/90 shadow-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-purple-400" />
+            <div className="flex flex-col items-center justify-center gap-1 sm:gap-2">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border border-purple-500/40 bg-dark-900/90 shadow-xl flex items-center justify-center">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
               </div>
-              <span className="text-[10px] font-mono font-bold tracking-widest text-gray-400">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-gray-400">
                 NEXT
               </span>
             </div>
@@ -777,13 +890,13 @@ export const TreasureHilo2D: React.FC = () => {
             <div className="flex flex-col items-center">
               <FlippableCard
                 card={revealedCardDisplay}
-                isFaceDown={revealFaceDown}
+                isFaceDown={isRevealFaceDown}
                 isGlowing={lastOutcome !== null}
                 glowColor={lastOutcome === 'WIN' ? 'gold' : lastOutcome === 'LOSS' ? 'red' : 'cyan'}
                 label="Revealed Card"
               />
-              {revealedCardDisplay && !revealFaceDown && (
-                <div className="mt-2 text-xs font-mono font-bold text-gray-300 bg-dark-950/80 px-2.5 py-1 rounded-lg border border-dark-800">
+              {revealedCardDisplay && !isRevealFaceDown && (
+                <div className="mt-2 text-[11px] sm:text-xs font-mono font-bold text-gray-300 bg-dark-950/80 px-2.5 py-1 rounded-lg border border-dark-800 shadow">
                   Rank: <span className="text-gold">{revealedCardDisplay.rank}</span> ({revealedCardDisplay.value})
                 </div>
               )}
