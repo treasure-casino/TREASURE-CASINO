@@ -43,7 +43,6 @@ export const SkyRocket3D: React.FC = () => {
 
   // Round State Machine
   const [gameState, setGameState] = useState<RocketState>('IDLE');
-  const [countdown, setCountdown] = useState<number>(3);
   const [nextRoundCountdown, setNextRoundCountdown] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1.0);
   const [roundId, setRoundId] = useState<string | null>(null);
@@ -103,7 +102,6 @@ export const SkyRocket3D: React.FC = () => {
   const cashingOutSlotRef = useRef<{ [slot: number]: boolean }>({ 1: false, 2: false });
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const nextRoundTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const ignitionIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isCrashingRef = useRef<boolean>(false);
   const slot1Ref = useRef<BetSlotState>(slot1);
   slot1Ref.current = slot1;
@@ -150,7 +148,6 @@ export const SkyRocket3D: React.FC = () => {
       window.removeEventListener('sound_settings_changed', handleSound);
       if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
       if (nextRoundTimerRef.current) clearInterval(nextRoundTimerRef.current);
-      if (ignitionIntervalRef.current) clearInterval(ignitionIntervalRef.current);
     };
   }, []);
 
@@ -322,7 +319,7 @@ export const SkyRocket3D: React.FC = () => {
           thrusterLightRef.current.intensity = 0;
         }
       } else {
-        // IDLE, COUNTDOWN, or INTERMISSION COUNTDOWN
+        // IDLE or INTERMISSION COUNTDOWN
         rocketGroupRef.current.visible = true;
         const bob = Math.sin(elapsed * 2) * 0.05;
         rocketGroupRef.current.position.set(-3.2, -1.8 + bob, 0);
@@ -330,7 +327,7 @@ export const SkyRocket3D: React.FC = () => {
 
         if (thrusterLightRef.current) {
           thrusterLightRef.current.position.set(-3.2, -1.8, 0);
-          thrusterLightRef.current.intensity = gameState === 'COUNTDOWN' ? 1.5 : (nextRoundCountdown > 0 ? 0.8 : 0);
+          thrusterLightRef.current.intensity = nextRoundCountdown > 0 ? 0.8 : 0;
         }
       }
     }
@@ -370,10 +367,6 @@ export const SkyRocket3D: React.FC = () => {
     if (nextRoundTimerRef.current) {
       clearInterval(nextRoundTimerRef.current);
       nextRoundTimerRef.current = null;
-    }
-    if (ignitionIntervalRef.current) {
-      clearInterval(ignitionIntervalRef.current);
-      ignitionIntervalRef.current = null;
     }
     setNextRoundCountdown(0);
 
@@ -441,35 +434,17 @@ export const SkyRocket3D: React.FC = () => {
         rocketGroupRef.current.rotation.z = -Math.PI / 4;
       }
 
-      // Ignition Countdown (3, 2, 1)
-      setGameState('COUNTDOWN');
-      let count = 3;
-      setCountdown(count);
-      soundManager.play('countdownBeep');
+      // Rocket Ascends Immediately when 10s countdown ends
+      startTimeRef.current = Date.now();
+      currentMultRef.current = 1.0;
+      setMultiplier(1.0);
+      setGameState('RUNNING');
+      isStartingRef.current = false;
+      soundManager.play('airplaneEngine');
 
-      ignitionIntervalRef.current = setInterval(() => {
-        count -= 1;
-        setCountdown(count);
-        if (count > 0) {
-          soundManager.play('countdownBeep');
-        } else {
-          if (ignitionIntervalRef.current) {
-            clearInterval(ignitionIntervalRef.current);
-            ignitionIntervalRef.current = null;
-          }
-          // Rocket Ascends
-          startTimeRef.current = Date.now();
-          currentMultRef.current = 1.0;
-          setMultiplier(1.0);
-          setGameState('RUNNING');
-          isStartingRef.current = false;
-          soundManager.play('airplaneEngine');
-
-          // Transition placed slots to RUNNING
-          setSlot1((prev) => (prev.placed ? { ...prev, status: 'RUNNING' } : prev));
-          setSlot2((prev) => (prev.placed ? { ...prev, status: 'RUNNING' } : prev));
-        }
-      }, 1000);
+      // Transition placed slots to RUNNING
+      setSlot1((prev) => (prev.placed ? { ...prev, status: 'RUNNING' } : prev));
+      setSlot2((prev) => (prev.placed ? { ...prev, status: 'RUNNING' } : prev));
     } catch (err: any) {
       console.error('Start error:', err);
       soundManager.play('loss');
@@ -890,20 +865,6 @@ export const SkyRocket3D: React.FC = () => {
               </div>
             )}
 
-            {gameState === 'COUNTDOWN' && (
-              <div className="text-center space-y-1 sm:space-y-2 animate-bounce">
-                <div className="text-[11px] sm:text-xs uppercase tracking-widest font-extrabold text-amber-400">
-                  IGNITION IN
-                </div>
-                <div className="text-5xl sm:text-7xl md:text-8xl font-black font-cinzel text-amber-300 drop-shadow-2xl">
-                  {countdown}
-                </div>
-                <div className="text-[11px] sm:text-xs text-amber-300/80 font-bold tracking-wider">
-                  PREPARING FLIGHT
-                </div>
-              </div>
-            )}
-
             {gameState === 'RUNNING' && (
               <div className="text-center space-y-0.5 sm:space-y-1">
                 <div className="text-5xl sm:text-7xl md:text-8xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-blue-400 drop-shadow-2xl">
@@ -983,14 +944,6 @@ export const SkyRocket3D: React.FC = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
               </span>
               <span>NEXT ROUND IN {nextRoundCountdown}s (AUTO LAUNCH)</span>
-            </div>
-          ) : gameState === 'COUNTDOWN' ? (
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-cyan-500/15 border border-cyan-500/40 rounded-xl text-cyan-300 text-xs font-black">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-              </span>
-              <span>IGNITION • LAUNCHING IN {countdown}s</span>
             </div>
           ) : gameState === 'RUNNING' ? (
             <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/15 border border-emerald-500/40 rounded-xl text-emerald-300 text-xs font-black">
